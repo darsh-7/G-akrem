@@ -86,18 +86,18 @@ class _CustomInputFieldState extends State<CustomInputField> {
           enabled: widget.enabled,
           border: OutlineInputBorder(
             borderSide:
-            BorderSide(width: 1, color: AppColors.blue),
+            BorderSide(width: 1, color: AppColors.mainColor),
             borderRadius: BorderRadius.circular(0.0),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(width: 1, color: AppColors.blue),
+                BorderSide(width: 1, color: AppColors.mainColor),
             borderRadius: BorderRadius.circular(0.0),
           ),
           focusedBorder: defaultBorder.copyWith(
             borderRadius: BorderRadius.circular(24),
             borderSide: BorderSide(
-              color: AppColors.blue,
+              color: AppColors.mainColor,
             ),
           ),
           errorBorder: defaultBorder.copyWith(
@@ -107,7 +107,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
           disabledBorder: defaultBorder.copyWith(
               borderRadius: BorderRadius.circular(24),
               borderSide: BorderSide(
-                color: AppColors.blue,
+                color: AppColors.mainColor,
               )),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

@@ -5,6 +5,7 @@ import 'package:akrem/widgets/input.dart';
 import 'package:akrem/widgets/appbar.dart';
 import 'package:akrem/widgets/scrollable_column.dart';
 import 'package:akrem/services/validator.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -165,7 +166,10 @@ class _RegisterPage extends State<RegisterPage> {
                   TextButton(
                     child: const Text("Login"),
                     onPressed: () => {
-                      Navigator.of(context).pushNamed("/login")
+                      SchedulerBinding.instance.addPostFrameCallback((_) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/register', (Route<dynamic> route) => false);
+                      })
                     },
                   ),
                 ],

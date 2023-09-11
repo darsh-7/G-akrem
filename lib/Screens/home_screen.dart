@@ -1,4 +1,7 @@
+import 'package:akrem/widgets/scrollable_column.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -30,54 +33,78 @@ class _MyHomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+        // appBar: CustomAppBar(title: "Register new account"),
+        body: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            child: ScrollableColumn(children: [
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
+              SizedBox(height: 40),
+              Text("data"),
 
+            ])));
 
-      body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-          Container(
-          width: 382,
-          height: 23,
-          color: Colors.red,
-          padding:
-          const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(24)),
-            alignment: Alignment.center,
-            child: const Text(
-              "Welcome",
-              style: TextStyle(color: Colors.white),
-            ),
-          )),
-        // horizontalArrangement = Arrangement.SpaceBetween,
-        // verticalAlignment = Alignment.CenterVertically,
-     ])
-    //Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       const Text(
-      //         'You have pushed the button this many times:',
-      //       ),
-      //       Text(
-      //         '$_counter',
-      //         style: Theme.of(context).textTheme.headlineMedium,
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _incrementCounter,
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    // return CupertinoTabScaffold(
+    //     tabBar: CupertinoTabBar(
+    //       items: const [
+    //         BottomNavigationBarItem(
+    //             icon: Icon(CupertinoIcons.home),
+    //             label: "Home",
+    //         ),
+    //         BottomNavigationBarItem(
+    //           icon: Icon(CupertinoIcons.add),
+    //           label: "add",
+    //         ),
+    //
+    //       ],
+    //     ),
+    //     tabBuilder:(context,i) {
+    //       return const Text("data");
+    //     }
+    // );
   }
 }

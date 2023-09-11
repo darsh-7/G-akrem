@@ -4,6 +4,7 @@ import 'package:akrem/widgets/input.dart';
 import 'package:akrem/widgets/appbar.dart';
 import 'package:akrem/widgets/scrollable_column.dart';
 import 'package:akrem/services/validator.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,7 +24,9 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Login to your account"),
-      body: Container(
+      body:
+
+      Container(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Form(
           key: _formKey,
@@ -63,8 +66,13 @@ class _LoginPage extends State<LoginPage> {
               SizedBox(height: 24),
               ElevatedButton(
                   onPressed: () =>
-                  {Navigator.of(context).pushNamed("/map")},
-
+                  {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/main', (Route<dynamic> route) => false);
+                  })
+                                   },
+//                      Navigator.of(context).pushNamed("/login")
                   // onPressed: () {
                   //   if (_formKey.currentState?.validate() == false) return;
                   //   showDialog(

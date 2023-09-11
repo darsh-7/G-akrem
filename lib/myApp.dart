@@ -1,3 +1,4 @@
+import 'package:akrem/Screens/NavigationBar.dart';
 import 'package:akrem/Screens/home_screen.dart';
 import 'package:akrem/Screens/login_page.dart';
 import 'package:akrem/Screens/map_screen.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
       //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
-        '/main': (context) => HomePage(title: "title"),
+        '/main': (context) => NavigationBarApp(),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
       },
