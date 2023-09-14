@@ -49,6 +49,7 @@ class _NavigationExampleState extends State<NavigationExample> {
             label: 'Order',
           ),
           NavigationDestination(
+            //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
             selectedIcon: Icon(Icons.person),
             icon: Icon(Icons.person_2_outlined),
             label: 'Profile',
@@ -56,12 +57,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         ],
       ),
       body:
-      <Widget>[HomePage(title: '',),
-        // Container(
-        //   color: Colors.red,
-        //   alignment: Alignment.center,
-        //   child: const Text('Page 1'),
-        // ),
+      <Widget>[Home(),
         Container(
           color: Colors.green,
           alignment: Alignment.center,

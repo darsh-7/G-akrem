@@ -1,110 +1,211 @@
-import 'package:akrem/widgets/scrollable_column.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:akrem/Api/fake_api.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import '../widgets/pharmacy_card.dart';
+import '../constants/app_colors.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class Home extends StatefulWidget {
+  Home({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _MyHomePageState();
+  State<Home> createState() => _HomeState();
 }
 
-class _MyHomePageState extends State<HomePage> {
-  int _counter = 0;
+class _HomeState extends State<Home> {
+  final todosList = Pharmacy.pharmacyList();
+  List<Pharmacy> _foundPharmacy = [];
+  final _todoController = TextEditingController();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    _foundPharmacy = todosList;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: CustomAppBar(title: "Register new account"),
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            child: ScrollableColumn(children: [
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
-              SizedBox(height: 40),
-              Text("data"),
+      backgroundColor: tdBGColor,
+      appBar: _buildAppBar(),
+      body: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 15,
+            ),
+            child: Column(
+              children: [
+                searchBox(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                          top: 50,
+                          bottom: 20,
+                        ),
+                        child: Text(
+                          'All Pharmacy',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      for (Pharmacy Pharm in _foundPharmacy.reversed)
+                        PharmacyItem(
+                          name: Pharm.name,
+                          location: Pharm.location,
+                          time: Pharm.time,
+                          distance: Pharm.distance,
+                          // onToDoChanged: _handleToDoChange,
+                          // onDeleteItem: _deleteToDoItem,
+                        ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: 20,
+                    right: 20,
+                    left: 20,
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 5,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 0.0),
+                        blurRadius: 10.0,
+                        spreadRadius: 0.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: TextField(
+                    controller: _todoController,
+                    decoration: InputDecoration(
+                        hintText: 'Add a new todo item',
+                        border: InputBorder.none),
+                  ),
+                ),
+              ),
+              // Container(
+              //   margin: EdgeInsets.only(
+              //     bottom: 20,
+              //     right: 20,
+              //   ),
+              //   child: ElevatedButton(
+              //     child: Text(
+              //       '+',
+              //       style: TextStyle(
+              //         fontSize: 40,
+              //       ),
+              //     ),
+              //     onPressed: () {
+              //       _addToDoItem(_todoController.text);
+              //     },
+              //     style: ElevatedButton.styleFrom(
+              //       primary: tdBlue,
+              //       minimumSize: Size(60, 60),
+              //       elevation: 10,
+              //     ),
+              //   ),
+              // ),
+            ]),
+          ),
+        ],
+      ),
+    );
+  }
 
-            ])));
 
-    // return CupertinoTabScaffold(
-    //     tabBar: CupertinoTabBar(
-    //       items: const [
-    //         BottomNavigationBarItem(
-    //             icon: Icon(CupertinoIcons.home),
-    //             label: "Home",
-    //         ),
-    //         BottomNavigationBarItem(
-    //           icon: Icon(CupertinoIcons.add),
-    //           label: "add",
-    //         ),
-    //
-    //       ],
-    //     ),
-    //     tabBuilder:(context,i) {
-    //       return const Text("data");
-    //     }
-    // );
+
+  // void _addToDoItem(String toDo) {
+  //   setState(() {
+  //     todosList.add(Pharmacy(
+  //       id: DateTime.now().millisecondsSinceEpoch.toString(),
+  //       todoText: toDo,
+  //     ));
+  //   });
+  //   _todoController.clear();
+  // }
+
+  void _runFilter(String enteredKeyword) {
+    List<Pharmacy> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = todosList;
+    } else {
+      results = todosList
+          .where((item) => item.name!
+          .toLowerCase()
+          .contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+
+    setState(() {
+      _foundPharmacy = results;
+    });
+  }
+
+  Widget searchBox() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextField(
+        onChanged: (value) => _runFilter(value),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(10),
+          prefixIcon: Icon(
+            Icons.search,
+            color: tdBlack,
+            size: 20,
+          ),
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: 20,
+            minWidth: 25,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(color: tdGrey),
+        ),
+      ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: tdBGColor,
+      elevation: 0,
+      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Icon(
+          Icons.menu,
+          color: tdBlack,
+          size: 30,
+        ),
+        Container(
+          height: 40,
+          width: 40,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child:  Image.asset('assets/profileimage.png'),
+          ),
+        ),
+      ]),
+    );
   }
 }

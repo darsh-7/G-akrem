@@ -9,8 +9,17 @@ class AppColors {
   static const Color backGround = Color.fromRGBO(255, 255, 255, 1.0);
   static const Color backGroundBar = Color.fromRGBO(255, 255, 255, 0.43);
 
+
+
 // static Color semon1 = Color("E48586".hexToInt());
 
   // static Color cardColor2 = const Color.fromRGBO(245, 244, 248, 1);
   // static Color cardColor3 = const Color.fromRGBO(245, 244, 248, 1);
 }
+ const Color tdRed = Color(0xFFDA4040);
+ const Color tdBlue = Color(0xFF5F52EE);
+
+ const Color tdBlack = Color(0xFF3A3A3A);
+ const Color tdGrey = Color(0xFF717171);
+
+ const Color tdBGColor = Color(0xFFEEEFF5);
