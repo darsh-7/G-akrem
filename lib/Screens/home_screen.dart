@@ -11,13 +11,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todosList = Pharmacy.pharmacyList();
+  final pharmacyList = Pharmacy.pharmacyList();
   List<Pharmacy> _foundPharmacy = [];
   final _todoController = TextEditingController();
+  Image image = Image.network("https://www.google.com/url?sa=i&url=https%3A%2F%2Flogowik.com%2Fflutter-vector-logo-5285.html&psig=AOvVaw0dqdu8fDKlXz-sYQeCFK-t&ust=1694821522894000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCIjFobakq4EDFQAAAAAdAAAAABAJ");
 
   @override
   void initState() {
-    _foundPharmacy = todosList;
+    _foundPharmacy = pharmacyList;
     super.initState();
   }
 
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
       body: Stack(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 20,
               vertical: 15,
             ),
@@ -38,17 +39,50 @@ class _HomeState extends State<Home> {
                 searchBox(),
                 Expanded(
                   child: ListView(
-                    children: [
+                    children: [                      Container(
+                      margin: const EdgeInsets.only(
+                        top: 50,
+                        bottom: 20,
+                      ),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Donation ',
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black
+                          ),
+                          /*defining default style is optional */
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "(${_foundPharmacy.length})",
+                                style:
+                                TextStyle(color: Colors.red)),
+                          ],
+                        ),
+                      ),
+                    ),
+
                       Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                           top: 50,
                           bottom: 20,
                         ),
-                        child: Text(
-                          'All Pharmacy',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Nearby Branch ',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black
+                            ),
+                            /*defining default style is optional */
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: "(${_foundPharmacy.length})",
+                                  style:
+                                      TextStyle(color: Colors.red)),
+                            ],
                           ),
                         ),
                       ),
@@ -67,70 +101,68 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(children: [
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(
-                    bottom: 20,
-                    right: 20,
-                    left: 20,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        offset: Offset(0.0, 0.0),
-                        blurRadius: 10.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: TextField(
-                    controller: _todoController,
-                    decoration: InputDecoration(
-                        hintText: 'Add a new todo item',
-                        border: InputBorder.none),
-                  ),
-                ),
-              ),
-              // Container(
-              //   margin: EdgeInsets.only(
-              //     bottom: 20,
-              //     right: 20,
-              //   ),
-              //   child: ElevatedButton(
-              //     child: Text(
-              //       '+',
-              //       style: TextStyle(
-              //         fontSize: 40,
-              //       ),
-              //     ),
-              //     onPressed: () {
-              //       _addToDoItem(_todoController.text);
-              //     },
-              //     style: ElevatedButton.styleFrom(
-              //       primary: tdBlue,
-              //       minimumSize: Size(60, 60),
-              //       elevation: 10,
-              //     ),
-              //   ),
-              // ),
-            ]),
-          ),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Row(children: [
+          //     Expanded(
+          //       child: Container(
+          //         margin: EdgeInsets.only(
+          //           bottom: 20,
+          //           right: 20,
+          //           left: 20,
+          //         ),
+          //         padding: EdgeInsets.symmetric(
+          //           horizontal: 20,
+          //           vertical: 5,
+          //         ),
+          //         decoration: BoxDecoration(
+          //           color: Colors.white,
+          //           boxShadow: const [
+          //             BoxShadow(
+          //               color: Colors.grey,
+          //               offset: Offset(0.0, 0.0),
+          //               blurRadius: 10.0,
+          //               spreadRadius: 0.0,
+          //             ),
+          //           ],
+          //           borderRadius: BorderRadius.circular(10),
+          //         ),
+          //         child: TextField(
+          //           controller: _todoController,
+          //           decoration: InputDecoration(
+          //               hintText: 'Add a new todo item',
+          //               border: InputBorder.none),
+          //         ),
+          //       ),
+          //     ),
+          // Container(
+          //   margin: EdgeInsets.only(
+          //     bottom: 20,
+          //     right: 20,
+          //   ),
+          //   child: ElevatedButton(
+          //     child: Text(
+          //       '+',
+          //       style: TextStyle(
+          //         fontSize: 40,
+          //       ),
+          //     ),
+          //     onPressed: () {
+          //       _addToDoItem(_todoController.text);
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       primary: tdBlue,
+          //       minimumSize: Size(60, 60),
+          //       elevation: 10,
+          //     ),
+          //   ),
+          // ),
+          //   ]),
+          // ),
         ],
       ),
     );
   }
-
-
 
   // void _addToDoItem(String toDo) {
   //   setState(() {
@@ -145,12 +177,11 @@ class _HomeState extends State<Home> {
   void _runFilter(String enteredKeyword) {
     List<Pharmacy> results = [];
     if (enteredKeyword.isEmpty) {
-      results = todosList;
+      results = pharmacyList;
     } else {
-      results = todosList
-          .where((item) => item.name!
-          .toLowerCase()
-          .contains(enteredKeyword.toLowerCase()))
+      results = pharmacyList
+          .where((item) =>
+              item.name!.toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
     }
 
@@ -161,14 +192,14 @@ class _HomeState extends State<Home> {
 
   Widget searchBox() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextField(
         onChanged: (value) => _runFilter(value),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(10),
           prefixIcon: Icon(
             Icons.search,
@@ -192,7 +223,7 @@ class _HomeState extends State<Home> {
       backgroundColor: tdBGColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Icon(
+        const Icon(
           Icons.menu,
           color: tdBlack,
           size: 30,
@@ -202,7 +233,7 @@ class _HomeState extends State<Home> {
           width: 40,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child:  Image.asset('assets/profileimage.png'),
+            child: image,
           ),
         ),
       ]),

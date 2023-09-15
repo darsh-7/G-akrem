@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/login',
+      initialRoute: '/main',
       routes: {
       //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
