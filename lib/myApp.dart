@@ -1,4 +1,5 @@
 import 'package:akrem/Screens/NavigationBar.dart';
+import 'package:akrem/Screens/add_items.dart';
 import 'package:akrem/Screens/home_screen.dart';
 import 'package:akrem/Screens/login_page.dart';
 import 'package:akrem/Screens/map_screen.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => NavigationBarApp(),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
+        '/items': (context) => ItemsScreen(),
       },
     );
   }

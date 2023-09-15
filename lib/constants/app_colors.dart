@@ -8,6 +8,7 @@ class AppColors {
   static Color darkBlue = Color.fromRGBO(33, 150, 243, 0.596078431372549);
   static const Color backGround = Color.fromRGBO(255, 255, 255, 1.0);
   static const Color backGroundBar = Color.fromRGBO(255, 255, 255, 0.43);
+  static const Color bar = Color.fromRGBO(163, 165, 167, 0.4);
 
 
 

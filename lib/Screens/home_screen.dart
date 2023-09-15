@@ -1,4 +1,5 @@
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import '../widgets/pharmacy_card.dart';
 import '../constants/app_colors.dart';
@@ -14,7 +15,7 @@ class _HomeState extends State<Home> {
   final pharmacyList = Pharmacy.pharmacyList();
   List<Pharmacy> _foundPharmacy = [];
   final _todoController = TextEditingController();
-  Image image = Image.network("https://www.google.com/url?sa=i&url=https%3A%2F%2Flogowik.com%2Fflutter-vector-logo-5285.html&psig=AOvVaw0dqdu8fDKlXz-sYQeCFK-t&ust=1694821522894000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCIjFobakq4EDFQAAAAAdAAAAABAJ");
+  Image image = Image.asset(AppImages.profileIcon);
 
   @override
   void initState() {

@@ -1,5 +1,8 @@
+import 'package:akrem/Screens/add_items.dart';
 import 'package:akrem/Screens/home_screen.dart';
+import 'package:akrem/Screens/profle_Screen.dart';
 import 'package:akrem/constants/app_colors.dart';
+import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 
 /// Flutter code sample for [NavigationBar].
@@ -24,51 +27,81 @@ class NavigationExample extends StatefulWidget {
 
 class _NavigationExampleState extends State<NavigationExample> {
   int currentPageIndex = 0;
+  Image image = Image.asset(
+    AppImages.profileIcon,
+  );
+  var radius = const Radius.circular(10);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        //backgroundColor: AppColors.backGroundBar,
-        indicatorColor: AppColors.mainColor,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.add_box_rounded),
-            icon: Icon(Icons.add_box_outlined),
-            label: 'Order',
-          ),
-          NavigationDestination(
-            //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
-            selectedIcon: Icon(Icons.person),
-            icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      body:
-      <Widget>[Home(),
-        Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
+    return    Scaffold(
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          shadowColor: Colors.red,
+          backgroundColor: AppColors.bar,
+          indicatorColor: Colors.transparent,
+          selectedIndex: currentPageIndex,
+          destinations: <Widget>[
+            NavigationDestination(
+              selectedIcon: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                    color: AppColors.mainColor,
+                  ),
+                  child: const Icon(Icons
+                      .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+              ),
+              icon: const Icon(Icons.home_outlined),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: const Icon(Icons.add_box_rounded),
+              selectedIcon: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                    color: AppColors.mainColor,
+                  ),
+                  child: const Icon(Icons
+                      .add_box_rounded) //Image.asset(AppImages.boxIcon,scale: 6),
+              ),
+              label: 'Order',
+            ),
+            NavigationDestination(
+              //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
+              selectedIcon: CircleAvatar(
+                radius: 22,
+                backgroundColor: AppColors.mainColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(4), // Border radius
+                  child: ClipOval(child: image),
+                ),
+              ),
+
+              icon: Container(
+                height: 40,
+                width: 40,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                  child: image,
+                ),
+              ),
+              label: 'Profile',
+            ),
+          ],
         ),
-        Container(
-          color: Colors.blue,
-          alignment: Alignment.center,
-          child: const Text('Page 3'),
-        ),
-      ][currentPageIndex],
+        body: <Widget>[
+          Home(),
+          const ItemsScreen(),
+          ProfileScreen(),
+        ][currentPageIndex],
     );
   }
 }
