@@ -3,6 +3,7 @@ import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import '../widgets/pharmacy_card.dart';
 import '../constants/app_colors.dart';
+import 'dart:math' as math;
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -40,30 +41,58 @@ class _HomeState extends State<Home> {
                 searchBox(),
                 Expanded(
                   child: ListView(
-                    children: [                      Container(
-                      margin: const EdgeInsets.only(
-                        top: 50,
-                        bottom: 20,
-                      ),
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Donation ',
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 50,
+                          bottom: 20,
+                        ),
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Donation ',
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                            /*defining default style is optional */
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: "(${_foundPharmacy.length})",
+                                  style: const TextStyle(color: Colors.red)),
+                            ],
                           ),
-                          /*defining default style is optional */
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "(${_foundPharmacy.length})",
-                                style:
-                                TextStyle(color: Colors.red)),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        height: 200,
+                        child: ListView(
+                          // This next line does the trick.
+                          scrollDirection: Axis.horizontal,
+                          children: <Widget>[
+                            Container(
+                              width: 160,
+                              color: Colors.red,
+                            ),
+                            Container(
+                              width: 160,
+                              color: Colors.blue,
+                            ),
+                            Container(
+                              width: 160,
+                              color: Colors.green,
+                            ),
+                            Container(
+                              width: 160,
+                              color: Colors.yellow,
+                            ),
+                            Container(
+                              width: 160,
+                              color: Colors.orange,
+                            ),
                           ],
                         ),
                       ),
-                    ),
-
                       Container(
                         margin: const EdgeInsets.only(
                           top: 50,
@@ -73,16 +102,14 @@ class _HomeState extends State<Home> {
                           text: TextSpan(
                             text: 'Nearby Branch ',
                             style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black
-                            ),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
                             /*defining default style is optional */
                             children: <TextSpan>[
                               TextSpan(
                                   text: "(${_foundPharmacy.length})",
-                                  style:
-                                      TextStyle(color: Colors.red)),
+                                  style: const TextStyle(color: Colors.red)),
                             ],
                           ),
                         ),
@@ -221,20 +248,40 @@ class _HomeState extends State<Home> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: tdBGColor,
+      backgroundColor: AppColors.mainColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Icon(
-          Icons.menu,
-          color: tdBlack,
-          size: 30,
-        ),
+         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Icon(
+            Icons.location_on_rounded,
+            color: Colors.black,
+            size: 30,
+          ),
+          Text("Location"),
+          Transform.rotate(
+            angle: 270 * math.pi / 180,
+            child: Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.grey.withOpacity(0.1),
+                ),
+                child: Icon(Icons
+                    .arrow_back_ios_new_rounded)
+            ),
+          ),
+        ]),
         Container(
           height: 40,
           width: 40,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: image,
+            child: const Icon(
+              Icons.notifications_outlined,
+              color: Colors.black,
+              size: 30,
+            ),
           ),
         ),
       ]),

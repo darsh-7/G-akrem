@@ -5,7 +5,7 @@ class Pharmacy {
   String? location;
   int? time;
   String? distance;
-//https://youtu.be/NkRkuI0ZgX0?t=147
+
 
   Pharmacy({
     required this.name,
