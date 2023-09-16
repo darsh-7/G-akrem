@@ -29,6 +29,23 @@ class PharmacyItem extends StatelessWidget {
       height: 320,
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.all(0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 4,
+            offset: Offset(-6, -5), // Shadow position
+          ),
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 4,
+            offset: Offset(6, 5), // Shadow position
+          ),
+        ],
+      ),
       child: ListTile(
         onTap: () {
           showCupertinoModalPopup(
@@ -122,9 +139,10 @@ class PharmacyItem extends StatelessWidget {
           // print('Clicked on Todo Item.');
         },
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(30),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        contentPadding: const EdgeInsets.all(0),
+        //const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         tileColor: Colors.white,
         // leading: Icon(
         //   todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
@@ -134,8 +152,16 @@ class PharmacyItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.asset(
-              AppImages.pharmacy,
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(20.0)),
+              //const BorderRadius.all(Radius.circular(20.0)),
+              child: Image.asset(
+                AppImages.pharmacy,
+                width: 400,
+                height: 230,
+              ),
             ),
             const SizedBox(
               height: 4,

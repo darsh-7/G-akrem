@@ -168,7 +168,7 @@ class _RegisterPage extends State<RegisterPage> {
                     onPressed: () => {
                       SchedulerBinding.instance.addPostFrameCallback((_) {
                         Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/register', (Route<dynamic> route) => false);
+                            '/login', (Route<dynamic> route) => false);
                       })
                     },
                   ),

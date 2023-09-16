@@ -32,20 +32,24 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: tdBGColor,
+      backgroundColor: AppColors.backGround,
       appBar: _buildAppBar(),
       body: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 15,
-            ),
+            // padding: const EdgeInsets.symmetric(
+            //   horizontal: 20,
+            //   vertical: 15,
+            // ),
             child: Column(
               children: [
                 searchBox(),
                 Expanded(
                   child: ListView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 15,
+                    ),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
