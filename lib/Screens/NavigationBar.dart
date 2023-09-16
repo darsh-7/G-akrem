@@ -31,7 +31,23 @@ class _NavigationExampleState extends State<NavigationExample> {
     AppImages.profileIcon,
   );
   var radius = const Radius.circular(10);
-
+// @override
+  // void initState() {
+  // showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       actions: [
+  //         TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: const Text("Close"))
+  //       ],
+  //       title: const Text("Welcome, Admin, to Akram "),
+  //       content: Text("we are good"),
+  //     ));
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return    Scaffold(
@@ -100,7 +116,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         body: <Widget>[
           Home(),
           const ItemsScreen(),
-          ProfileScreen(),
+          const ProfileScreen(),
         ][currentPageIndex],
     );
   }

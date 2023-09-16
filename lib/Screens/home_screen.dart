@@ -17,6 +17,11 @@ class _HomeState extends State<Home> {
   List<Pharmacy> _foundPharmacy = [];
   final _todoController = TextEditingController();
   Image image = Image.asset(AppImages.profileIcon);
+  List<Card> cards = [
+    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
+    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
+    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
+  ];
 
   @override
   void initState() {
@@ -48,49 +53,35 @@ class _HomeState extends State<Home> {
                           bottom: 20,
                         ),
                         child: RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             text: 'Donation ',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
                             /*defining default style is optional */
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "(${_foundPharmacy.length})",
-                                  style: const TextStyle(color: Colors.red)),
+                                  text: "(3)", //"(${_foundPharmacy.length})",
+                                  style: TextStyle(color: Colors.red)),
                             ],
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 20),
-                        height: 200,
-                        child: ListView(
+                      SizedBox(
+                        height: 96,
+                        child: ListView.separated(
                           // This next line does the trick.
                           scrollDirection: Axis.horizontal,
-                          children: <Widget>[
-                            Container(
-                              width: 160,
-                              color: Colors.red,
-                            ),
-                            Container(
-                              width: 160,
-                              color: Colors.blue,
-                            ),
-                            Container(
-                              width: 160,
-                              color: Colors.green,
-                            ),
-                            Container(
-                              width: 160,
-                              color: Colors.yellow,
-                            ),
-                            Container(
-                              width: 160,
-                              color: Colors.orange,
-                            ),
-                          ],
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              width: 0,
+                            );
+                          },
+                          itemCount: 3,
+                          itemBuilder: (context, index) {
+                            return buildCard(card: cards[index]);
+                          },
                         ),
                       ),
                       Container(
@@ -98,21 +89,37 @@ class _HomeState extends State<Home> {
                           top: 50,
                           bottom: 20,
                         ),
-                        child: RichText(
-                          text: TextSpan(
-                            text: 'Nearby Branch ',
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                            /*defining default style is optional */
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "(${_foundPharmacy.length})",
-                                  style: const TextStyle(color: Colors.red)),
-                            ],
-                          ),
-                        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        text: 'Nearby Branch ',
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black),
+                                        /*defining default style is optional */
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text:
+                                                  "(${_foundPharmacy.length})",
+                                              style: const TextStyle(
+                                                  color: Colors.red)),
+                                        ],
+                                      ),
+                                    ),
+                                  ]),
+                              Container(
+                                // height: 40,
+                                // width: 40,
+                                child: const Text("See all",
+                                    style: TextStyle(color: Colors.blue)),
+                              ),
+                            ]),
                       ),
                       for (Pharmacy Pharm in _foundPharmacy.reversed)
                         PharmacyItem(
@@ -129,78 +136,10 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child: Row(children: [
-          //     Expanded(
-          //       child: Container(
-          //         margin: EdgeInsets.only(
-          //           bottom: 20,
-          //           right: 20,
-          //           left: 20,
-          //         ),
-          //         padding: EdgeInsets.symmetric(
-          //           horizontal: 20,
-          //           vertical: 5,
-          //         ),
-          //         decoration: BoxDecoration(
-          //           color: Colors.white,
-          //           boxShadow: const [
-          //             BoxShadow(
-          //               color: Colors.grey,
-          //               offset: Offset(0.0, 0.0),
-          //               blurRadius: 10.0,
-          //               spreadRadius: 0.0,
-          //             ),
-          //           ],
-          //           borderRadius: BorderRadius.circular(10),
-          //         ),
-          //         child: TextField(
-          //           controller: _todoController,
-          //           decoration: InputDecoration(
-          //               hintText: 'Add a new todo item',
-          //               border: InputBorder.none),
-          //         ),
-          //       ),
-          //     ),
-          // Container(
-          //   margin: EdgeInsets.only(
-          //     bottom: 20,
-          //     right: 20,
-          //   ),
-          //   child: ElevatedButton(
-          //     child: Text(
-          //       '+',
-          //       style: TextStyle(
-          //         fontSize: 40,
-          //       ),
-          //     ),
-          //     onPressed: () {
-          //       _addToDoItem(_todoController.text);
-          //     },
-          //     style: ElevatedButton.styleFrom(
-          //       primary: tdBlue,
-          //       minimumSize: Size(60, 60),
-          //       elevation: 10,
-          //     ),
-          //   ),
-          // ),
-          //   ]),
-          // ),
         ],
       ),
     );
   }
-
-  // void _addToDoItem(String toDo) {
-  //   setState(() {
-  //     todosList.add(Pharmacy(
-  //       id: DateTime.now().millisecondsSinceEpoch.toString(),
-  //       todoText: toDo,
-  //     ));
-  //   });
-  //   _todoController.clear();
-  // }
 
   void _runFilter(String enteredKeyword) {
     List<Pharmacy> results = [];
@@ -217,6 +156,27 @@ class _HomeState extends State<Home> {
       _foundPharmacy = results;
     });
   }
+
+  Widget buildCard({required Card card}) => Container(
+        width: 100,
+        //height: 200,
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 4 / 3,
+              child: Container(
+                // width: 50,
+                // height: 50,
+                child: card.img,
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            Text(card.title),
+          ],
+        ),
+      );
 
   Widget searchBox() {
     return Container(
@@ -251,13 +211,13 @@ class _HomeState extends State<Home> {
       backgroundColor: AppColors.mainColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Icon(
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const Icon(
             Icons.location_on_rounded,
             color: Colors.black,
             size: 30,
           ),
-          Text("Location"),
+          const Text("Location"),
           Transform.rotate(
             angle: 270 * math.pi / 180,
             child: Container(
@@ -267,9 +227,7 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.circular(100),
                   color: Colors.grey.withOpacity(0.1),
                 ),
-                child: Icon(Icons
-                    .arrow_back_ios_new_rounded)
-            ),
+                child: const Icon(Icons.arrow_back_ios_new_rounded)),
           ),
         ]),
         Container(
@@ -287,4 +245,14 @@ class _HomeState extends State<Home> {
       ]),
     );
   }
+}
+
+class Card {
+  final Image img;
+  final String title;
+
+  const Card({
+    required this.img,
+    required this.title,
+  });
 }

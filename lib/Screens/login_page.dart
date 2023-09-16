@@ -1,3 +1,4 @@
+import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akrem/widgets/input.dart';
@@ -27,12 +28,12 @@ class _LoginPage extends State<LoginPage> {
       body:
 
       Container(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Form(
           key: _formKey,
           child: ScrollableColumn(
             children: [
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               CustomInputField(
                 keyboardType: TextInputType.emailAddress,
                 hintText: "Email",
@@ -43,7 +44,7 @@ class _LoginPage extends State<LoginPage> {
                   LengthLimitingTextInputFormatter(320),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               CustomInputField(
                 keyboardType: TextInputType.visiblePassword,
                 hintText: "Password",
@@ -56,39 +57,49 @@ class _LoginPage extends State<LoginPage> {
                 ],
 
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               CustomCheckbox(
                 labelText: "Remember me",
                 value: _rememberMeChecked,
                 onChanged: (checked) =>
                     setState(() => _rememberMeChecked = checked ?? false),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               ElevatedButton(
-                  onPressed: () =>
-                  {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/main', (Route<dynamic> route) => false);
-                  })
-                                   },
-//                      Navigator.of(context).pushNamed("/login")
-                  // onPressed: () {
-                  //   if (_formKey.currentState?.validate() == false) return;
-                  //   showDialog(
-                  //       context: context,
-                  //       builder: (context) => AlertDialog(
-                  //             actions: [
-                  //               TextButton(
-                  //                   onPressed: () {
-                  //                     Navigator.of(context).pop();
-                  //                   },
-                  //                   child: const Text("Close"))
-                  //             ],
-                  //             title: const Text("form content"),
-                  //             content: Text("we are good"),
-                  //           ));
-                  // },
+                  // onPressed:
+                  // {
+                  // SchedulerBinding.instance.addPostFrameCallback((_) {
+                  // Navigator.of(context).pushNamedAndRemoveUntil(
+                  // '/main', (Route<dynamic> route) => false);
+                  // })
+                  //                  },
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() == false) return;
+
+                    if(_emailController.value.toString() == "admin@gmail.com" && _passwordController.value.toString() == "admin") {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Close"))
+                            ],
+                            title: const Text("Data not valued"),
+                            content: const Text("Pls try again using different email or password"),
+                          ));
+                      return;
+                    }
+
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/main', (Route<dynamic> route) => false);
+                    });
+
+
+                  },
                   child: const Text("Login")),
               Expanded(
                 child: Container(),
@@ -100,17 +111,17 @@ class _LoginPage extends State<LoginPage> {
                   Text(
                     "Don't have an account",
                     style: TextStyle(
-                      color: Color(0xFFb8b8b8),
+                      color: AppColors.mainColor,
                     ),
                   ),
                   TextButton(
-                    child: Text("Register"),
+                    child: const Text("Register"),
                     onPressed: () =>
                         {Navigator.of(context).pushNamed("/register")},
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
             ],
           ),
         ),

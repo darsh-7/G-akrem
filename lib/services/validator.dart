@@ -2,7 +2,7 @@ class Validator {
   // Validator._();
 
   static String? validateName(String? name) {
-    if ((name?.length ?? 0) < 5 ) {
+    if ((name?.length ?? 0) < 3 ) {
       return "Provided name is very short" ;
     }
     if (name == null) {
@@ -19,7 +19,7 @@ class Validator {
   }
 
   static String? validatePassword(String? password) {
-    return (password?.length ?? 0) < 6 ? "Password is too short" : null;
+    return (password?.length ?? 0) < 5 ? "Password is too short" : null;
   }
   static String? validateConfirmationPassword(String? password,String? confirmationPassword) {
     return password== confirmationPassword ? "Password is too short" : null;
