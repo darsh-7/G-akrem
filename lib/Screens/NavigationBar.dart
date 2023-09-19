@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:akrem/Screens/add_items.dart';
 import 'package:akrem/Screens/home_screen.dart';
 import 'package:akrem/Screens/profle_Screen.dart';
+import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +34,7 @@ class _NavigationExampleState extends State<NavigationExample> {
     AppImages.profileIcon,
   );
   var radius = const Radius.circular(10);
+
 // @override
   // void initState() {
   // showDialog(
@@ -50,74 +54,84 @@ class _NavigationExampleState extends State<NavigationExample> {
   // }
   @override
   Widget build(BuildContext context) {
-    return    Scaffold(
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          shadowColor: Colors.red,
-          backgroundColor: AppColors.bar,
-          indicatorColor: Colors.transparent,
-          selectedIndex: currentPageIndex,
-          destinations: <Widget>[
-            NavigationDestination(
-              selectedIcon: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    color: AppColors.mainColor,
-                  ),
-                  child: const Icon(Icons
-                      .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+    return Scaffold(
+      extendBody: true,
+      //extendBodyBehindAppBar: true,
+      bottomNavigationBar: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: NavigationBar(
+            onDestinationSelected: (int index) {
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+            //surfaceTintColor: Colors.red,
+            //shadowColor: Colors.red,
+            backgroundColor: Colors.white.withAlpha(150),
+            indicatorColor: Colors.transparent,
+            selectedIndex: currentPageIndex,
+            destinations: <Widget>[
+              NavigationDestination(
+                selectedIcon: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                      color: AppColors.mainColor,
+                    ),
+                    child: const Icon(Icons
+                        .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+                    ),
+                icon: const Icon(Icons.home_outlined),
+                label: 'Home',
               ),
-              icon: const Icon(Icons.home_outlined),
-              label: 'Home',
-            ),
-            NavigationDestination(
-              icon: const Icon(Icons.add_box_rounded),
-              selectedIcon: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
-                    color: AppColors.mainColor,
-                  ),
-                  child: const Icon(Icons
-                      .add_box_rounded) //Image.asset(AppImages.boxIcon,scale: 6),
+              NavigationDestination(
+                icon: const Icon(Icons.explore),
+                selectedIcon: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                      color: AppColors.mainColor,
+                    ),
+                    child: const Icon(Icons
+                        .explore) //Image.asset(AppImages.boxIcon,scale: 6),
+                    ),
+                label: 'explore',
               ),
-              label: 'Order',
-            ),
-            NavigationDestination(
-              //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
-              selectedIcon: CircleAvatar(
-                radius: 22,
-                backgroundColor: AppColors.mainColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(4), // Border radius
-                  child: ClipOval(child: image),
+              NavigationDestination(
+                //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
+                selectedIcon: CircleAvatar(
+                  radius: 22,
+                  backgroundColor: AppColors.mainColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(4), // Border radius
+                    child: ClipOval(child: image),
+                  ),
                 ),
-              ),
 
-              icon: Container(
-                height: 40,
-                width: 40,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                  child: image,
+                icon: Container(
+                  height: 40,
+                  width: 40,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    child: image,
+                  ),
                 ),
+                label: 'Profile',
               ),
-              label: 'Profile',
-            ),
-          ],
+            ],
+          ),
         ),
-        body: <Widget>[
-          Home(),
-          const ItemsScreen(),
-          const ProfileScreen(),
-        ][currentPageIndex],
+      ),
+      body: <Widget>[
+        Home(),
+        ShowBranch(),
+        const ProfileScreen(),
+      ][currentPageIndex],
     );
   }
 }

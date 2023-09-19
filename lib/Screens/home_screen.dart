@@ -1,5 +1,7 @@
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/widgets/appbarr.dart';
 import 'package:flutter/material.dart';
 import '../widgets/pharmacy_card.dart';
 import '../constants/app_colors.dart';
@@ -18,9 +20,10 @@ class _HomeState extends State<Home> {
   final _todoController = TextEditingController();
   Image image = Image.asset(AppImages.profileIcon);
   List<Card> cards = [
-    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
-    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
-    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
+    Card(
+        img: Image.asset(AppImages.mvrk), title: "Donate from home", action: 1),
+    Card(img: Image.asset(AppImages.mvrk), title: "Nearest branch", action: 2),
+    Card(img: Image.asset(AppImages.mvrk), title: "Donate to box", action: 3),
   ];
 
   @override
@@ -33,27 +36,23 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGround,
-      appBar: _buildAppBar(),
+      appBar: buildAppBar("Location"),
       body: Stack(
         children: [
           Container(
-            // padding: const EdgeInsets.symmetric(
-            //   horizontal: 20,
-            //   vertical: 15,
-            // ),
+            //padding: const EdgeInsets.only(bottom: 100),
+
             child: Column(
               children: [
                 searchBox(),
                 Expanded(
                   child: ListView(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 15,
-                    ),
+                    padding: const EdgeInsets.only(
+                        bottom: 80, right: 20, left: 20, top: 10),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
-                          top: 50,
+                          top: 0,
                           bottom: 20,
                         ),
                         child: RichText(
@@ -79,7 +78,7 @@ class _HomeState extends State<Home> {
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: (context, index) {
                             return const SizedBox(
-                              width: 0,
+                              width: 20,
                             );
                           },
                           itemCount: 3,
@@ -90,7 +89,7 @@ class _HomeState extends State<Home> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(
-                          top: 50,
+                          top: 20,
                           bottom: 20,
                         ),
                         child: Row(
@@ -164,47 +163,122 @@ class _HomeState extends State<Home> {
   Widget buildCard({required Card card}) => Container(
         width: 100,
         //height: 200,
-        child: Column(
-          children: [
-            AspectRatio(
-              aspectRatio: 4 / 3,
-              child: Container(
-                // width: 50,
-                // height: 50,
-                child: card.img,
+
+        child: ListTile(
+          onTap: () {
+            switch (card.action) {
+              // case 1:
+              //   {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(builder: (context) => ShowBranch()),
+              //     );
+              //   }
+              //   break;
+
+              case 2: {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ShowBranch()),
+                );
+              }
+              break;
+
+              // case 3: {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => ShowBranch()),
+              //   );
+              // }
+              // break;
+
+              default:
+                {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text("Close"))
+                            ],
+                            title: const Text("Error"),
+                            content: const Text(
+                                "Sorry this button not working \n try again later"),
+                          ));
+                }
+                break;
+            }
+          },
+          title: Column(
+            children: [
+              AspectRatio(
+                aspectRatio: 4 / 3,
+                child: Container(
+                  // width: 50,
+                  // height: 50,
+                  child: card.img,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 4,
-            ),
-            Text(card.title),
-          ],
+              SizedBox(
+                height: 10,
+                child: Text(
+                  card.title,
+                  //softWrap: true,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  //textWidthBasis: TextWidthBasis.values.last,
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
   Widget searchBox() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        color: AppColors.mainColor,
       ),
-      child: TextField(
-        onChanged: (value) => _runFilter(value),
-        decoration: const InputDecoration(
-          contentPadding: EdgeInsets.all(10),
-          prefixIcon: Icon(
-            Icons.search,
-            color: tdBlack,
-            size: 20,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        // padding: const EdgeInsets.symmetric(horizontal: 15 ,vertical: 10),
+        decoration: BoxDecoration(
+          color: AppColors.backGround,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              blurRadius: 4,
+              offset: Offset(-6, -5), // Shadow position
+            ),
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              blurRadius: 4,
+              offset: Offset(6, 5), // Shadow position
+            ),
+          ],
+        ),
+        child: TextField(
+          onChanged: (value) => _runFilter(value),
+          decoration: const InputDecoration(
+            contentPadding: EdgeInsets.all(10),
+            prefixIcon: Icon(
+              Icons.search,
+              color: tdBlack,
+              size: 20,
+            ),
+            prefixIconConstraints: BoxConstraints(
+              maxHeight: 20,
+              minWidth: 25,
+            ),
+            border: InputBorder.none,
+            hintText: 'Search',
+            hintStyle: TextStyle(color: Colors.black),
           ),
-          prefixIconConstraints: BoxConstraints(
-            maxHeight: 20,
-            minWidth: 25,
-          ),
-          border: InputBorder.none,
-          hintText: 'Search',
-          hintStyle: TextStyle(color: tdGrey),
         ),
       ),
     );
@@ -218,7 +292,7 @@ class _HomeState extends State<Home> {
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           const Icon(
             Icons.location_on_rounded,
-            color: Colors.black,
+            color: Colors.redAccent,
             size: 30,
           ),
           const Text("Location"),
@@ -254,9 +328,11 @@ class _HomeState extends State<Home> {
 class Card {
   final Image img;
   final String title;
+  final int? action;
 
   const Card({
     required this.img,
     required this.title,
+    this.action,
   });
 }

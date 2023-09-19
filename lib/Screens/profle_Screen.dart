@@ -24,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 80 ,right: 5,left: 5,top: 0),
         child: Container(
           padding: const EdgeInsets.all(20),
           child: Column(children: [
@@ -57,8 +58,8 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text("Zenda", style: Theme.of(context).textTheme.headline4),
-            Text("Zenda@gmail.com",
+            Text("Zendaya", style: Theme.of(context).textTheme.headline4),
+            Text("Zendaya@gmail.com",
                 style: Theme.of(context).textTheme.bodyText2),
             const SizedBox(height: 20),
 
