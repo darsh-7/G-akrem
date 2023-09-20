@@ -16,13 +16,7 @@ class ShowBranch extends StatefulWidget {
 class _ShowBranchState extends State<ShowBranch> {
   final pharmacyList = Pharmacy.pharmacyList();
   List<Pharmacy> _foundPharmacy = [];
-  final _todoController = TextEditingController();
   Image image = Image.asset(AppImages.profileIcon);
-  List<Card> cards = [
-    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
-    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
-    Card(img: Image.asset(AppImages.mvrk), title: "donate"),
-  ];
 
   @override
   void initState() {
@@ -34,36 +28,67 @@ class _ShowBranchState extends State<ShowBranch> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGround,
-      appBar: buildAppBar("Location"),
-      body: Stack(
+      extendBodyBehindAppBar: false,
+      //appBar:  //_buildAppBar(),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
 
-        children: [
-          Container(
-            //padding: const EdgeInsets.only(bottom: 100),
+          return [
+            SliverAppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              title: Container(
+                  color: Colors.transparent,
+                  child:searchBox(),
 
-            child: Column(
-              children: [
-                searchBox(),
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 80 ,right: 20,left: 20,top: 10),
-                    children: [
-                      for (Pharmacy Pharm in _foundPharmacy.reversed)
-                        PharmacyItem(
-                          name: Pharm.name,
-                          location: Pharm.location,
-                          time: Pharm.time,
-                          distance: Pharm.distance,
-                          // onToDoChanged: _handleToDoChange,
-                          // onDeleteItem: _deleteToDoItem,
-                        ),
-                    ],
-                  ),
-                )
-              ],
+
+                  // const Text("Donation branch's")
+              ),
+              centerTitle: true,
+              elevation: 10.0,
+              automaticallyImplyLeading: false,
+              expandedHeight: 50,
+              floating: true,
+              snap: true,
+              backgroundColor: AppColors.mainColor,
+
             ),
-          ),
-        ],
+          ];
+        },
+        // list of images for scrolling
+        body: Stack(
+          children: [
+            Container(
+              //padding: const EdgeInsets.only(top: 72),
+              //color: Colors.transparent,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      padding: const EdgeInsets.only(
+                          bottom: 20, right: 20, left: 20, top: 10),
+                      children: [
+                        for (Pharmacy Pharm in _foundPharmacy.reversed)
+                          PharmacyItem(
+                            name: Pharm.name,
+                            location: Pharm.location,
+                            time: Pharm.time,
+                            distance: Pharm.distance,
+                            // onToDoChanged: _handleToDoChange,
+                            // onDeleteItem: _deleteToDoItem,
+                          ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -75,7 +100,7 @@ class _ShowBranchState extends State<ShowBranch> {
     } else {
       results = pharmacyList
           .where((item) =>
-          item.name!.toLowerCase().contains(enteredKeyword.toLowerCase()))
+              item.name!.toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
     }
 
@@ -84,35 +109,14 @@ class _ShowBranchState extends State<ShowBranch> {
     });
   }
 
-  Widget buildCard({required Card card}) => Container(
-    width: 100,
-    //height: 200,
-    child: Column(
-      children: [
-        AspectRatio(
-          aspectRatio: 4 / 3,
-          child: Container(
-            // width: 50,
-            // height: 50,
-            child: card.img,
-          ),
-        ),
-        SizedBox(
-          height: 4,
-        ),
-        Text(card.title),
-      ],
-    ),
-  );
-
   Widget searchBox() {
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.mainColor,
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
       ),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15 ,vertical: 10),
-        // padding: const EdgeInsets.symmetric(horizontal: 15 ,vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+         padding: const EdgeInsets.symmetric(horizontal: 20 ,vertical: 0),
         decoration: BoxDecoration(
           color: AppColors.backGround,
           borderRadius: BorderRadius.circular(30),
@@ -120,12 +124,12 @@ class _ShowBranchState extends State<ShowBranch> {
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: Offset(-6, -5), // Shadow position
+              offset: const Offset(-6, -5), // Shadow position
             ),
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: Offset(6, 5), // Shadow position
+              offset: const Offset(6, 5), // Shadow position
             ),
           ],
         ),
@@ -135,7 +139,7 @@ class _ShowBranchState extends State<ShowBranch> {
             contentPadding: EdgeInsets.all(10),
             prefixIcon: Icon(
               Icons.search,
-              color: tdBlack,
+              color: Colors.black,
               size: 20,
             ),
             prefixIconConstraints: BoxConstraints(
@@ -156,36 +160,37 @@ class _ShowBranchState extends State<ShowBranch> {
       backgroundColor: AppColors.mainColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const Icon(
-            Icons.location_on_rounded,
-            color: Colors.redAccent,
-            size: 30,
-          ),
-          const Text("Location"),
-          Transform.rotate(
-            angle: 270 * math.pi / 180,
-            child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey.withOpacity(0.1),
-                ),
-                child: const Icon(Icons.arrow_back_ios_new_rounded)),
-          ),
+        const Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          // const Icon(
+          //   Icons.location_on_rounded,
+          //   color: Colors.redAccent,
+          //   size: 30,
+          // ),
+          Text("Donation branch's"),
+          // Transform.rotate(
+          //   angle: 270 * math.pi / 180,
+          //   child: Container(
+          //       width: 30,
+          //       height: 30,
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(100),
+          //         color: Colors.grey.withOpacity(0.1),
+          //       ),
+          //       child: const Icon(Icons.arrow_back_ios_new_rounded)),
+          // ),
         ]),
         Container(
           height: 40,
           width: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: const Icon(
-              Icons.notifications_outlined,
-              color: Colors.black,
-              size: 30,
-            ),
-          ),
+          // child: ClipRRect(
+          //   borderRadius: BorderRadius.circular(20),
+          //   child:
+          //   const Icon(
+          //     Icons.notifications_outlined,
+          //     color: Colors.black,
+          //     size: 30,
+          //   ),
+          // ),
         ),
       ]),
     );

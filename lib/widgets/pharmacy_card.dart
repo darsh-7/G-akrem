@@ -135,8 +135,6 @@ class PharmacyItem extends StatelessWidget {
               );
             },
           );
-
-          // print('Clicked on Todo Item.');
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),

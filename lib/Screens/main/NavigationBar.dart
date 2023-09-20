@@ -1,8 +1,7 @@
 import 'dart:ui';
 
-import 'package:akrem/Screens/add_items.dart';
-import 'package:akrem/Screens/home_screen.dart';
-import 'package:akrem/Screens/profle_Screen.dart';
+import 'package:akrem/Screens/main/home_screen.dart';
+import 'package:akrem/Screens/main/profle_Screen.dart';
 import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';

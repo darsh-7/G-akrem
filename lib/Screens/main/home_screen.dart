@@ -3,9 +3,11 @@ import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/widgets/appbarr.dart';
 import 'package:flutter/material.dart';
-import '../widgets/pharmacy_card.dart';
-import '../constants/app_colors.dart';
+import '../../widgets/pharmacy_card.dart';
+import '../../constants/app_colors.dart';
 import 'dart:math' as math;
+
+import '../basket/medic_basket.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -17,13 +19,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final pharmacyList = Pharmacy.pharmacyList();
   List<Pharmacy> _foundPharmacy = [];
-  final _todoController = TextEditingController();
   Image image = Image.asset(AppImages.profileIcon);
-  List<Card> cards = [
+  final List<Card> cards = [
     Card(
         img: Image.asset(AppImages.mvrk), title: "Donate from home", action: 1),
     Card(img: Image.asset(AppImages.mvrk), title: "Nearest branch", action: 2),
     Card(img: Image.asset(AppImages.mvrk), title: "Donate to box", action: 3),
+    Card(
+        img: Image.asset(AppImages.mvrk),
+        title: "Fast Donation order",
+        action: 4),
   ];
 
   @override
@@ -36,7 +41,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGround,
-      appBar: buildAppBar("Location"),
+      appBar: _buildAppBar(),
       body: Stack(
         children: [
           Container(
@@ -47,14 +52,15 @@ class _HomeState extends State<Home> {
                 searchBox(),
                 Expanded(
                   child: ListView(
-                    padding: const EdgeInsets.only(
-                        bottom: 80, right: 20, left: 20, top: 10),
+                    padding: const EdgeInsets.only(bottom: 80, top: 10),
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
                           top: 0,
-                          bottom: 20,
+                          bottom: 10,
                         ),
+                        padding:
+                            const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                         child: RichText(
                           text: const TextSpan(
                             text: 'Donation ',
@@ -65,23 +71,23 @@ class _HomeState extends State<Home> {
                             /*defining default style is optional */
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "(3)", //"(${_foundPharmacy.length})",
+                                  text: "(4)", //"(${_foundPharmacy.length})",
                                   style: TextStyle(color: Colors.red)),
                             ],
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 96,
+                        height: 100,
                         child: ListView.separated(
                           // This next line does the trick.
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: (context, index) {
                             return const SizedBox(
-                              width: 20,
+                              width: 0,
                             );
                           },
-                          itemCount: 3,
+                          itemCount: cards.length,
                           itemBuilder: (context, index) {
                             return buildCard(card: cards[index]);
                           },
@@ -89,9 +95,11 @@ class _HomeState extends State<Home> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(
-                          top: 20,
+                          top: 10,
                           bottom: 20,
                         ),
+                        padding:
+                            const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -119,20 +127,33 @@ class _HomeState extends State<Home> {
                               Container(
                                 // height: 40,
                                 // width: 40,
-                                child: const Text("See all",
-                                    style: TextStyle(color: Colors.blue)),
+                                child: TextButton(
+                                    child: const Text(
+                                      "See all",
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
+                                    onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ShowBranch()),
+                                        )),
                               ),
                             ]),
                       ),
                       for (Pharmacy Pharm in _foundPharmacy.reversed)
-                        PharmacyItem(
-                          name: Pharm.name,
-                          location: Pharm.location,
-                          time: Pharm.time,
-                          distance: Pharm.distance,
-                          // onToDoChanged: _handleToDoChange,
-                          // onDeleteItem: _deleteToDoItem,
-                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                          child: PharmacyItem(
+                            name: Pharm.name,
+                            location: Pharm.location,
+                            time: Pharm.time,
+                            distance: Pharm.distance,
+                            // onToDoChanged: _handleToDoChange,
+                            // onDeleteItem: _deleteToDoItem,
+                          ),
+                        )
                     ],
                   ),
                 )
@@ -167,27 +188,38 @@ class _HomeState extends State<Home> {
         child: ListTile(
           onTap: () {
             switch (card.action) {
-              // case 1:
-              //   {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(builder: (context) => ShowBranch()),
-              //     );
-              //   }
-              //   break;
+              case 1:
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MedicBasket()),
+                  );
+                }
+                break;
 
-              case 2: {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ShowBranch()),
-                );
-              }
-              break;
+              case 2:
+                {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ShowBranch()),
+                  );
+                }
+                break;
 
               // case 3: {
               //   Navigator.push(
               //     context,
               //     MaterialPageRoute(builder: (context) => ShowBranch()),
+              //TODO:donat to the box
+              //   );
+              // }
+              // break;
+
+              // case 4: {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => ShowBranch()),
+              //TODO:Fast donation
               //   );
               // }
               // break;
@@ -215,7 +247,7 @@ class _HomeState extends State<Home> {
           title: Column(
             children: [
               AspectRatio(
-                aspectRatio: 4 / 3,
+                aspectRatio: 1 / 1,
                 child: Container(
                   // width: 50,
                   // height: 50,
@@ -223,7 +255,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 14,
+                width: 70,
                 child: Text(
                   card.title,
                   //softWrap: true,
@@ -231,6 +264,7 @@ class _HomeState extends State<Home> {
                   maxLines: 2,
                   //textWidthBasis: TextWidthBasis.values.last,
                   overflow: TextOverflow.visible,
+                  style: const TextStyle(fontSize: 13),
                 ),
               ),
             ],
@@ -253,12 +287,12 @@ class _HomeState extends State<Home> {
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: Offset(-6, -5), // Shadow position
+              offset: const Offset(-6, -5), // Shadow position
             ),
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: Offset(6, 5), // Shadow position
+              offset: const Offset(6, 5), // Shadow position
             ),
           ],
         ),
@@ -292,7 +326,7 @@ class _HomeState extends State<Home> {
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           const Icon(
             Icons.location_on_rounded,
-            color: Colors.redAccent,
+            color: Colors.deepOrangeAccent,
             size: 30,
           ),
           const Text("Location"),

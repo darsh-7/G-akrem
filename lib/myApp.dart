@@ -1,9 +1,7 @@
-import 'package:akrem/Screens/NavigationBar.dart';
-import 'package:akrem/Screens/add_items.dart';
-import 'package:akrem/Screens/home_screen.dart';
-import 'package:akrem/Screens/login_page.dart';
+import 'package:akrem/Screens/login/login_page.dart';
+import 'package:akrem/Screens/login/register_page.dart';
+import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/map_screen.dart';
-import 'package:akrem/Screens/register_page.dart';
 import 'package:flutter/material.dart';
 
 
@@ -44,7 +42,6 @@ class MyApp extends StatelessWidget {
         '/main': (context) => NavigationBarApp(),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
-        '/items': (context) => ItemsScreen(),
       },
     );
   }
