@@ -25,18 +25,19 @@ class MedicBasket extends StatelessWidget {
           );
         },
       ),
-      body: const EmptyItemsScreen(),
+      body: EmptyItemsScreen(),
     );
   }
 
   Widget buildItemsScreen() {
     return Column(
       children: [
-        if (MedicManager.medics.isEmpty ) ...[
+        if (MedicManager.medics.isEmpty ) ...{
           const EmptyItemsScreen(),
-        ] else ...[
-          ShowList(),
-        ],
+        } else ...{
+          const EmptyItemsScreen(),
+          //ShowList(),
+        },
       ],
     );
   }

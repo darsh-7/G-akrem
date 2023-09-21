@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class EmptyItemsScreen extends StatelessWidget {
   const EmptyItemsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,18 +24,23 @@ class EmptyItemsScreen extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             'add items to donate by taping the + button\n\n'
-                'If there is any trouble you can click "How it works"',
+            'If there is any trouble you can click "How it works"',
             textAlign: TextAlign.center,
           ),
-          FilledButton(
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll<Color>(Colors.lightBlue),
+          Padding(
+            padding: const EdgeInsets.only(top: 18),
+            child: FilledButton(
+              style: const ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll<Color>(Colors.lightBlue),
+                //TODO: add video
+              ),
+              onPressed: () {
+                //Provider.of<TabManager>(context, listen: false).goToRecipes();
+              },
+              child: const Text('How it works'),
             ),
-            onPressed: () {
-              //Provider.of<TabManager>(context, listen: false).goToRecipes();
-            },
-            child: const Text('How it works'),
-          ),
+          )
         ],
       ),
     );

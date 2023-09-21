@@ -99,8 +99,24 @@ class _NavigationExampleState extends State<NavigationExample> {
                     child: const Icon(Icons
                         .explore) //Image.asset(AppImages.boxIcon,scale: 6),
                     ),
-                label: 'explore',
+                label: "fast order",
               ),
+              NavigationDestination(
+                icon: const Icon(Icons.attach_money),
+                selectedIcon: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                      const BorderRadius.all(Radius.circular(8.0)),
+                      color: AppColors.mainColor,
+                    ),
+                    child: const Icon(Icons
+                        .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
+                ),
+                label: "fund score",
+              ),
+
               NavigationDestination(
                 //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
                 selectedIcon: CircleAvatar(
@@ -129,6 +145,9 @@ class _NavigationExampleState extends State<NavigationExample> {
       body: <Widget>[
         Home(),
         ShowBranch(),
+        Center(
+          child: Text("fund page"),
+        ),
         const ProfileScreen(),
       ][currentPageIndex],
     );

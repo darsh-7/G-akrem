@@ -326,7 +326,7 @@ class _HomeState extends State<Home> {
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           const Icon(
             Icons.location_on_rounded,
-            color: Colors.deepOrangeAccent,
+            color: Colors.deepOrange,
             size: 30,
           ),
           const Text("Location"),
