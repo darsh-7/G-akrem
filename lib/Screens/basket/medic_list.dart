@@ -4,6 +4,7 @@ import '../../constants/medic.dart';
 import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
 import 'add_medic.dart';
+import 'empty_items.dart';
 
 class MedicList extends StatefulWidget {
   MedicList({Key? key}) : super(key: key);
@@ -17,7 +18,6 @@ class MMedicList extends State<MedicList> {
   late List<Medic> _foundMedic;
 
   Image image = Image.asset(AppImages.profileIcon);
-  Key refreshKey = UniqueKey();
 
   @override
   void initState() {
@@ -43,11 +43,6 @@ class MMedicList extends State<MedicList> {
             context,
             MaterialPageRoute(builder: (context) => AddMedic()),
           );
-
-          // List<Medic> results = MedicManager.medics;
-          // setState(() {
-          //   _foundMedic = results;
-          // });
           refreshList();
         },
       ),
@@ -58,36 +53,14 @@ class MMedicList extends State<MedicList> {
           Container(
               child: Column(
             children: [
-              TextButton(onPressed: () => {refreshList()}, child: Text("tap")),
-              LinearProgressIndicator(),
+              //TextButton(onPressed: () => {refreshList()}, child: Text("tap")),
+              const LinearProgressIndicator(),
               Expanded(
                 child: ListView(
-                  key: refreshKey,
                   padding: const EdgeInsets.only(bottom: 80, top: 10),
                   children: [
-                    // Container(
-                    //   margin: const EdgeInsets.only(
-                    //     top: 0,
-                    //     bottom: 10,
-                    //   ),
-                    //   padding: const EdgeInsets.symmetric(
-                    //       vertical: 0, horizontal: 20),
-                    //   child: RichText(
-                    //     text: const TextSpan(
-                    //       text: 'Donation ',
-                    //       style: TextStyle(
-                    //           fontSize: 20,
-                    //           fontWeight: FontWeight.w500,
-                    //           color: Colors.black),
-                    //       /*defining default style is optional */
-                    //       children: <TextSpan>[
-                    //         TextSpan(
-                    //             text: "(4)", //"(${_foundPharmacy.length})",
-                    //             style: TextStyle(color: Colors.red)),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    // if(_foundMedic.isEmpty)
+                    //   const EmptyItemsScreen(),
 
                     for (var i = 0; i < _foundMedic.length; i++)
                       Padding(
@@ -100,23 +73,12 @@ class MMedicList extends State<MedicList> {
                           bar: _foundMedic[i].bar,
                           date: _foundMedic[i].date,
                           index : i,
-
+                          refresh: (i) {
+                            MedicManager.removeMedic(index: i);
+                            refreshList();
+                          },
                         ),
                       ),
-
-
-                    // for (Medic medic in _foundMedic.reversed)
-                    //   Padding(
-                    //     padding: const EdgeInsets.symmetric(
-                    //         vertical: 0, horizontal: 20),
-                    //     child: MedicCard(
-                    //         img: medic.img,
-                    //         name: medic.name,
-                    //         pill: medic.pill,
-                    //         bar: medic.bar,
-                    //         date: medic.date,
-                    //     ),
-                    //   )
                   ],
                 ),
               ),

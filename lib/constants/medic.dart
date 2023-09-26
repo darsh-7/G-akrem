@@ -24,24 +24,24 @@ class Medic {
 
 class MedicManager {
   static List<Medic> medics = [
-    Medic(
-        img: Image.asset(AppImages.pharmacy),
-        name: 'item1',
-        bar: 1,
-        pill: 2,
-        date: DateTime.now()),
-    Medic(
-        img: Image.asset(AppImages.pharmacy),
-        name: 'item1',
-        bar: 1,
-        pill: 2,
-        date: DateTime.now()),
-    Medic(
-        img: Image.asset(AppImages.pharmacy),
-        name: 'item1',
-        bar: 1,
-        pill: 2,
-        date: DateTime.now()),
+    // Medic(
+    //     img: Image.asset(AppImages.pharmacy),
+    //     name: 'item1',
+    //     bar: 1,
+    //     pill: 2,
+    //     date: DateTime.now()),
+    // Medic(
+    //     img: Image.asset(AppImages.pharmacy),
+    //     name: 'item1',
+    //     bar: 1,
+    //     pill: 2,
+    //     date: DateTime.now()),
+    // Medic(
+    //     img: Image.asset(AppImages.pharmacy),
+    //     name: 'item1',
+    //     bar: 1,
+    //     pill: 2,
+    //     date: DateTime.now()),
   ];
 
   static void removeMedic({

@@ -12,7 +12,7 @@ class MedicCard extends StatelessWidget {
   final int? pill;
   final DateTime? date;
   final int index;
-  final void Function()? refresh;
+  final void Function(int) refresh;
 
 
   const MedicCard({
@@ -23,7 +23,7 @@ class MedicCard extends StatelessWidget {
     this.pill,
     this.date,
     required this.index,
-    this.refresh,
+    required this.refresh,
   }) : super(key: key);
 
   @override
@@ -41,12 +41,12 @@ class MedicCard extends StatelessWidget {
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: Offset(-6, -5), // Shadow position
+              offset: const Offset(-6, -5), // Shadow position
             ),
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: Offset(6, 5), // Shadow position
+              offset: const Offset(6, 5), // Shadow position
             ),
           ],
         ),
@@ -178,9 +178,9 @@ class MedicCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: IconButton(
-                        icon: Icon(Icons.close,size: 30,),
+                        icon: const Icon(Icons.close,size: 30,),
                         onPressed: () {
-                          MedicManager.removeMedic(index: index);
+                          refresh(index);
                         },
                       ),
                     )
@@ -191,7 +191,7 @@ class MedicCard extends StatelessWidget {
                   width: double.infinity,
                   margin: const EdgeInsets.only(top: 180),
                   padding: const EdgeInsets.all(0),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(30),
@@ -226,9 +226,9 @@ class MedicCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               RichText(
-                                text: TextSpan(
+                                text: const TextSpan(
                                   text: 'type : ',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w300,
                                       color: Colors.grey),
@@ -237,7 +237,7 @@ class MedicCard extends StatelessWidget {
                                     TextSpan(
                                         text: "( Why do you care :) )" ?? "_",
                                         style:
-                                            const TextStyle(color: Colors.red)),
+                                            TextStyle(color: Colors.red)),
                                   ],
                                 ),
                               ),
@@ -319,97 +319,8 @@ class MedicCard extends StatelessWidget {
               const SizedBox(
                 height: 4,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              //   child: Text(
-              //     (name ?? ""),
-              //     style: const TextStyle(
-              //       fontSize: 16,
-              //       color: tdBlack,
-              //     ),
-              //   ),
-              // ),
-              // const Divider(
-              //   indent: 15,
-              //   endIndent: 15,
-              //   thickness: 1.2,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              //   child:
-              //       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              //     Icon(
-              //       Icons.location_on_rounded,
-              //       color: AppColors.mainColor,
-              //       size: 20,
-              //     ),
-              //     RichText(
-              //       text: TextSpan(
-              //         text: '$pill ',
-              //         style: const TextStyle(
-              //             fontSize: 15,
-              //             fontWeight: FontWeight.w300,
-              //             color: Colors.black),
-              //         /*defining default style is optional */
-              //         children: <TextSpan>[
-              //           // TextSpan(
-              //           //     text:
-              //           //     "($distance km)",
-              //           //     style: const TextStyle(
-              //           //         color: Colors.red)),
-              //         ],
-              //       ),
-              //     ),
-              //   ]),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              //   child:
-              //       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              //     Icon(
-              //       Icons.timer,
-              //       color: AppColors.mainColor,
-              //       size: 20,
-              //     ),
-              //     RichText(
-              //       text: TextSpan(
-              //         text: '$bar min ',
-              //         style: const TextStyle(
-              //             fontSize: 15,
-              //             fontWeight: FontWeight.w300,
-              //             color: Colors.black),
-              //         /*defining default style is optional */
-              //         children: <TextSpan>[
-              //           TextSpan(
-              //               text: "• $pill km",
-              //               style: const TextStyle(color: Colors.black)),
-              //         ],
-              //       ),
-              //     ),
-              //   ]),
-              // ),
             ],
           ),
-
-          // trailing: Container(
-          //   padding: const EdgeInsets.all(0),
-          //   margin: const EdgeInsets.symmetric(vertical: 12),
-          //   height: 35,
-          //   width: 35,
-          //   decoration: BoxDecoration(
-          //     color: tdRed,
-          //     borderRadius: BorderRadius.circular(5),
-          //   ),
-          //   child: IconButton(
-          //     color: Colors.white,
-          //     iconSize: 18,
-          //     icon: const Icon(Icons.delete),
-          //     onPressed: () {
-          //       // print('Clicked on delete icon');
-          //       //onDeleteItem(todo.id);
-          //     },
-          //   ),
-          // ),
         ),
       ),
     ]);
