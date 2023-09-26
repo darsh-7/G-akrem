@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login',
       debugShowCheckedModeBanner: false,
+      title: 'Akrem',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/showPharm',
+      initialRoute: '/main',
       routes: {
       //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),

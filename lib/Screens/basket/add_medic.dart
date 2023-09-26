@@ -8,7 +8,6 @@ import '../../services/log_manager.dart';
 import '../../services/validator.dart';
 import 'medic_list.dart';
 
-
 class AddMedic extends StatefulWidget {
   AddMedic({Key? key}) : super(key: key);
 
@@ -17,8 +16,6 @@ class AddMedic extends StatefulWidget {
 }
 
 class _AddMedic extends State<AddMedic> {
-
-
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _barController = TextEditingController();
@@ -375,18 +372,24 @@ class _AddMedic extends State<AddMedic> {
                                       return;
                                     }
 
+                                    Medic medic = Medic(
+                                      img: Image.asset(AppImages.pharmacy),
+                                      name: _nameController.text,
+                                      bar: int.parse(_barController.text),
+                                      pill: int.parse(_pillController.text),
+                                      date: selectedDate,
+                                    );
                                     MedicManager.addMedic(
-                                        img: Image.asset(AppImages.pharmacy),
-                                        name: _nameController.text,
-                                        bar: int.parse(_barController.text),
-                                        pills: int.parse(_pillController.text));
+                                      img: Image.asset(AppImages.pharmacy),
+                                      name: _nameController.text,
+                                      bar: int.parse(_barController.text),
+                                      pills: int.parse(_pillController.text),
+                                      date: selectedDate,
+                                    );
                                     LogManager.logToConsole(
                                         "new Medic list now: ${MedicManager.medics.reversed}");
-                                    //
-                                    // setState(() {
-                                    //   MMedicList.foundMedic = MedicManager.medics;
-                                    // });
-                                    //Navigator.pop(context, data);
+
+                                    //Navigator.of(context).pop(medic);
                                     Navigator.pop(context);
                                   },
                                   child: const Text("Save")),
@@ -433,11 +436,10 @@ class _AddMedic extends State<AddMedic> {
 Widget buildCard({required Card card}) => Container(
       width: 100,
       //height: 200,
-        margin: const EdgeInsets.only(left: 4,right: 4),
+      margin: const EdgeInsets.only(left: 4, right: 4),
       decoration: const BoxDecoration(
         color: AppColors.mainColor,
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        
       ),
       child: ListTile(
         onTap: () {

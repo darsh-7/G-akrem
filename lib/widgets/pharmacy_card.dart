@@ -1,30 +1,17 @@
+import 'package:akrem/Screens/main/show_pharm.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../Api/fake_api.dart';
+
 class PharmacyItem extends StatelessWidget {
-  final String img;
-  final String? name;
-  final String? locName;
-
-  // final String? location;
-  final int? time;
-
-  // final int? boxStorage;
-  // final String? phone;
+  final Pharmacy pharm;
 
   const PharmacyItem({
     Key? key,
-    required this.img,
-    required this.name,
-    required this.locName,
-    //required this.location,
-    required this.time,
-    //required this.boxStorage,
-    //required this.phone,
-    // required this.onToDoChanged,
-    // required this.onDeleteItem,
+    required this.pharm,
   }) : super(key: key);
 
   @override
@@ -51,95 +38,103 @@ class PharmacyItem extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        onTap: () {
-          showCupertinoModalPopup(
-            context: context,
-            builder: (BuildContext builder) {
-              return CupertinoPopupSurface(
-                child: Container(
-                    color: Colors.white,
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    height: 400,
-                    child: Container(
-                        margin: const EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: 'Name ',
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey),
-                                /*defining default style is optional */
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ": ${name}",
-                                      style:
-                                          const TextStyle(color: Colors.black)),
-                                ],
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Location ',
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey),
-                                /*defining default style is optional */
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ": ${locName}",
-                                      style:
-                                          const TextStyle(color: Colors.black)),
-                                ],
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Time ',
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey),
-                                /*defining default style is optional */
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ": ${time}",
-                                      style:
-                                          const TextStyle(color: Colors.black)),
-                                ],
-                              ),
-                            ),
-                            RichText(
-                              text: const TextSpan(
-                                text: 'Distance ',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey),
-                                /*defining default style is optional */
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ": ${"NOT EX"} km",
-                                      style:
-                                          TextStyle(color: Colors.black)),
-                                ],
-                              ),
-                            ),
-                            Image.asset(
-                              "assets/Pharmacy.png",
-                              scale: 1,
-                            ),
-                          ],
-                        ))),
-              );
-            },
-          );
-        },
+        // onTap: () {
+        //   showCupertinoModalPopup(
+        //     context: context,
+        //     builder: (BuildContext builder) {
+        //       return CupertinoPopupSurface(
+        //         child: Container(
+        //             color: Colors.white,
+        //             alignment: Alignment.center,
+        //             width: double.infinity,
+        //             height: 400,
+        //             child: Container(
+        //                 margin: const EdgeInsets.all(10.0),
+        //                 child: Column(
+        //                   crossAxisAlignment: CrossAxisAlignment.stretch,
+        //                   children: [
+        //                     RichText(
+        //                       text: TextSpan(
+        //                         text: 'Name ',
+        //                         style: const TextStyle(
+        //                             fontSize: 20,
+        //                             fontWeight: FontWeight.w500,
+        //                             color: Colors.grey),
+        //                         /*defining default style is optional */
+        //                         children: <TextSpan>[
+        //                           TextSpan(
+        //                               text: ": ${name}",
+        //                               style:
+        //                                   const TextStyle(color: Colors.black)),
+        //                         ],
+        //                       ),
+        //                     ),
+        //                     RichText(
+        //                       text: TextSpan(
+        //                         text: 'Location ',
+        //                         style: const TextStyle(
+        //                             fontSize: 20,
+        //                             fontWeight: FontWeight.w500,
+        //                             color: Colors.grey),
+        //                         /*defining default style is optional */
+        //                         children: <TextSpan>[
+        //                           TextSpan(
+        //                               text: ": ${locName}",
+        //                               style:
+        //                                   const TextStyle(color: Colors.black)),
+        //                         ],
+        //                       ),
+        //                     ),
+        //                     RichText(
+        //                       text: TextSpan(
+        //                         text: 'Time ',
+        //                         style: const TextStyle(
+        //                             fontSize: 20,
+        //                             fontWeight: FontWeight.w500,
+        //                             color: Colors.grey),
+        //                         /*defining default style is optional */
+        //                         children: <TextSpan>[
+        //                           TextSpan(
+        //                               text: ": ${time}",
+        //                               style:
+        //                                   const TextStyle(color: Colors.black)),
+        //                         ],
+        //                       ),
+        //                     ),
+        //                     RichText(
+        //                       text: const TextSpan(
+        //                         text: 'Distance ',
+        //                         style: TextStyle(
+        //                             fontSize: 20,
+        //                             fontWeight: FontWeight.w500,
+        //                             color: Colors.grey),
+        //                         /*defining default style is optional */
+        //                         children: <TextSpan>[
+        //                           TextSpan(
+        //                               text: ": ${"NOT EX"} km",
+        //                               style:
+        //                                   TextStyle(color: Colors.black)),
+        //                         ],
+        //                       ),
+        //                     ),
+        //                     Image.asset(
+        //                       "assets/Pharmacy.png",
+        //                       scale: 1,
+        //                     ),
+        //                   ],
+        //                 ))),
+        //       );
+        //     },
+        //   );
+        // },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ShowPharm(
+                    pharm: pharm,
+                  )),
+        ),
+
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
@@ -162,8 +157,7 @@ class PharmacyItem extends StatelessWidget {
                     topRight: Radius.circular(20.0)),
                 //const BorderRadius.all(Radius.circular(20.0)),
                 child: Image.asset(
-
-                  img,
+                  pharm.img,
                   width: 400,
                   height: 230,
                   fit: BoxFit.fitWidth,
@@ -189,7 +183,7 @@ class PharmacyItem extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               top: 8, left: 4.0, right: 1.0),
                           child: Text(
-                            (name ?? ""),
+                            (pharm.name ?? ""),
                             style: const TextStyle(
                               fontSize: 16,
                               color: tdBlack,
@@ -215,7 +209,7 @@ class PharmacyItem extends StatelessWidget {
                               ),
                               RichText(
                                 text: TextSpan(
-                                  text: '$locName',
+                                  text: '${pharm.locName}',
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w300,
@@ -244,7 +238,7 @@ class PharmacyItem extends StatelessWidget {
                               ),
                               RichText(
                                 text: TextSpan(
-                                  text: '$time min ',
+                                  text: '${pharm.time} min ',
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w300,
@@ -253,8 +247,7 @@ class PharmacyItem extends StatelessWidget {
                                   children: <TextSpan>[
                                     const TextSpan(
                                         text: "• no EX km",
-                                        style: TextStyle(
-                                            color: Colors.black)),
+                                        style: TextStyle(color: Colors.black)),
                                   ],
                                 ),
                               ),

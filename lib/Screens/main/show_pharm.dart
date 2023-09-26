@@ -9,31 +9,42 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class ShowPharm extends StatelessWidget {
   final Pharmacy pharm;
-   ShowPharm({
+
+  const ShowPharm({
     Key? key,
     required this.pharm,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-      backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        leading: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.black54.withOpacity(0.8),
-                    ),
-                    child: const BackButtonIcon()),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 4),
+                  child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.black54.withOpacity(0.8),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      )),
+                ),
               ],
             ),
           ],
@@ -44,15 +55,15 @@ class ShowPharm extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 28,
-            width: double.infinity,
-            color: AppColors.mainColor,
-          ),
-
+      Padding(
+      padding: EdgeInsets.only(top: statusBarHeight),
+        child: null
+    ),
           Stack(children: <Widget>[
             ClipRRect(
-              child: Image.asset(
+              child:
+                  // Image.network(src),
+                  Image.asset(
                 pharm.img,
                 width: 400,
                 height: 230,
@@ -76,16 +87,15 @@ class ShowPharm extends StatelessWidget {
                       height: 70,
                       width: double.infinity,
                       child: Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 30, left: 16.0, right: 12.0),
                         child: Text(
-                          ("name"),
-                          style: TextStyle(
+                          ("${pharm.name}"),
+                          style: const TextStyle(
                             fontSize: 20,
                             color: tdBlack,
                             fontWeight: FontWeight.bold,
                             overflow: TextOverflow.ellipsis,
-
                           ),
                         ),
                       ),
@@ -95,68 +105,61 @@ class ShowPharm extends StatelessWidget {
           ]),
           Padding(
             padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.location_on_rounded,
-                    color: AppColors.mainColor,
-                    size: 20,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'locName',
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                      /*defining default style is optional */
-                      children: <TextSpan>[
-                        // TextSpan(
-                        //     text:
-                        //     "($distance km)",
-                        //     style: const TextStyle(
-                        //         color: Colors.red)),
-                      ],
-                    ),
-                  ),
-                ]),
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              const Icon(
+                Icons.location_on_rounded,
+                color: AppColors.mainColor,
+                size: 20,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: '${pharm.locName}',
+                  style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                  /*defining default style is optional */
+                  children: <TextSpan>[
+                    // TextSpan(
+                    //     text:
+                    //     "($distance km)",
+                    //     style: const TextStyle(
+                    //         color: Colors.red)),
+                  ],
+                ),
+              ),
+            ]),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.timer,
-                    color: AppColors.mainColor,
-                    size: 20,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'time min ',
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                      /*defining default style is optional */
-                      children: <TextSpan>[
-                        const TextSpan(
-                            text: "• no EX km",
-                            style: TextStyle(
-                                color: Colors.black)),
-                      ],
-                    ),
-                  ),
-                ]),
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              const Icon(
+                Icons.timer,
+                color: AppColors.mainColor,
+                size: 20,
+              ),
+              RichText(
+                text: TextSpan(
+                  text: '${pharm.time} ',
+                  style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                  /*defining default style is optional */
+                  children: <TextSpan>[
+                    const TextSpan(
+                        text: "• no EX km",
+                        style: TextStyle(color: Colors.black)),
+                  ],
+                ),
+              ),
+            ]),
           ),
-
-          Divider(
+          const Divider(
             indent: 15,
             endIndent: 15,
             thickness: 1.2,
           ),
-
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -166,11 +169,11 @@ class ShowPharm extends StatelessWidget {
                   radius: 60.0,
                   lineWidth: 13.0,
                   animation: false,
-                  percent: 0.7,
-                  center: const Text(
-                    "70.0%",
+                  percent: pharm.boxStorage,
+                  center: Text(
+                    "${pharm.boxStorage * 100}%",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                        const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
                   footer: const Text(
                     "Box Storage",
@@ -182,6 +185,42 @@ class ShowPharm extends StatelessWidget {
                   circularStrokeCap: CircularStrokeCap.round,
                   progressColor: Colors.orange,
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, right: 40, left: 40, bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        child: const Text("Call"),
+                        clipBehavior: Clip.hardEdge,
+                        onPressed: () => {},
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+
+                          textStyle: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 20,
+                              fontStyle: FontStyle.normal),
+                        ),
+                      ),
+                      ElevatedButton(
+                        child: const Text("Location"),
+                        onPressed: () => {},
+                        style: ElevatedButton.styleFrom(
+                          //primary: Colors.green,
+                          textStyle: const TextStyle(
+                              color: Colors.blue,
+                              fontSize: 20,
+                              fontStyle: FontStyle.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

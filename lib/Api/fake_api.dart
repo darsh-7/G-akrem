@@ -8,7 +8,7 @@ class Pharmacy {
   String? locName;
   String? location;
   int? time;
-  int? boxStorage;
+  double boxStorage;
   String? phone;
 
   Pharmacy({
@@ -17,7 +17,7 @@ class Pharmacy {
     required this.locName,
     required this.location,
     this.time,
-    this.boxStorage,
+    required this.boxStorage,
     this.phone,
   });
 
@@ -28,7 +28,7 @@ class Pharmacy {
         locName: '8502 Preston Rd. Inglewood, Maine 98380',
         location: "iqkuwhdiauwdiaw12783",
         time: 15,
-        boxStorage: 50,
+        boxStorage:  0.6,
         phone: "01012345678"),
     Pharmacy(
         img: AppImages.pharmacy,
@@ -36,7 +36,7 @@ class Pharmacy {
         locName: 'Cairo',
         location: "iqkuwhdiauw213diaw12783",
         time: 15,
-        boxStorage: 30,
+        boxStorage: 0.3,
         phone: "01012345678"),
     Pharmacy(
         img: AppImages.profileIcon,
@@ -44,7 +44,7 @@ class Pharmacy {
         locName: '8502 Preston Rd. Inglewood, Maine 98380',
         location: "iqkuwhdiauwdiaw12783",
         time: 15,
-        boxStorage: 50,
+        boxStorage:  0.9,
         phone: "01012345678"),
     Pharmacy(
         img: AppImages.pharmacy,
@@ -52,7 +52,7 @@ class Pharmacy {
         locName: 'Cairo',
         location: "iqkuwhdiauw213diaw12783",
         time: 15,
-        boxStorage: 30,
+        boxStorage:  0.1,
         phone: "01012345678"),
   ];
 }

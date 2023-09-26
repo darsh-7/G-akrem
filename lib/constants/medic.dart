@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'dart:math' as math;
 
-
 class Medic {
   final Image img;
   final String name;
@@ -45,34 +44,11 @@ class MedicManager {
         date: DateTime.now()),
   ];
 
-  // static var medics = LiveData(<Medic>[
-  //       Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now()),
-  //       Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now()),
-  //       Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now()),
-  // ]);
-
-  // StreamController<Medic> medics = StreamController<Medic>();
-  //
-  // logIn() { medics.add( Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now())); }
-  // static List<Medic> medicss() {
-  //   return [
-  //     Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now()),
-  //     Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now()),
-  //     Medic(img: Image.asset(AppImages.pharmacy) ,name: 'item1', bar: 1,pill: 2,date: DateTime.now()),
-  //   ];
-  // }
-
-//   static void addMedic({
-//     required Image img,
-//     required String name,
-//     int? bar,
-//     int? pills,
-//     DateTime? date,
-//   }) {
-//     Medic medic =
-//     Medic(img: img, name: name, bar: bar, pill: pills, date: date);
-//     medics.value = medics.value + [medic];
-//   }
+  static void removeMedic({
+    required int index,
+  }) {
+    medics.removeAt(index);
+  }
 
   static void addMedic({
     required Image img,

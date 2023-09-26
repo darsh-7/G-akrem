@@ -1,6 +1,7 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/constants/medic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class MedicCard extends StatelessWidget {
   final int? bar;
   final int? pill;
   final DateTime? date;
+  final int index;
+  final void Function()? refresh;
 
-  // final onToDoChanged;
-  // final onDeleteItem;
 
   const MedicCard({
     Key? key,
@@ -21,8 +22,8 @@ class MedicCard extends StatelessWidget {
     this.bar,
     this.pill,
     this.date,
-    // required this.onToDoChanged,
-    // required this.onDeleteItem,
+    required this.index,
+    this.refresh,
   }) : super(key: key);
 
   @override
@@ -166,6 +167,25 @@ class MedicCard extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(12),
+                      //padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.close,size: 30,),
+                        onPressed: () {
+                          MedicManager.removeMedic(index: index);
+                        },
+                      ),
+                    )
+                  ],
+                ),
                 Container(
                   height: 126,
                   width: double.infinity,
@@ -204,7 +224,6 @@ class MedicCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 5.0, right: 1.0),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                             children: [
                               RichText(
                                 text: TextSpan(
@@ -216,10 +235,9 @@ class MedicCard extends StatelessWidget {
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text:
-                                        "( Why do you care :) )"??"_",
-                                        style: const TextStyle(
-                                            color: Colors.red)),
+                                        text: "( Why do you care :) )" ?? "_",
+                                        style:
+                                            const TextStyle(color: Colors.red)),
                                   ],
                                 ),
                               ),
@@ -240,10 +258,9 @@ class MedicCard extends StatelessWidget {
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text:
-                                        "($bar)"??"_",
-                                        style: const TextStyle(
-                                            color: Colors.red)),
+                                        text: "($bar)" ?? "_",
+                                        style:
+                                            const TextStyle(color: Colors.red)),
                                   ],
                                 ),
                               ),
@@ -264,10 +281,9 @@ class MedicCard extends StatelessWidget {
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text:
-                                        "($pill)",
-                                        style: const TextStyle(
-                                            color: Colors.red)),
+                                        text: "($pill)",
+                                        style:
+                                            const TextStyle(color: Colors.red)),
                                   ],
                                 ),
                               ),
@@ -288,10 +304,9 @@ class MedicCard extends StatelessWidget {
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text:
-                                        "($date)"??"_",
-                                        style: const TextStyle(
-                                            color: Colors.red)),
+                                        text: "($date)" ?? "_",
+                                        style:
+                                            const TextStyle(color: Colors.red)),
                                   ],
                                 ),
                               ),

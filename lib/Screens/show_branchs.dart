@@ -29,20 +29,42 @@ class _ShowBranchState extends State<ShowBranch> {
     return Scaffold(
       backgroundColor: AppColors.backGround,
       extendBodyBehindAppBar: false,
-      //appBar:  //_buildAppBar(),
+      appBar: _buildAppBar(),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             SliverAppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // leading: IconButton(
+              //   icon: const Icon(Icons.arrow_back),
+              //   onPressed: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
               title: Container(
                 color: Colors.transparent,
                 child: searchBox(),
+
+                // const Text("Donation branch's")
+              ),
+              centerTitle: true,
+              elevation: 10.0,
+              automaticallyImplyLeading: false,
+              expandedHeight: 50,
+              floating: true,
+              snap: true,
+              backgroundColor: AppColors.mainColor,
+            ),
+            SliverAppBar(
+              title: Container(
+                color: Colors.transparent,
+                child:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("data"),
+                      Text("data"),
+                    ],
+                  ),
 
                 // const Text("Donation branch's")
               ),
@@ -71,10 +93,7 @@ class _ShowBranchState extends State<ShowBranch> {
                       children: [
                         for (Pharmacy Pharm in _foundPharmacy.reversed)
                           PharmacyItem(
-                            img: Pharm.img,
-                            name: Pharm.name,
-                            locName: Pharm.locName,
-                            time: Pharm.time,
+                            pharm: Pharm,
                           ),
                       ],
                     ),
@@ -154,40 +173,8 @@ class _ShowBranchState extends State<ShowBranch> {
     return AppBar(
       backgroundColor: AppColors.mainColor,
       elevation: 0,
-      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          // const Icon(
-          //   Icons.location_on_rounded,
-          //   color: Colors.redAccent,
-          //   size: 30,
-          // ),
-          Text("Donation branch's"),
-          // Transform.rotate(
-          //   angle: 270 * math.pi / 180,
-          //   child: Container(
-          //       width: 30,
-          //       height: 30,
-          //       decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(100),
-          //         color: Colors.grey.withOpacity(0.1),
-          //       ),
-          //       child: const Icon(Icons.arrow_back_ios_new_rounded)),
-          // ),
-        ]),
-        Container(
-          height: 40,
-          width: 40,
-          // child: ClipRRect(
-          //   borderRadius: BorderRadius.circular(20),
-          //   child:
-          //   const Icon(
-          //     Icons.notifications_outlined,
-          //     color: Colors.black,
-          //     size: 30,
-          //   ),
-          // ),
-        ),
-      ]),
+      centerTitle: true,
+      title: const Text("Searsh for branch"),
     );
   }
 }

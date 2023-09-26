@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../constants/medic.dart';
 import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
+import 'add_medic.dart';
 
 class MedicList extends StatefulWidget {
   MedicList({Key? key}) : super(key: key);
@@ -11,20 +12,20 @@ class MedicList extends StatefulWidget {
   State<MedicList> createState() => MMedicList();
 }
 
-
 class MMedicList extends State<MedicList> {
   static List<Medic> foundMedic = MedicManager.medics;
-  late List<Medic> _foundMedic ;
+  late List<Medic> _foundMedic;
+
   Image image = Image.asset(AppImages.profileIcon);
   Key refreshKey = UniqueKey();
+
   @override
   void initState() {
-    _foundMedic= foundMedic;
+    _foundMedic = foundMedic;
     super.initState();
   }
 
-
-   void refreshList() {
+  void refreshList() {
     List<Medic> results = MedicManager.medics;
     setState(() {
       _foundMedic = results;
@@ -35,13 +36,29 @@ class MMedicList extends State<MedicList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGround,
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddMedic()),
+          );
+
+          // List<Medic> results = MedicManager.medics;
+          // setState(() {
+          //   _foundMedic = results;
+          // });
+          refreshList();
+        },
+      ),
+
       //appBar: _buildAppBar(),
       body: Stack(
         children: [
           Container(
               child: Column(
             children: [
-              TextButton(onPressed:()=> {refreshList()}, child: Text("tap")),
+              TextButton(onPressed: () => {refreshList()}, child: Text("tap")),
               LinearProgressIndicator(),
               Expanded(
                 child: ListView(
@@ -71,17 +88,35 @@ class MMedicList extends State<MedicList> {
                     //     ),
                     //   ),
                     // ),
-                    for (Medic medic in foundMedic.reversed)
+
+                    for (var i = 0; i < _foundMedic.length; i++)
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 20),
                         child: MedicCard(
-                            img: Image.asset(AppImages.pharmacy),
-                            name: medic.name,
-                            pill: medic.pill,
-                            bar: medic.bar,
-                            date: medic.date),
-                      )
+                          img: _foundMedic[i].img,
+                          name: _foundMedic[i].name,
+                          pill: _foundMedic[i].pill,
+                          bar: _foundMedic[i].bar,
+                          date: _foundMedic[i].date,
+                          index : i,
+
+                        ),
+                      ),
+
+
+                    // for (Medic medic in _foundMedic.reversed)
+                    //   Padding(
+                    //     padding: const EdgeInsets.symmetric(
+                    //         vertical: 0, horizontal: 20),
+                    //     child: MedicCard(
+                    //         img: medic.img,
+                    //         name: medic.name,
+                    //         pill: medic.pill,
+                    //         bar: medic.bar,
+                    //         date: medic.date,
+                    //     ),
+                    //   )
                   ],
                 ),
               ),
@@ -92,5 +127,3 @@ class MMedicList extends State<MedicList> {
     );
   }
 }
-
-

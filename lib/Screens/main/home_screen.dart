@@ -33,14 +33,16 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _foundPharmacy = pharmacyList;
-    _getThingsOnStartup().then((value){
+    _getThingsOnStartup().then((value) {
       print('Async done');
     });
     super.initState();
   }
+
   Future _getThingsOnStartup() async {
     await Future.delayed(Duration(seconds: 3));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +55,8 @@ class _HomeState extends State<Home> {
 
             child: Column(
               children: [
-                searchBox(),
+                LinearProgressIndicator(),
+                //searchBox(),
                 Expanded(
                   child: ListView(
                     padding: const EdgeInsets.only(bottom: 80, top: 10),
@@ -63,8 +66,8 @@ class _HomeState extends State<Home> {
                           top: 0,
                           bottom: 10,
                         ),
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 20),
                         child: RichText(
                           text: const TextSpan(
                             text: 'Donation ',
@@ -102,8 +105,8 @@ class _HomeState extends State<Home> {
                           top: 10,
                           bottom: 20,
                         ),
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 20),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -147,13 +150,10 @@ class _HomeState extends State<Home> {
                       ),
                       for (Pharmacy Pharm in _foundPharmacy.reversed)
                         Padding(
-                          padding:
-                              const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 20),
                           child: PharmacyItem(
-                            img: Pharm.img,
-                            name: Pharm.name,
-                            locName: Pharm.locName,
-                            time: Pharm.time,
+                            pharm: Pharm,
                           ),
                         )
                     ],

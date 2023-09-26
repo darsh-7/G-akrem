@@ -1,7 +1,6 @@
 
 import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/Screens/basket/empty_items.dart';
-import 'package:akrem/widgets/medic_item.dart';
 import 'package:flutter/material.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/medic.dart';
@@ -17,21 +16,6 @@ class MedicBasket extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-
-            Navigator.push(context,MaterialPageRoute(builder: (context) => AddMedic()),);
-            // pushNamedAndRemoveUntil(
-            //     '/basket', (Route<dynamic> route) => false);
-
-
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => AddMedic()),
-          // );
-        },
-      ),
       body: MedicList(),
     );
   }

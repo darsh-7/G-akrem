@@ -58,11 +58,11 @@ class _NavigationExampleState extends State<NavigationExample> {
       //extendBodyBehindAppBar: true,
       bottomNavigationBar:
           Padding(
-            padding: const EdgeInsets.only(bottom: 8,left: 16,right: 16),
+            padding: const EdgeInsets.only(bottom: 0,left: 0,right: 0),
             child:
             ClipRRect(
 
-              borderRadius: BorderRadius.circular(60),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                 child: NavigationBar(
