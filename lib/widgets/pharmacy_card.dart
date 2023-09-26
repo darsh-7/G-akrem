@@ -1,24 +1,28 @@
-import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PharmacyItem extends StatelessWidget {
+  final String img;
   final String? name;
-  final String? location;
-  final int? time;
-  final String? distance;
+  final String? locName;
 
-  // final onToDoChanged;
-  // final onDeleteItem;
+  // final String? location;
+  final int? time;
+
+  // final int? boxStorage;
+  // final String? phone;
 
   const PharmacyItem({
     Key? key,
+    required this.img,
     required this.name,
-    required this.location,
+    required this.locName,
+    //required this.location,
     required this.time,
-    required this.distance,
+    //required this.boxStorage,
+    //required this.phone,
     // required this.onToDoChanged,
     // required this.onDeleteItem,
   }) : super(key: key);
@@ -26,23 +30,23 @@ class PharmacyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 320,
+      height: 280,
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
             blurRadius: 4,
-            offset: Offset(-6, -5), // Shadow position
+            offset: const Offset(-6, -5), // Shadow position
           ),
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
             blurRadius: 4,
-            offset: Offset(6, 5), // Shadow position
+            offset: const Offset(6, 5), // Shadow position
           ),
         ],
       ),
@@ -88,7 +92,7 @@ class PharmacyItem extends StatelessWidget {
                                 /*defining default style is optional */
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: ": ${location}",
+                                      text: ": ${locName}",
                                       style:
                                           const TextStyle(color: Colors.black)),
                                 ],
@@ -111,18 +115,18 @@ class PharmacyItem extends StatelessWidget {
                               ),
                             ),
                             RichText(
-                              text: TextSpan(
+                              text: const TextSpan(
                                 text: 'Distance ',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey),
                                 /*defining default style is optional */
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: ": ${distance} km",
+                                      text: ": ${"NOT EX"} km",
                                       style:
-                                          const TextStyle(color: Colors.black)),
+                                          TextStyle(color: Colors.black)),
                                 ],
                               ),
                             ),
@@ -150,87 +154,115 @@ class PharmacyItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(20.0)),
-              //const BorderRadius.all(Radius.circular(20.0)),
-              child: Image.asset(
-                AppImages.pharmacy,
-                width: 400,
-                height: 230,
-              ),
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              child: Text(
-                (name ?? ""),
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: tdBlack,
+            Stack(children: <Widget>[
+              ClipRRect(
+                // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30.0),
+                    topRight: Radius.circular(20.0)),
+                //const BorderRadius.all(Radius.circular(20.0)),
+                child: Image.asset(
+
+                  img,
+                  width: 400,
+                  height: 230,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
-            ),
-            const Divider(
-              indent: 15,
-              endIndent: 15,
-              thickness: 1.2,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Icon(
-                  Icons.location_on_rounded,
-                  color: AppColors.mainColor,
-                  size: 20,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: '$location ',
-                    style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black),
-                    /*defining default style is optional */
-                    children: <TextSpan>[
-                      // TextSpan(
-                      //     text:
-                      //     "($distance km)",
-                      //     style: const TextStyle(
-                      //         color: Colors.red)),
-                    ],
+              Container(
+                  height: 100,
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 180),
+                  padding: const EdgeInsets.all(0),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(30),
+                        bottomLeft: Radius.circular(30)),
                   ),
-                ),
-              ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Icon(
-                  Icons.timer,
-                  color: AppColors.mainColor,
-                  size: 20,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: '$time min ',
-                    style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.black),
-                    /*defining default style is optional */
-                    children: <TextSpan>[
-                      TextSpan(
-                          text: "• $distance km",
-                          style: const TextStyle(color: Colors.black)),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 28,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8, left: 4.0, right: 1.0),
+                          child: Text(
+                            (name ?? ""),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: tdBlack,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Divider(
+                        indent: 15,
+                        endIndent: 15,
+                        thickness: 1.2,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0, right: 1.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.location_on_rounded,
+                                color: AppColors.mainColor,
+                                size: 20,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  text: '$locName',
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black),
+                                  /*defining default style is optional */
+                                  children: <TextSpan>[
+                                    // TextSpan(
+                                    //     text:
+                                    //     "($distance km)",
+                                    //     style: const TextStyle(
+                                    //         color: Colors.red)),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0, right: 1.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.timer,
+                                color: AppColors.mainColor,
+                                size: 20,
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  text: '$time min ',
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black),
+                                  /*defining default style is optional */
+                                  children: <TextSpan>[
+                                    const TextSpan(
+                                        text: "• no EX km",
+                                        style: TextStyle(
+                                            color: Colors.black)),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                      ),
                     ],
-                  ),
-                ),
-              ]),
-            ),
+                  )),
+            ]),
           ],
         ),
 

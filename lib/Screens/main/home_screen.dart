@@ -1,7 +1,6 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/widgets/appbarr.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
@@ -17,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final pharmacyList = Pharmacy.pharmacyList();
+  final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
   final List<Card> cards = [
@@ -34,9 +33,14 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     _foundPharmacy = pharmacyList;
+    _getThingsOnStartup().then((value){
+      print('Async done');
+    });
     super.initState();
   }
-
+  Future _getThingsOnStartup() async {
+    await Future.delayed(Duration(seconds: 3));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,12 +150,10 @@ class _HomeState extends State<Home> {
                           padding:
                               const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
                           child: PharmacyItem(
+                            img: Pharm.img,
                             name: Pharm.name,
-                            location: Pharm.location,
+                            locName: Pharm.locName,
                             time: Pharm.time,
-                            distance: Pharm.distance,
-                            // onToDoChanged: _handleToDoChange,
-                            // onDeleteItem: _deleteToDoItem,
                           ),
                         )
                     ],
@@ -348,8 +350,8 @@ class _HomeState extends State<Home> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: const Icon(
-              Icons.notifications_outlined,
-              color: Colors.black,
+              Icons.notifications,
+              color: Colors.black54,
               size: 30,
             ),
           ),

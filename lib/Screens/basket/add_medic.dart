@@ -1,34 +1,55 @@
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/widgets/input.dart';
-import 'package:akrem/widgets/medic_item.dart';
 import 'package:flutter/material.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/medic.dart';
 import 'package:flutter/services.dart';
-import 'dart:math' as math;
-
+import '../../services/log_manager.dart';
 import '../../services/validator.dart';
-import '../../widgets/scrollable_column.dart';
-import '../show_branchs.dart';
+import 'medic_list.dart';
 
-class AddMedic extends StatelessWidget {
-  AddMedic({super.key});
+
+class AddMedic extends StatefulWidget {
+  AddMedic({Key? key}) : super(key: key);
+
+  @override
+  State<AddMedic> createState() => _AddMedic();
+}
+
+class _AddMedic extends State<AddMedic> {
+
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _barController = TextEditingController();
   final _pillController = TextEditingController();
   final _dateController = TextEditingController();
-  late DateTime Date ;
-  Duration minExDate=const Duration(days:3*7);
+  late DateTime Date;
+
+  Duration minExDate = const Duration(days: 3 * 7);
   DateTime selectedDate = DateTime.now();
 
-
   final List<Card> cards = [
-    Card(img: Image.asset(AppImages.mvrk), title: "Box", action: 1),
-    Card(img: Image.asset(AppImages.mvrk), title: "Bar", action: 2),
-    Card(img: Image.asset(AppImages.mvrk), title: "medicine bottle", action: 3),
-    Card(img: Image.asset(AppImages.mvrk), title: "Medical device", action: 4),
+    Card(
+        img: Image.asset(AppImages.mvrk),
+        title: "Box",
+        action: 1,
+        trigger: true),
+    Card(
+        img: Image.asset(AppImages.mvrk),
+        title: "Bar",
+        action: 2,
+        trigger: false),
+    Card(
+        img: Image.asset(AppImages.mvrk),
+        title: "medicine bottle",
+        action: 3,
+        trigger: false),
+    Card(
+        img: Image.asset(AppImages.mvrk),
+        title: "Medical device",
+        action: 4,
+        trigger: false),
   ];
 
   @override
@@ -37,6 +58,7 @@ class AddMedic extends StatelessWidget {
       appBar: _buildAppBar(),
       body: Stack(
         children: [
+          LinearProgressIndicator(),
           Container(
             //padding: const EdgeInsets.only(bottom: 100),
 
@@ -53,7 +75,6 @@ class AddMedic extends StatelessWidget {
                   ),
                   child: Container(
                     margin: const EdgeInsets.only(
-                      top: 0,
                       bottom: 8,
                       right: 8,
                       left: 8,
@@ -224,7 +245,7 @@ class AddMedic extends StatelessWidget {
                                                 /*defining default style is optional */
                                                 children: <TextSpan>[
                                                   TextSpan(
-                                                    text: "\n(Not Required)",
+                                                    text: "\n(Optional)",
                                                     style: TextStyle(
                                                       color: Colors.red,
                                                       fontSize: 10,
@@ -291,37 +312,29 @@ class AddMedic extends StatelessWidget {
                                           ]),
                                     ]),
                               ),
-                              const SizedBox(height: 24),
-                              CustomInputField(
-                                keyboardType: TextInputType.emailAddress,
-                                hintText: "Date",
-                                controller: _nameController,
-                                validator: Validator.validateName,
-                                label: "Date",
-                                inputFormatters: [
-                                  LengthLimitingTextInputFormatter(320),
-                                ],
-                              ),
+                              const SizedBox(height: 12),
                               Container(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                                child: Column(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 40, vertical: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                        "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
                                     ElevatedButton(
                                       onPressed: () async {
-                                        DateTime? newDate = await showDatePicker(
-                                            context: context,
-                                            initialDate: selectedDate.subtract(minExDate*2),
-                                            firstDate: DateTime(1900),
-                                            lastDate: selectedDate
-                                        );
+                                        DateTime? newDate =
+                                            await showDatePicker(
+                                                context: context,
+                                                initialDate: selectedDate,
+                                                firstDate: DateTime(2020),
+                                                lastDate: DateTime(2100));
 
                                         if (newDate == null) return;
                                         selectedDate = newDate;
 
-
+                                        //Todo: Font asset "MaterialIcons-Regular.otf" was tree-shaken,
+                                        // reducing it from 1645184 to 4716 bytes (99.7% reduction).
+                                        // Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
                                         //
                                         // setState(() {
                                         //   selectedDate = newDate;
@@ -330,35 +343,51 @@ class AddMedic extends StatelessWidget {
                                       },
                                       child: const Text("select date"),
                                     ),
+                                    Text(
+                                        "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
                                   ],
                                 ),
                               ),
-
+                              const SizedBox(height: 12),
                               ElevatedButton(
                                   onPressed: () {
                                     //if (_formKey.currentState?.validate() == false) return;
 
-                                    if(selectedDate.isAfter(DateTime.now().subtract(minExDate))) {
+                                    if (selectedDate.isAfter(
+                                        DateTime.now().add(minExDate))) {
                                       showDialog(
                                           context: context,
                                           builder: (context) => AlertDialog(
-                                            actions: [
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text("Close"))
-                                            ],
-                                            title: const Text("Medicine about to expire"),
-                                            content: const Text("Sorry we cant take Medicine about to expire"),
-                                          ));
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child:
+                                                          const Text("Close"))
+                                                ],
+                                                title: const Text(
+                                                    "Medicine about to expire"),
+                                                content: const Text(
+                                                    "Sorry we cant take Medicine about to expire"),
+                                              ));
                                       return;
                                     }
 
-
-
+                                    MedicManager.addMedic(
+                                        img: Image.asset(AppImages.pharmacy),
+                                        name: _nameController.text,
+                                        bar: int.parse(_barController.text),
+                                        pills: int.parse(_pillController.text));
+                                    LogManager.logToConsole(
+                                        "new Medic list now: ${MedicManager.medics.reversed}");
+                                    //
+                                    // setState(() {
+                                    //   MMedicList.foundMedic = MedicManager.medics;
+                                    // });
+                                    //Navigator.pop(context, data);
                                     Navigator.pop(context);
-
                                   },
                                   child: const Text("Save")),
                             ],
@@ -404,7 +433,12 @@ class AddMedic extends StatelessWidget {
 Widget buildCard({required Card card}) => Container(
       width: 100,
       //height: 200,
-
+        margin: const EdgeInsets.only(left: 4,right: 4),
+      decoration: const BoxDecoration(
+        color: AppColors.mainColor,
+        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+        
+      ),
       child: ListTile(
         onTap: () {
           switch (card.action) {
@@ -486,10 +520,12 @@ class Card {
   final Image img;
   final String title;
   final int? action;
+  final bool trigger;
 
   const Card({
     required this.img,
     required this.title,
     this.action,
+    required this.trigger,
   });
 }

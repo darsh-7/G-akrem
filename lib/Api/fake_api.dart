@@ -1,28 +1,58 @@
 import 'package:akrem/Screens/map_screen.dart';
+import 'package:akrem/constants/app_images.dart';
+import 'package:flutter/material.dart';
 
 class Pharmacy {
+  String img;
   String? name;
+  String? locName;
   String? location;
   int? time;
-  String? distance;
-
+  int? boxStorage;
+  String? phone;
 
   Pharmacy({
+    required this.img,
     required this.name,
+    required this.locName,
     required this.location,
     this.time,
-    this.distance,
+    this.boxStorage,
+    this.phone,
   });
 
-  static List<Pharmacy> pharmacyList() {
-    return [
-      Pharmacy(name: 'Pharmacy1Pharmacy1', location: '8502 Preston Rd. Inglewood, Maine 98380', time: 15 , distance: "15"),
-      Pharmacy(name: 'Pharmacy2', location: 'cairo', time: 15 , distance: "15"),
-      Pharmacy(name: 'Pharmacy3', location: '8502 Preston Rd. Inglewood, Maine 98380', time: 15 , distance: "15"),
-      Pharmacy(name: 'Pharmacy4', location: 'cairo', time: 15 , distance: "15"),
-      Pharmacy(name: 'Pharmacy5', location: 'cairo', time: 15 , distance: "15"),
-      Pharmacy(name: 'Pharmacy6', location: '8502 Preston Rd. Inglewood, Maine 98380', time: 15 , distance: "15"),
-      Pharmacy(name: 'Pharmacy7', location: 'Morning Excercise', time: 15 , distance: "15"),
-    ];
-  }
+  static List<Pharmacy> pharmacyList = [
+    Pharmacy(
+        img: AppImages.profileIcon,
+        name: 'Pharmacy1Pharmacy1',
+        locName: '8502 Preston Rd. Inglewood, Maine 98380',
+        location: "iqkuwhdiauwdiaw12783",
+        time: 15,
+        boxStorage: 50,
+        phone: "01012345678"),
+    Pharmacy(
+        img: AppImages.pharmacy,
+        name: 'Pharmacy2',
+        locName: 'Cairo',
+        location: "iqkuwhdiauw213diaw12783",
+        time: 15,
+        boxStorage: 30,
+        phone: "01012345678"),
+    Pharmacy(
+        img: AppImages.profileIcon,
+        name: 'Pharmacy1Pharmacy1',
+        locName: '8502 Preston Rd. Inglewood, Maine 98380',
+        location: "iqkuwhdiauwdiaw12783",
+        time: 15,
+        boxStorage: 50,
+        phone: "01012345678"),
+    Pharmacy(
+        img: AppImages.pharmacy,
+        name: 'Pharmacy2',
+        locName: 'Cairo',
+        location: "iqkuwhdiauw213diaw12783",
+        time: 15,
+        boxStorage: 30,
+        phone: "01012345678"),
+  ];
 }

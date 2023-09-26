@@ -14,7 +14,7 @@ class ShowBranch extends StatefulWidget {
 }
 
 class _ShowBranchState extends State<ShowBranch> {
-  final pharmacyList = Pharmacy.pharmacyList();
+  final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
 
@@ -32,7 +32,6 @@ class _ShowBranchState extends State<ShowBranch> {
       //appBar:  //_buildAppBar(),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-
           return [
             SliverAppBar(
               leading: IconButton(
@@ -42,11 +41,10 @@ class _ShowBranchState extends State<ShowBranch> {
                 },
               ),
               title: Container(
-                  color: Colors.transparent,
-                  child:searchBox(),
+                color: Colors.transparent,
+                child: searchBox(),
 
-
-                  // const Text("Donation branch's")
+                // const Text("Donation branch's")
               ),
               centerTitle: true,
               elevation: 10.0,
@@ -55,7 +53,6 @@ class _ShowBranchState extends State<ShowBranch> {
               floating: true,
               snap: true,
               backgroundColor: AppColors.mainColor,
-
             ),
           ];
         },
@@ -74,12 +71,10 @@ class _ShowBranchState extends State<ShowBranch> {
                       children: [
                         for (Pharmacy Pharm in _foundPharmacy.reversed)
                           PharmacyItem(
+                            img: Pharm.img,
                             name: Pharm.name,
-                            location: Pharm.location,
+                            locName: Pharm.locName,
                             time: Pharm.time,
-                            distance: Pharm.distance,
-                            // onToDoChanged: _handleToDoChange,
-                            // onDeleteItem: _deleteToDoItem,
                           ),
                       ],
                     ),
@@ -116,7 +111,7 @@ class _ShowBranchState extends State<ShowBranch> {
       ),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-         padding: const EdgeInsets.symmetric(horizontal: 20 ,vertical: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         decoration: BoxDecoration(
           color: AppColors.backGround,
           borderRadius: BorderRadius.circular(30),
