@@ -35,6 +35,7 @@ class MMedicList extends State<MedicList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: _buildAppBar(),
       backgroundColor: AppColors.backGround,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -50,6 +51,8 @@ class MMedicList extends State<MedicList> {
       //appBar: _buildAppBar(),
       body: Stack(
         children: [
+          if(_foundMedic.isEmpty)
+            const EmptyItemsScreen(),
           Container(
               child: Column(
             children: [
@@ -59,9 +62,6 @@ class MMedicList extends State<MedicList> {
                 child: ListView(
                   padding: const EdgeInsets.only(bottom: 80, top: 10),
                   children: [
-                    // if(_foundMedic.isEmpty)
-                    //   const EmptyItemsScreen(),
-
                     for (var i = 0; i < _foundMedic.length; i++)
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -86,6 +86,30 @@ class MMedicList extends State<MedicList> {
           ))
         ],
       ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: AppColors.mainColor,
+      elevation: 0,
+      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        const Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Text("Donation basket"),
+        ]),
+        Container(
+          height: 40,
+          width: 120,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: IconButton(
+                icon: const Icon(Icons.fiber_smart_record),
+                onPressed: () => {
+                  //TODO : add voice recognition for adding items
+                },
+              )),
+        ),
+      ]),
     );
   }
 }

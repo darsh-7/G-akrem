@@ -1,4 +1,5 @@
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
@@ -194,7 +195,7 @@ class _HomeState extends State<Home> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MedicBasket()),
+                    MaterialPageRoute(builder: (context) => MedicList()),
                   );
                 }
                 break;
