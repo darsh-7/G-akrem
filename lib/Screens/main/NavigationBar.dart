@@ -5,29 +5,30 @@ import 'package:akrem/Screens/main/profle_Screen.dart';
 import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 /// Flutter code sample for [NavigationBar].
 
 // void main() => runApp(const NavigationBarApp());
 
-class NavigationBarApp extends StatelessWidget {
-  const NavigationBarApp({super.key});
+
+class NavigationBarApp extends StatefulWidget {
+  final List<CameraDescription> cameraDescription;
+
+  NavigationBarApp({super.key,
+   required this.cameraDescription,});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: NavigationExample());
-  }
+  State<NavigationBarApp> createState() => _NavigationBarApp(cameraDescription: cameraDescription);
 }
 
-class NavigationExample extends StatefulWidget {
-  const NavigationExample({super.key});
+class _NavigationBarApp extends State<NavigationBarApp> {
 
-  @override
-  State<NavigationExample> createState() => _NavigationExampleState();
-}
+  final List<CameraDescription> cameraDescription;
 
-class _NavigationExampleState extends State<NavigationExample> {
+  _NavigationBarApp({
+   required this.cameraDescription,});
   int currentPageIndex = 0;
   Image image = Image.asset(
     AppImages.profileIcon,
@@ -152,7 +153,7 @@ class _NavigationExampleState extends State<NavigationExample> {
 
           ),
       body: <Widget>[
-        Home(),
+        Home( cameraDescription: cameraDescription,),
         ShowBranch(),
         const Center(
           child: Text("fund page"),

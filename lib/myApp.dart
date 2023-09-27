@@ -1,19 +1,23 @@
 import 'package:akrem/Screens/basket/add_medic.dart';
-import 'package:akrem/Screens/basket/medic_basket.dart';
+import 'package:akrem/Screens/basket/medic_list.dart';
+import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/map_screen.dart';
 import 'package:akrem/Api/fake_api.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/main/show_pharm.dart';
 
-
 const mainColor = Color(0xFF4672ff);
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<CameraDescription> cameraDescription;
+
+  MyApp({super.key,
+    required this.cameraDescription,});
 
   // This widget is the root of your application.
   @override
@@ -42,14 +46,18 @@ class MyApp extends StatelessWidget {
       // ],
       initialRoute: '/main',
       routes: {
-      //  '/': (context) => SplashPage(),
+        //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
-        '/main': (context) => NavigationBarApp(),
+        '/main': (context) => NavigationBarApp(cameraDescription: cameraDescription,),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
-        '/basket': (context) => MedicBasket(),
-        '/addMedic': (context) => AddMedic(),
-        '/showPharm': (context) => ShowPharm(pharm: Pharmacy.pharmacyList.first),
+        '/basket': (context) => MedicList(cameraDescription: cameraDescription,),
+        //'/addMedic': (context) => AddMedic(),
+        '/showPharm': (context) =>
+            ShowPharm(pharm: Pharmacy.pharmacyList.first),
+        '/cam': (context) =>
+            TakePic(cameraDescription: cameraDescription),
+
       },
     );
   }

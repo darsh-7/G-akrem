@@ -23,7 +23,7 @@ class Pharmacy {
 
   static List<Pharmacy> pharmacyList = [
     Pharmacy(
-        img: AppImages.profileIcon,
+        img: "https://i.pinimg.com/originals/e4/37/30/e437307f4baf5f8c6a9236c82886bbd4.jpg",
         name: 'Pharmacy1Pharmacy1',
         locName: '8502 Preston Rd. Inglewood, Maine 98380',
         location: "iqkuwhdiauwdiaw12783",
@@ -31,7 +31,7 @@ class Pharmacy {
         boxStorage:  0.6,
         phone: "01012345678"),
     Pharmacy(
-        img: AppImages.pharmacy,
+        img: "https://frenchly.us/wp-content/uploads/2023/02/Pharmacy-front-shutterstock.jpg",
         name: 'Pharmacy2',
         locName: 'Cairo',
         location: "iqkuwhdiauw213diaw12783",
@@ -39,7 +39,7 @@ class Pharmacy {
         boxStorage: 0.3,
         phone: "01012345678"),
     Pharmacy(
-        img: AppImages.profileIcon,
+        img: "https://pbs.twimg.com/media/DjLwIwJXcAAl1xW.jpg",
         name: 'Pharmacy1Pharmacy1',
         locName: '8502 Preston Rd. Inglewood, Maine 98380',
         location: "iqkuwhdiauwdiaw12783",
@@ -47,7 +47,7 @@ class Pharmacy {
         boxStorage:  0.9,
         phone: "01012345678"),
     Pharmacy(
-        img: AppImages.pharmacy,
+        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_6UxZS5E87vjuXTgTQ4Qw3MAvtv3srWQwpg&usqp=CAU",
         name: 'Pharmacy2',
         locName: 'Cairo',
         location: "iqkuwhdiauw213diaw12783",

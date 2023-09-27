@@ -15,6 +15,10 @@ class CustomInputField extends StatefulWidget {
   final String? label;
   final double? bottomPadding;
   final double? width;
+  final bool readOnly;
+  final Icon? icon;
+
+  final void Function()? onTap;
   final List<TextInputFormatter>? inputFormatters;
 
   const CustomInputField({
@@ -31,6 +35,9 @@ class CustomInputField extends StatefulWidget {
     this.onChanged,
     this.inputFormatters,
     this.width,
+    this.readOnly =false,
+    this.icon,
+    this.onTap,
   });
 
   @override
@@ -79,10 +86,12 @@ class _CustomInputFieldState extends State<CustomInputField> {
         obscureText: _obscure,
         onEditingComplete: widget.onEditingComplete,
         inputFormatters: widget.inputFormatters,
-
+        readOnly: widget.readOnly,
         obscuringCharacter: '*',
         validator: widget.validator,
+        onTap: widget.onTap,
         decoration: InputDecoration(
+          icon: widget.icon,
           enabled: widget.enabled,
           border: OutlineInputBorder(
             borderSide:

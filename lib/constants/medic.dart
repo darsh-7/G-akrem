@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:akrem/constants/app_colors.dart';
 import 'dart:math' as math;
 
 class Medic {
-  final Image img;
+  final File img;
   final String name;
   final int? bar;
   final int? pill;
@@ -51,7 +52,7 @@ class MedicManager {
   }
 
   static void addMedic({
-    required Image img,
+    required File img,
     required String name,
     int? bar,
     int? pills,

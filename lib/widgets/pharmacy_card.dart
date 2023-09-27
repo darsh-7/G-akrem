@@ -1,6 +1,5 @@
 import 'package:akrem/Screens/main/show_pharm.dart';
 import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,13 +26,13 @@ class PharmacyItem extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
-            blurRadius: 4,
-            offset: const Offset(-6, -5), // Shadow position
+            blurRadius: 5,
+            offset: const Offset(0, -1), // Shadow position
           ),
           BoxShadow(
             color: Colors.grey.withOpacity(0.3),
             blurRadius: 4,
-            offset: const Offset(6, 5), // Shadow position
+            offset: const Offset(0, 8), // Shadow position
           ),
         ],
       ),
@@ -150,23 +149,26 @@ class PharmacyItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Stack(children: <Widget>[
-              ClipRRect(
-                // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(20.0)),
-                //const BorderRadius.all(Radius.circular(20.0)),
-                child: Image.asset(
-                  pharm.img,
-                  width: 400,
-                  height: 230,
-                  fit: BoxFit.fitWidth,
+              AspectRatio(
+                aspectRatio: 2 / 1,
+                child: ClipRRect(
+                  // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(20.0)),
+                  //const BorderRadius.all(Radius.circular(20.0)),
+                  child: Image.network(
+                    pharm.img,
+                    width: 400,
+                    height: 230,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
               Container(
-                  height: 100,
+                  height: 108,
                   width: double.infinity,
-                  margin: const EdgeInsets.only(top: 180),
+                  margin: const EdgeInsets.only(top: 170),
                   padding: const EdgeInsets.all(0),
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -244,8 +246,8 @@ class PharmacyItem extends StatelessWidget {
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black),
                                   /*defining default style is optional */
-                                  children: <TextSpan>[
-                                    const TextSpan(
+                                  children: const <TextSpan>[
+                                    TextSpan(
                                         text: "• no EX km",
                                         style: TextStyle(color: Colors.black)),
                                   ],

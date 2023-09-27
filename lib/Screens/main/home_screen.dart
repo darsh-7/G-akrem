@@ -2,24 +2,36 @@ import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
 
-import '../basket/medic_basket.dart';
-
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  final List<CameraDescription> cameraDescription;
+
+  Home({
+    required this.cameraDescription,
+    super.key,
+  });
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home> createState() => _HomeState(cameraDescription: cameraDescription);
 }
 
 class _HomeState extends State<Home> {
+  late List<CameraDescription> cameraDescription;
+
+  _HomeState({
+    required this.cameraDescription,
+  });
+
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
+  bool loddingBar = true;
+
   final List<Card> cards = [
     Card(
         img: Image.asset(AppImages.mvrk), title: "Donate from home", action: 1),
@@ -41,22 +53,56 @@ class _HomeState extends State<Home> {
   }
 
   Future _getThingsOnStartup() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 4));
+    setState(() {
+      loddingBar = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backGround,
-      appBar: _buildAppBar(),
-      body: Stack(
-        children: [
-          Container(
-            //padding: const EdgeInsets.only(bottom: 100),
-
-            child: Column(
+    return WillPopScope(
+      onWillPop: () async {
+        // Do something here
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text(
+                          "NO",
+                          style: TextStyle(color: AppColors.positives),
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Leave",
+                            style: TextStyle(color: AppColors.negative)))
+                  ],
+                  title: const Text("want to leave? "),
+                  content: const Text(
+                      "Are you sure you want to leave the app? \n if yse click leave other with click no"),
+                ));
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backGround,
+        appBar: _buildAppBar(),
+        body: Stack(
+          children: [
+            Column(
               children: [
-                LinearProgressIndicator(),
+                Visibility(
+                  visible: loddingBar,
+                  child: const LinearProgressIndicator(
+                    minHeight: 8,
+                  ),
+                ),
                 //searchBox(),
                 Expanded(
                   child: ListView(
@@ -104,7 +150,7 @@ class _HomeState extends State<Home> {
                       Container(
                         margin: const EdgeInsets.only(
                           top: 10,
-                          bottom: 20,
+                          bottom: 10,
                         ),
                         padding: const EdgeInsets.symmetric(
                             vertical: 0, horizontal: 20),
@@ -132,27 +178,22 @@ class _HomeState extends State<Home> {
                                       ),
                                     ),
                                   ]),
-                              Container(
-                                // height: 40,
-                                // width: 40,
-                                child: TextButton(
-                                    child: const Text(
-                                      "See all",
-                                      style: TextStyle(color: Colors.blue),
-                                    ),
-                                    onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ShowBranch()),
-                                        )),
-                              ),
+                              TextButton(
+                                  child: const Text(
+                                    "See all",
+                                    style: TextStyle(color: Colors.blue),
+                                  ),
+                                  onPressed: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ShowBranch()),
+                                      )),
                             ]),
                       ),
                       for (Pharmacy Pharm in _foundPharmacy.reversed)
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 20),
+                              vertical: 4, horizontal: 20),
                           child: PharmacyItem(
                             pharm: Pharm,
                           ),
@@ -162,8 +203,8 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -184,10 +225,9 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Widget buildCard({required Card card}) => Container(
+  Widget buildCard({required Card card}) => SizedBox(
         width: 100,
         //height: 200,
-
         child: ListTile(
           onTap: () {
             switch (card.action) {
@@ -195,7 +235,10 @@ class _HomeState extends State<Home> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MedicList()),
+                    MaterialPageRoute(
+                        builder: (context) => MedicList(
+                              cameraDescription: cameraDescription,
+                            )),
                   );
                 }
                 break;
@@ -277,7 +320,7 @@ class _HomeState extends State<Home> {
 
   Widget searchBox() {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.mainColor,
       ),
       child: Container(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
@@ -6,13 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MedicCard extends StatelessWidget {
-  final Image img;
+  final File img;
   final String? name;
   final int? bar;
   final int? pill;
   final DateTime? date;
   final int index;
-  final void Function(int) refresh;
+  final void Function(int) onDelete;
 
 
   const MedicCard({
@@ -23,7 +25,7 @@ class MedicCard extends StatelessWidget {
     this.pill,
     this.date,
     required this.index,
-    required this.refresh,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -160,8 +162,8 @@ class MedicCard extends StatelessWidget {
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(20.0)),
                   //const BorderRadius.all(Radius.circular(20.0)),
-                  child: Image.asset(
-                    AppImages.panadol,
+                  child: Image.file(
+                    img,
                     width: 400,
                     height: 230,
                     fit: BoxFit.fitWidth,
@@ -178,9 +180,10 @@ class MedicCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100),
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.close,size: 30,),
+                        icon: const Icon(Icons.close,size: 30,color: Colors.white,),
                         onPressed: () {
-                          refresh(index);
+                          img.delete();
+                          onDelete(index);
                         },
                       ),
                     )
