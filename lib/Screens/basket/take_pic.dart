@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:akrem/Screens/basket/ImagePreview.dart';
+import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +91,6 @@ class _TakePic extends State<TakePic> {
                       onPressed: () async {
                         setState(() {
                           lodding = true;
-                          camOn = false;
                         });
                         if (!_cameraController.value.isInitialized) {
                           return null;
@@ -98,11 +100,13 @@ class _TakePic extends State<TakePic> {
                         }
                         try {
                           XFile pic = await _cameraController.takePicture();
-                          _cameraController.dispose();
+                          //_cameraController.dispose();
                           setState(() {
                             lodding = false;
+                            //camOn = false;
                           });
-                          await Navigator.push(
+
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ImagePreview(file: pic)),
@@ -112,10 +116,10 @@ class _TakePic extends State<TakePic> {
                           debugPrint("takePicture error");
                           return null;
                         }
-                        cameraInitialize();
-                        setState(() {
-                          camOn = true;
-                        });
+                        // cameraInitialize();
+                        // setState(() {
+                        //   camOn = true;
+                        // });
 
                       }),
                 ),

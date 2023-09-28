@@ -21,6 +21,10 @@ class Validator {
   static String? validatePassword(String? password) {
     return (password?.length ?? 0) < 5 ? "Password is too short" : null;
   }
+
+  static String? validateEmpty(String? string) {
+    return (string?.length ?? 0) == 0 ? "" : null;
+  }
   static String? validateConfirmationPassword(String? password,String? confirmationPassword) {
     return password== confirmationPassword ? "Password is too short" : null;
   }

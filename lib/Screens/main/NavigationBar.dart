@@ -12,23 +12,26 @@ import 'package:flutter/material.dart';
 
 // void main() => runApp(const NavigationBarApp());
 
-
 class NavigationBarApp extends StatefulWidget {
   final List<CameraDescription> cameraDescription;
 
-  NavigationBarApp({super.key,
-   required this.cameraDescription,});
+  NavigationBarApp({
+    super.key,
+    required this.cameraDescription,
+  });
 
   @override
-  State<NavigationBarApp> createState() => _NavigationBarApp(cameraDescription: cameraDescription);
+  State<NavigationBarApp> createState() =>
+      _NavigationBarApp(cameraDescription: cameraDescription);
 }
 
 class _NavigationBarApp extends State<NavigationBarApp> {
-
   final List<CameraDescription> cameraDescription;
 
   _NavigationBarApp({
-   required this.cameraDescription,});
+    required this.cameraDescription,
+  });
+
   int currentPageIndex = 0;
   Image image = Image.asset(
     AppImages.profileIcon,
@@ -57,104 +60,102 @@ class _NavigationBarApp extends State<NavigationBarApp> {
     return Scaffold(
       extendBody: true,
       //extendBodyBehindAppBar: true,
-      bottomNavigationBar:
-          Padding(
-            padding: const EdgeInsets.only(bottom: 0,left: 0,right: 0),
-            child:
-            ClipRRect(
-
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                child: NavigationBar(
-                  onDestinationSelected: (int index) {
-                    setState(() {
-                      currentPageIndex = index;
-                    });
-                  },
-                  height: 4*15,
-                  //surfaceTintColor: Colors.red,
-                  //shadowColor: Colors.red,
-                  backgroundColor: Colors.white.withAlpha(150),
-                  indicatorColor: Colors.transparent,
-                  selectedIndex: currentPageIndex,
-                  destinations: <Widget>[
-                    NavigationDestination(
-                      selectedIcon: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            color: AppColors.mainColor,
-                          ),
-                          child: const Icon(Icons
-                              .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 0, left: 0, right: 0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+            child: NavigationBar(
+              onDestinationSelected: (int index) {
+                setState(() {
+                  currentPageIndex = index;
+                });
+              },
+              height: 4 * 15,
+              //surfaceTintColor: Colors.red,
+              //shadowColor: Colors.red,
+              backgroundColor: Colors.white.withAlpha(150),
+              indicatorColor: Colors.transparent,
+              selectedIndex: currentPageIndex,
+              destinations: <Widget>[
+                NavigationDestination(
+                  selectedIcon: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        color: AppColors.mainColor,
                       ),
-                      icon: const Icon(Icons.home_outlined),
-                      label: 'Home',
-                    ),
-                    NavigationDestination(
-                      icon: const Icon(Icons.explore),
-                      selectedIcon: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            color: AppColors.mainColor,
-                          ),
-                          child: const Icon(Icons
-                              .explore) //Image.asset(AppImages.boxIcon,scale: 6),
+                      child: const Icon(Icons
+                          .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
                       ),
-                      label: "fast order",
-                    ),
-                    NavigationDestination(
-                      icon: const Icon(Icons.attach_money),
-                      selectedIcon: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            color: AppColors.mainColor,
-                          ),
-                          child: const Icon(Icons
-                              .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
-                      ),
-                      label: "fund score",
-                    ),
-
-                    NavigationDestination(
-                      //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
-                      selectedIcon: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: AppColors.mainColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4), // Border radius
-                          child: ClipOval(child: image),
-                        ),
-                      ),
-
-                      icon: Container(
-                        height: 40,
-                        width: 40,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                          child: image,
-                        ),
-                      ),
-                      label: 'Profile',
-                    ),
-                  ],
+                  icon: const Icon(Icons.home_outlined),
+                  label: 'Home',
                 ),
-              ),
-            ),
+                NavigationDestination(
+                  icon: const Icon(Icons.explore),
+                  selectedIcon: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        color: AppColors.mainColor,
+                      ),
+                      child: const Icon(Icons
+                          .explore) //Image.asset(AppImages.boxIcon,scale: 6),
+                      ),
+                  label: "fast order",
+                ),
+                NavigationDestination(
+                  icon: const Icon(Icons.attach_money),
+                  selectedIcon: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        color: AppColors.mainColor,
+                      ),
+                      child: const Icon(Icons
+                          .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
+                      ),
+                  label: "fund score",
+                ),
+                NavigationDestination(
+                  //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
+                  selectedIcon: CircleAvatar(
+                    radius: 22,
+                    backgroundColor: AppColors.mainColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(4), // Border radius
+                      child: ClipOval(child: image),
+                    ),
+                  ),
 
+                  icon: Container(
+                    height: 40,
+                    width: 40,
+                    child: ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
+                      child: image,
+                    ),
+                  ),
+                  label: 'Profile',
+                ),
+              ],
+            ),
           ),
+        ),
+      ),
       body: <Widget>[
-        Home( cameraDescription: cameraDescription,),
-        ShowBranch(),
+        Home(
+          cameraDescription: cameraDescription,
+        ),
+        const Center(
+          child: Text("fast order"),
+        ),
         const Center(
           child: Text("fund page"),
         ),

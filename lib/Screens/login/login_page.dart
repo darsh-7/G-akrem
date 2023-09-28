@@ -101,6 +101,21 @@ class _LoginPage extends State<LoginPage> {
 
                   },
                   child: const Text("Login")),
+              Container(
+                margin: EdgeInsets.all(30),
+                width: 80,
+                decoration: BoxDecoration(
+                  color: AppColors.mainColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: RawMaterialButton(
+                    child: Text("Skip",style: TextStyle(fontSize: 20),), onPressed: ()  {
+                  SchedulerBinding.instance.addPostFrameCallback((_) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/main', (Route<dynamic> route) => false);
+                  });
+                }),
+              ),
               Expanded(
                 child: Container(),
               ),

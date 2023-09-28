@@ -8,7 +8,6 @@ import 'package:akrem/constants/medic.dart';
 import 'package:flutter/services.dart';
 import '../../services/log_manager.dart';
 import '../../services/validator.dart';
-import 'medic_list.dart';
 
 class AddMedic extends StatefulWidget {
   final File pic;
@@ -29,10 +28,8 @@ class _AddMedic extends State<AddMedic> {
   final _pillController = TextEditingController();
   final _dateController = TextEditingController();
 
-  late DateTime Date;
-
   Duration minExDate = const Duration(days: 3 * 7);
-  DateTime selectedDate = DateTime.now();
+  late DateTime selectedDate;
 
   final List<Card> cards = [
     Card(
@@ -147,7 +144,7 @@ class _AddMedic extends State<AddMedic> {
                     keyboardType: TextInputType.emailAddress,
                     hintText: "Name",
                     controller: _nameController,
-                    validator: Validator.validateName,
+                    validator: Validator.validateEmpty,
                     label: "Name",
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(20),
@@ -207,10 +204,10 @@ class _AddMedic extends State<AddMedic> {
                                     keyboardType: TextInputType.number,
                                     hintText: "bars",
                                     controller: _barController,
-                                    validator: Validator.validateName,
+                                    validator: Validator.validateEmpty,
                                     label: "bars",
                                     inputFormatters: [
-                                      LengthLimitingTextInputFormatter(20),
+                                      LengthLimitingTextInputFormatter(2),
                                     ],
                                   ),
                                 ),
@@ -287,7 +284,7 @@ class _AddMedic extends State<AddMedic> {
                                     keyboardType: TextInputType.number,
                                     hintText: "pills",
                                     controller: _pillController,
-                                    //validator: Validator.validateName,
+                                    validator: Validator.validateEmpty,
                                     label: "pills",
                                     inputFormatters: [
                                       LengthLimitingTextInputFormatter(2),
@@ -316,11 +313,12 @@ class _AddMedic extends State<AddMedic> {
                     controller: _dateController,
                     label: "Expiration date",
                     readOnly: true,
+                    validator: Validator.validateEmpty,
                     icon: Icon(Icons.calendar_today),
                     onTap: () async {
                       DateTime? newDate = await showDatePicker(
                           context: context,
-                          initialDate: selectedDate,
+                          initialDate: DateTime.now(),
                           firstDate: DateTime(2020),
                           lastDate: DateTime(2100));
 
@@ -345,7 +343,7 @@ class _AddMedic extends State<AddMedic> {
                   const SizedBox(height: 12),
                   ElevatedButton(
                       onPressed: () {
-                        //if (_formKey.currentState?.validate() == false) return;
+                        if (_formKey.currentState?.validate() == false) return;
 
                         if (selectedDate
                             .isAfter(DateTime.now().add(minExDate))) {

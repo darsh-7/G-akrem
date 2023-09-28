@@ -65,6 +65,7 @@ class ProfileScreen extends StatelessWidget {
 
             /// -- BUTTON
             SizedBox(
+              height: 48,
               width: 200,
               child: ElevatedButton(
                 //onPressed: () => Get.to(() => const UpdateProfileScreen()),
@@ -91,8 +92,6 @@ class ProfileScreen extends StatelessWidget {
 
             const Divider(),
             const SizedBox(height: 10),
-            ProfileMenuWidget(
-                title: "Information", icon: Icons.info, onPress: () {}),
             ProfileMenuWidget(
                 title: "About US", icon: Icons.info, onPress: () {}),
 
