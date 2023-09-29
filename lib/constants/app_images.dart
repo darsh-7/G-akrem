@@ -12,12 +12,15 @@ class AppImages {
   static const String emptyList = "assets/empty_list.jpg";
 
   //icons
-  static const String boxIcon = "assets/icons/box-open-fill-svgrepo-com.svg";
+  static const String donateBoxIcon = "assets/icons/donateBox.svg";
+  static const String emptyBoxIcon = "assets/icons/box-open-fill.svg";
   static const String donateFromHome = "assets/icons/hospital-doctor-medical-home-virus-mask-care-svgrepo-com.svg";
   static const String nearesBransh = "assets/icons/navigation-arrow-bold-svgrepo-com.svg";
-
   static const String fastDonation = "assets/icons/fast-forward-svgrepo-com.svg";
+  static const String donate = "assets/icons/donate.svg";
 
+
+  static const String pillIcon = "assets/icons/pill.svg";
   static const String homeIcon = "assets/icons/icon-box.png";
   static const String backIcon = "assets/icons/vector.png";
 

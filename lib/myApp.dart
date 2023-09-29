@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/basket/take_pic.dart';
@@ -6,6 +8,7 @@ import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/map_screen.dart';
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/main',
+      initialRoute: '/addMedic',
       routes: {
         //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
@@ -52,7 +55,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
         '/basket': (context) => MedicList(cameraDescription: cameraDescription,),
-        //'/addMedic': (context) => AddMedic(),
+        '/addMedic': (context) => AddMedic(pic: File(AppImages.profileIcon)),
         '/showPharm': (context) =>
             ShowPharm(pharm: Pharmacy.pharmacyList.first),
         '/cam': (context) =>

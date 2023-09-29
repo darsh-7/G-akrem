@@ -15,7 +15,7 @@ class EmptyItemsScreen extends StatelessWidget {
           Flexible(
             child: AspectRatio(
               aspectRatio: 1 / 1,
-              child: SvgPicture.asset(AppImages.boxIcon),
+              child: SvgPicture.asset(AppImages.emptyBoxIcon),
             ),
           ),
           Text(

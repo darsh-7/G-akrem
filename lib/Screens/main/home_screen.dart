@@ -37,13 +37,13 @@ class _HomeState extends State<Home> {
     Card(
         img: SvgPicture.asset(AppImages.donateFromHome), title: "Donate from home", action: 1),
     Card(img: Container(margin: EdgeInsets.all(8),child: SvgPicture.asset(AppImages.nearesBransh,)), title: "Nearest branch", action: 2),
-    Card(img: SvgPicture.asset(AppImages.boxIcon), title: "Donate to box", action: 3),
+    Card(img: Container(margin: EdgeInsets.all(8),child:SvgPicture.asset(AppImages.donateBoxIcon)), title: "Donate to box", action: 3),
     Card(
         img: SvgPicture.asset(AppImages.fastDonation),
         title: "Fast Donation order",
         action: 4),
     Card(
-        img: SvgPicture.asset(AppImages.donateFromHome), title: "Donate from home", action: 1),
+        img: Container(margin: EdgeInsets.all(8),child:SvgPicture.asset(AppImages.donate)), title: "Support US", action: 5),
   ];
 
   @override
@@ -135,7 +135,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       SizedBox(
-                        height: 100,
+                        height: 108,
                         child: ListView.separated(
                           // This next line does the trick.
                           scrollDirection: Axis.horizontal,

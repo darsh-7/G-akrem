@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/medic.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../services/log_manager.dart';
 import '../../services/validator.dart';
 
 class AddMedic extends StatefulWidget {
-  final File pic;
+  final File? pic;
 
   AddMedic({
     super.key,
@@ -38,7 +39,7 @@ class _AddMedic extends State<AddMedic> {
         action: 1,
         trigger: true),
     Card(
-        img: Image.asset(AppImages.mvrk),
+        img: SvgPicture.asset(AppImages.pillIcon),
         title: "Bar",
         action: 2,
         trigger: false),
@@ -101,7 +102,7 @@ class _AddMedic extends State<AddMedic> {
                     width: 400,
                     height: 300,
                     fit: BoxFit.fill,
-                  )??Image.asset(AppImages.pharmacy),
+                  )
                 ),
               ),
 
@@ -365,7 +366,7 @@ class _AddMedic extends State<AddMedic> {
                           return;
                         }
                         MedicManager.addMedic(
-                          img: widget.pic,
+                          img: widget.pic ?? File(AppImages.profileIcon),
                           name: _nameController.text,
                           bar: int.parse(_barController.text),
                           pills: int.parse(_pillController.text),
@@ -494,8 +495,8 @@ Widget buildCard({required Card card}) {
           AspectRatio(
             aspectRatio: 1 / 1,
             child: Container(
-              // width: 50,
-              // height: 50,
+               width: 50,
+               height: 50,
               child: card.img,
             ),
           ),
@@ -519,7 +520,7 @@ Widget buildCard({required Card card}) {
 }
 
 class Card {
-  final Image img;
+  final Widget img;
   final String title;
   final int? action;
   final bool trigger;
