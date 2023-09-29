@@ -1,5 +1,6 @@
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmptyItemsScreen extends StatelessWidget {
   const EmptyItemsScreen({super.key});
@@ -14,7 +15,7 @@ class EmptyItemsScreen extends StatelessWidget {
           Flexible(
             child: AspectRatio(
               aspectRatio: 1 / 1,
-              child: Image.asset(AppImages.emptyList),
+              child: SvgPicture.asset(AppImages.boxIcon),
             ),
           ),
           Text(

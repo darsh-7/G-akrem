@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      // debugShowCheckedModeBanner: false,
       title: 'Akrem',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/login',
+      initialRoute: '/main',
       routes: {
         //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),

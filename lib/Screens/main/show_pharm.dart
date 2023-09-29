@@ -1,8 +1,5 @@
 import 'package:akrem/Api/fake_api.dart';
-import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
-import '../../constants/medic.dart';
-import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
 import 'package:percent_indicator/percent_indicator.dart';
@@ -172,11 +169,11 @@ class ShowPharm extends StatelessWidget {
               thickness: 1.2,
             ),
             SizedBox(
-              height: 28,
+              height: 100,
             ),
             CircularPercentIndicator(
-              radius: 60.0,
-              lineWidth: 13.0,
+              radius: 100.0,
+              lineWidth: 20.0,
               animation: false,
               percent: pharm.boxStorage,
               center: Text(
@@ -188,7 +185,7 @@ class ShowPharm extends StatelessWidget {
                 "Box Storage",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 17.0,
+                    fontSize: 30.0,
                     overflow: TextOverflow.clip),
               ),
               circularStrokeCap: CircularStrokeCap.round,

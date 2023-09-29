@@ -7,6 +7,7 @@ import 'package:akrem/constants/app_colors.dart';
 import 'dart:math' as math;
 
 class Medic {
+ // final int id;
   final File img;
   final String name;
   final int? bar;

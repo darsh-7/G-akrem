@@ -4,6 +4,7 @@ import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
@@ -34,13 +35,15 @@ class _HomeState extends State<Home> {
 
   final List<Card> cards = [
     Card(
-        img: Image.asset(AppImages.mvrk), title: "Donate from home", action: 1),
-    Card(img: Image.asset(AppImages.mvrk), title: "Nearest branch", action: 2),
-    Card(img: Image.asset(AppImages.mvrk), title: "Donate to box", action: 3),
+        img: SvgPicture.asset(AppImages.donateFromHome), title: "Donate from home", action: 1),
+    Card(img: Container(margin: EdgeInsets.all(8),child: SvgPicture.asset(AppImages.nearesBransh,)), title: "Nearest branch", action: 2),
+    Card(img: SvgPicture.asset(AppImages.boxIcon), title: "Donate to box", action: 3),
     Card(
-        img: Image.asset(AppImages.mvrk),
+        img: SvgPicture.asset(AppImages.fastDonation),
         title: "Fast Donation order",
         action: 4),
+    Card(
+        img: SvgPicture.asset(AppImages.donateFromHome), title: "Donate from home", action: 1),
   ];
 
   @override
@@ -406,7 +409,7 @@ class _HomeState extends State<Home> {
 }
 
 class Card {
-  final Image img;
+  final Widget img;
   final String title;
   final int? action;
 

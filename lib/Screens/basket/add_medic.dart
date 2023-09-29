@@ -378,7 +378,9 @@ class _AddMedic extends State<AddMedic> {
                         Navigator.pop(context);
                         Navigator.pop(context);
                         Navigator.pop(context);
-
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("New medic Saved"),
+                        ));
                         //Navigator.popUntil(context, ModalRoute.withName('/basket'));
                       },
                       child: const Text("Save")),
@@ -414,7 +416,11 @@ class _AddMedic extends State<AddMedic> {
                       icon: const Icon(
                         Icons.arrow_back,
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
                     )),
               ),
             ],

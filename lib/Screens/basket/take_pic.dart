@@ -59,7 +59,7 @@ class _TakePic extends State<TakePic> {
 
   @override
   Widget build(BuildContext context) {
-    _cameraController.setFlashMode(FlashMode.always);
+    _cameraController.setFlashMode(FlashMode.auto);
     return Scaffold(
         body: Stack(children: <Widget>[
           Visibility(
