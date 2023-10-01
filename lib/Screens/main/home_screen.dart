@@ -4,10 +4,12 @@ import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
+import 'dart:io';
 
 class Home extends StatefulWidget {
   final List<CameraDescription> cameraDescription;
@@ -35,15 +37,33 @@ class _HomeState extends State<Home> {
 
   final List<Card> cards = [
     Card(
-        img: SvgPicture.asset(AppImages.donateFromHome), title: "Donate from home", action: 1),
-    Card(img: Container(margin: EdgeInsets.all(8),child: SvgPicture.asset(AppImages.nearesBransh,)), title: "Nearest branch", action: 2),
-    Card(img: Container(margin: EdgeInsets.all(8),child:SvgPicture.asset(AppImages.donateBoxIcon)), title: "Donate to box", action: 3),
+        img: SvgPicture.asset(AppImages.donateFromHome),
+        title: "Donate from home",
+        action: 1),
+    Card(
+        img: Container(
+            margin: EdgeInsets.all(8),
+            child: SvgPicture.asset(
+              AppImages.nearesBransh,
+            )),
+        title: "Nearest branch",
+        action: 2),
+    Card(
+        img: Container(
+            margin: EdgeInsets.all(8),
+            child: SvgPicture.asset(AppImages.donateBoxIcon)),
+        title: "Donate to box",
+        action: 3),
     Card(
         img: SvgPicture.asset(AppImages.fastDonation),
         title: "Fast Donation order",
         action: 4),
     Card(
-        img: Container(margin: EdgeInsets.all(8),child:SvgPicture.asset(AppImages.donate)), title: "Support US", action: 5),
+        img: Container(
+            margin: EdgeInsets.all(8),
+            child: SvgPicture.asset(AppImages.donate)),
+        title: "Support US",
+        action: 5),
   ];
 
   @override
@@ -72,9 +92,9 @@ class _HomeState extends State<Home> {
             builder: (context) => AlertDialog(
                   actions: [
                     TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                        onPressed: () => {
+                              SystemNavigator.pop(),
+                            },
                         child: const Text(
                           "NO",
                           style: TextStyle(color: AppColors.positives),
@@ -128,7 +148,7 @@ class _HomeState extends State<Home> {
                             /*defining default style is optional */
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "(4)", //"(${_foundPharmacy.length})",
+                                  text: "(5)",
                                   style: TextStyle(color: Colors.red)),
                             ],
                           ),

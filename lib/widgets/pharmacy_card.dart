@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Api/fake_api.dart';
+import '../constants/app_images.dart';
 
 class PharmacyItem extends StatelessWidget {
   final Pharmacy pharm;
@@ -12,6 +13,7 @@ class PharmacyItem extends StatelessWidget {
     Key? key,
     required this.pharm,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,95 +39,6 @@ class PharmacyItem extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        // onTap: () {
-        //   showCupertinoModalPopup(
-        //     context: context,
-        //     builder: (BuildContext builder) {
-        //       return CupertinoPopupSurface(
-        //         child: Container(
-        //             color: Colors.white,
-        //             alignment: Alignment.center,
-        //             width: double.infinity,
-        //             height: 400,
-        //             child: Container(
-        //                 margin: const EdgeInsets.all(10.0),
-        //                 child: Column(
-        //                   crossAxisAlignment: CrossAxisAlignment.stretch,
-        //                   children: [
-        //                     RichText(
-        //                       text: TextSpan(
-        //                         text: 'Name ',
-        //                         style: const TextStyle(
-        //                             fontSize: 20,
-        //                             fontWeight: FontWeight.w500,
-        //                             color: Colors.grey),
-        //                         /*defining default style is optional */
-        //                         children: <TextSpan>[
-        //                           TextSpan(
-        //                               text: ": ${name}",
-        //                               style:
-        //                                   const TextStyle(color: Colors.black)),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                     RichText(
-        //                       text: TextSpan(
-        //                         text: 'Location ',
-        //                         style: const TextStyle(
-        //                             fontSize: 20,
-        //                             fontWeight: FontWeight.w500,
-        //                             color: Colors.grey),
-        //                         /*defining default style is optional */
-        //                         children: <TextSpan>[
-        //                           TextSpan(
-        //                               text: ": ${locName}",
-        //                               style:
-        //                                   const TextStyle(color: Colors.black)),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                     RichText(
-        //                       text: TextSpan(
-        //                         text: 'Time ',
-        //                         style: const TextStyle(
-        //                             fontSize: 20,
-        //                             fontWeight: FontWeight.w500,
-        //                             color: Colors.grey),
-        //                         /*defining default style is optional */
-        //                         children: <TextSpan>[
-        //                           TextSpan(
-        //                               text: ": ${time}",
-        //                               style:
-        //                                   const TextStyle(color: Colors.black)),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                     RichText(
-        //                       text: const TextSpan(
-        //                         text: 'Distance ',
-        //                         style: TextStyle(
-        //                             fontSize: 20,
-        //                             fontWeight: FontWeight.w500,
-        //                             color: Colors.grey),
-        //                         /*defining default style is optional */
-        //                         children: <TextSpan>[
-        //                           TextSpan(
-        //                               text: ": ${"NOT EX"} km",
-        //                               style:
-        //                                   TextStyle(color: Colors.black)),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                     Image.asset(
-        //                       "assets/Pharmacy.png",
-        //                       scale: 1,
-        //                     ),
-        //                   ],
-        //                 ))),
-        //       );
-        //     },
-        //   );
-        // },
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
@@ -157,12 +70,29 @@ class PharmacyItem extends StatelessWidget {
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(20.0)),
                   //const BorderRadius.all(Radius.circular(20.0)),
-                  child: Image.network(
-                    pharm.img,
-                    width: 400,
-                    height: 230,
+                  child:
+                  FadeInImage(
+                    image:NetworkImage(pharm.img),
+                    placeholder: const AssetImage(AppImages.noImage),
+                    imageErrorBuilder:(context, error, stackTrace) {
+                      return Image.asset(AppImages.noImage,
+                          fit: BoxFit.fitWidth
+                      );
+                    },
                     fit: BoxFit.fitWidth,
                   ),
+                  // CachedNetworkImage(
+                  //   imageUrl:pharm.img,
+                  //   placeholder: (context, url) => CircularProgressIndicator(),
+                  //   errorWidget: (context, url, error) => Icon(Icons.error),
+                  // ),
+
+                  // FadeInImage(image: NetworkImage(pharm.img), placeholder: AssetImage(AppImages.noImage),
+                  //     width: 400,
+                  //     height: 230,
+                  //     fit: BoxFit.fitWidth,
+                  // ),
+
                 ),
               ),
               Container(
@@ -261,25 +191,6 @@ class PharmacyItem extends StatelessWidget {
           ],
         ),
 
-        // trailing: Container(
-        //   padding: const EdgeInsets.all(0),
-        //   margin: const EdgeInsets.symmetric(vertical: 12),
-        //   height: 35,
-        //   width: 35,
-        //   decoration: BoxDecoration(
-        //     color: tdRed,
-        //     borderRadius: BorderRadius.circular(5),
-        //   ),
-        //   child: IconButton(
-        //     color: Colors.white,
-        //     iconSize: 18,
-        //     icon: const Icon(Icons.delete),
-        //     onPressed: () {
-        //       // print('Clicked on delete icon');
-        //       //onDeleteItem(todo.id);
-        //     },
-        //   ),
-        // ),
       ),
     );
   }

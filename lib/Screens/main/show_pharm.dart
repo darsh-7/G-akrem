@@ -5,8 +5,10 @@ import 'dart:math' as math;
 import 'package:percent_indicator/percent_indicator.dart';
 
 late Color storageColor;
+
 class ShowPharm extends StatelessWidget {
   final Pharmacy pharm;
+
   const ShowPharm({
     Key? key,
     required this.pharm,
@@ -14,15 +16,12 @@ class ShowPharm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
-    if (pharm.boxStorage<0.4) {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    if (pharm.boxStorage < 0.4) {
       storageColor = Colors.green;
-    } else if (pharm.boxStorage<0.7){
+    } else if (pharm.boxStorage < 0.7) {
       storageColor = Colors.orange;
-    } else if (pharm.boxStorage<1){
+    } else if (pharm.boxStorage < 1) {
       storageColor = Colors.red;
     }
 
@@ -43,7 +42,10 @@ class ShowPharm extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
                         color: Colors.black54.withOpacity(0.8),
                       ),
                       child: IconButton(
@@ -207,8 +209,8 @@ class ShowPharm extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: RawMaterialButton(
-                          child:
-                          const Text("Call", style: TextStyle(fontSize: 20)),
+                          child: const Text("Call",
+                              style: TextStyle(fontSize: 20)),
                           onPressed: () {
                             Navigator.pop(context);
                           }),

@@ -19,7 +19,9 @@ class ProfileScreen extends StatelessWidget {
         title: Text("Profile", style: Theme.of(context).textTheme.headline4),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+              //  Get.changeTheme();
+              },
               icon: Icon(isDark ? Icons.sunny : Icons.nightlight))
         ],
       ),

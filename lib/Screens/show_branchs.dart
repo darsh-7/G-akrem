@@ -1,10 +1,8 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/widgets/appbarr.dart';
 import 'package:flutter/material.dart';
 import '../widgets/pharmacy_card.dart';
 import '../constants/app_colors.dart';
-import 'dart:math' as math;
 
 class ShowBranch extends StatefulWidget {
   ShowBranch({Key? key}) : super(key: key);
@@ -30,79 +28,56 @@ class _ShowBranchState extends State<ShowBranch> {
       backgroundColor: AppColors.backGround,
       extendBodyBehindAppBar: false,
       appBar: _buildAppBar(),
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              // leading: IconButton(
-              //   icon: const Icon(Icons.arrow_back),
-              //   onPressed: () {
-              //     Navigator.pop(context);
-              //   },
-              // ),
-              title: Container(
-                color: Colors.transparent,
-                child: searchBox(),
+      body: Stack(
+        children: [
+          Container(
+            //padding: const EdgeInsets.only(top: 72),
+            //color: Colors.transparent,
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  color: AppColors.mainColor,
+                    child: Column(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.only(bottom: 12),
 
-                // const Text("Donation branch's")
-              ),
-              centerTitle: true,
-              elevation: 10.0,
-              automaticallyImplyLeading: false,
-              expandedHeight: 50,
-              floating: true,
-              snap: true,
-              backgroundColor: AppColors.mainColor,
-            ),
-            SliverAppBar(
-              title: Container(
-                color: Colors.transparent,
-                child:
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        color: Colors.transparent,
+                        child: Column(
+                          children: [
+                            searchBox(),
+                          ],
+                        )),
+                    Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text("City"),
+                          Text("City"),
+                        ],
+                      ),
+                    ),
+                  ],
+                )),
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.only(
+                        bottom: 20, right: 20, left: 20, top: 10),
                     children: [
-                      Text("data"),
-                      Text("data"),
+                      for (Pharmacy Pharm in _foundPharmacy.reversed)
+                        PharmacyItem(
+                          pharm: Pharm,
+                        ),
                     ],
                   ),
-
-                // const Text("Donation branch's")
-              ),
-              centerTitle: true,
-              elevation: 10.0,
-              automaticallyImplyLeading: false,
-              expandedHeight: 50,
-              floating: true,
-              snap: true,
-              backgroundColor: AppColors.mainColor,
+                )
+              ],
             ),
-          ];
-        },
-        // list of images for scrolling
-        body: Stack(
-          children: [
-            Container(
-              //padding: const EdgeInsets.only(top: 72),
-              //color: Colors.transparent,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      padding: const EdgeInsets.only(
-                          bottom: 20, right: 20, left: 20, top: 10),
-                      children: [
-                        for (Pharmacy Pharm in _foundPharmacy.reversed)
-                          PharmacyItem(
-                            pharm: Pharm,
-                          ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -162,7 +137,7 @@ class _ShowBranchState extends State<ShowBranch> {
             ),
             border: InputBorder.none,
             hintText: 'Search',
-            hintStyle: TextStyle(color: Colors.black),
+            hintStyle: TextStyle(color: Colors.grey),
           ),
         ),
       ),
@@ -177,14 +152,4 @@ class _ShowBranchState extends State<ShowBranch> {
       title: const Text("Searsh for branch"),
     );
   }
-}
-
-class Card {
-  final Image img;
-  final String title;
-
-  const Card({
-    required this.img,
-    required this.title,
-  });
 }

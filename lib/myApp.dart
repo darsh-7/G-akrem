@@ -13,6 +13,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/main/show_pharm.dart';
+import 'Screens/main/testpop.datr.dart';
 
 const mainColor = Color(0xFF4672ff);
 
@@ -47,10 +48,11 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/addMedic',
+      initialRoute: '/login',
       routes: {
         //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
+        '/loginn': (context) => LoginPagee(),
         '/main': (context) => NavigationBarApp(cameraDescription: cameraDescription,),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),

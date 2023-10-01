@@ -1,21 +1,20 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:akrem/constants/app_colors.dart';
+import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/services/validator.dart';
+import 'package:akrem/widgets/input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:akrem/widgets/input.dart';
-import 'package:akrem/widgets/appbar.dart';
-import 'package:akrem/widgets/scrollable_column.dart';
-import 'package:akrem/services/validator.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage() : super();
+class LoginPagee extends StatefulWidget {
+  const LoginPagee({super.key});
+
   @override
-  _RegisterPage createState() => _RegisterPage();
+  State<LoginPagee> createState() => _LoginPageState();
 }
 
-class _RegisterPage extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPagee> {
   late Color myColor;
   late Size mediaSize;
 
@@ -38,10 +37,10 @@ class _RegisterPage extends State<RegisterPage> {
       decoration: BoxDecoration(
         color: myColor,
         image: DecorationImage(
-          image: const AssetImage("assets/medicBackground.png"),
+          image: const AssetImage(AppImages.profileIcon),
           fit: BoxFit.cover,
           colorFilter:
-          ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
+              ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
         ),
       ),
       child: Scaffold(
@@ -84,9 +83,9 @@ class _RegisterPage extends State<RegisterPage> {
       child: Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            )),
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        )),
         child: Padding(
           padding: const EdgeInsets.all(32.0),
           child: _buildForm(),
@@ -208,7 +207,7 @@ class _RegisterPage extends State<RegisterPage> {
                                     children: [
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
+                                            CrossAxisAlignment.stretch,
                                         children: [
                                           Padding(
                                               padding: EdgeInsets.only(
@@ -225,8 +224,8 @@ class _RegisterPage extends State<RegisterPage> {
                                               children: <TextSpan>[
                                                 TextSpan(
                                                     text:
-                                                    "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
-                                                        " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
+                                                        "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
+                                                            " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
                                                     style: const TextStyle(
                                                         color: Colors.black)),
                                               ],
@@ -248,11 +247,11 @@ class _RegisterPage extends State<RegisterPage> {
               ),
               value: _agreeWithTermsAndConditions,
               onChanged: (checked) => setState(
-                      () => _agreeWithTermsAndConditions = checked ?? false),
+                  () => _agreeWithTermsAndConditions = checked ?? false),
             ),
           ]),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 20),
         _buildOtherLogin(),
       ],
     );
@@ -269,23 +268,23 @@ class _RegisterPage extends State<RegisterPage> {
     return Center(
       child: Column(
         children: [
-          const SizedBox(height: 4),
+          const SizedBox(height: 12),
           ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState?.validate() == false) return;
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("Close"))
-                      ],
-                      title: const Text("form content"),
-                      content: const Text("we are good"),
-                    ));
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("Close"))
+                          ],
+                          title: const Text("form content"),
+                          content: const Text("we are good"),
+                        ));
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
@@ -295,30 +294,30 @@ class _RegisterPage extends State<RegisterPage> {
                 backgroundColor: myColor,
               ),
               child: const Text("Register")),
-          const SizedBox(height: 24),
-          _buildGreyText("Or Register with"),
+          const SizedBox(height: 12),
+          _buildGreyText("Or Login with"),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Tab(
                   icon: Image.asset(
-                    "assets/socialIcons/google.png",
-                    width: 32,
-                    height: 32,
-                  )),
+                "assets/socialIcons/google.png",
+                width: 32,
+                height: 32,
+              )),
               Tab(
                   icon: Image.asset(
-                    "assets/socialIcons/facebook.png",
-                    width: 32,
-                    height: 32,
-                  )),
+                "assets/socialIcons/facebook.png",
+                width: 32,
+                height: 32,
+              )),
               Tab(
                   icon: Image.asset(
-                    "assets/socialIcons/github.png",
-                    width: 32,
-                    height: 32,
-                  )),
+                "assets/socialIcons/github.png",
+                width: 32,
+                height: 32,
+              )),
             ],
           ),
           Row(
