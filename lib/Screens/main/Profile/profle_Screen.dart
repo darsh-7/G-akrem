@@ -1,7 +1,9 @@
+import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/widgets/profle_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 Color tPrimaryColor = AppColors.mainColor;
 Color tDarkColor = AppColors.backGroundBar;
@@ -16,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         // leading: IconButton(onPressed:( )/* () => Get.back()*/, icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
-        title: Text("Profile", style: Theme.of(context).textTheme.headline4),
+        title: Text("Profile"),
         actions: [
           IconButton(
               onPressed: () {
@@ -103,29 +105,30 @@ class ProfileScreen extends StatelessWidget {
                 textColor: Colors.red,
                 endIcon: false,
                 onPress: () {
-                  // Get.defaultDialog(
-                  //   title: "LOGOUT",
-                  //   titleStyle: const TextStyle(fontSize: 20),
-                  //   content: const Padding(
-                  //     padding: EdgeInsets.symmetric(vertical: 15.0),
-                  //     child: Text("Are you sure, you want to Logout?"),
-                  //   ),
-                  //   confirm: Expanded(
-                  //     child: ElevatedButton(
-                  //       onPressed: () {
-                  //       },
-                  //       style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, side: BorderSide.none),
-                  //       child: const Text("Yes"),
-                  //     ),
-                  //   ),
-                  //   cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No")),
-                  // );
+                  Get.defaultDialog(
+                    title: "LOGOUT",
+                    titleStyle: const TextStyle(fontSize: 20),
+                    content: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15.0),
+                      child: Text("Are you sure, you want to Logout?"),
+                    ),
+                    confirm: Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.offAll(const LoginPage());
+                          // todo : remove all temp data and local storage
+                        },
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, side: BorderSide.none),
+                        child: const Text("Yes"),
+                      ),
+                    ),
+                    cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No")),
+                  );
                 }),
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Container(
-                  child: const SizedBox(
+              const SizedBox(
                 height: 20,
-              )),
+              ),
               Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                 Container(
                   height: 30,
@@ -134,9 +137,9 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         RichText(
-                          text: TextSpan(
+                          text: const TextSpan(
                             text: 'Developed by ',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
@@ -145,7 +148,7 @@ class ProfileScreen extends StatelessWidget {
                               TextSpan(
                                   text: "Ｍ𝕒ᐯ𝕖尺𝕚𝕔K𝕤",
                                   style: TextStyle(color: AppColors.mainColor)),
-                              const TextSpan(
+                              TextSpan(
                                 text: " Team",
                                 //style: TextStyle(color: Colors.red)
                               ),

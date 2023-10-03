@@ -8,9 +8,13 @@ import 'package:akrem/widgets/scrollable_column.dart';
 import 'package:akrem/services/validator.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage() : super();
+
   @override
   _RegisterPage createState() => _RegisterPage();
 }
@@ -25,8 +29,9 @@ class _RegisterPage extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _passwordConfirmationController = TextEditingController();
+  final _phoneController = TextEditingController();
+  bool hasWhatsApp = false;
   bool _agreeWithTermsAndConditions = false;
-  bool rememberUser = false;
   double statusBarHeight = 20;
 
   @override
@@ -41,7 +46,7 @@ class _RegisterPage extends State<RegisterPage> {
           image: const AssetImage("assets/medicBackground.png"),
           fit: BoxFit.cover,
           colorFilter:
-          ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
+              ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
         ),
       ),
       child: Scaffold(
@@ -84,9 +89,9 @@ class _RegisterPage extends State<RegisterPage> {
       child: Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            )),
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        )),
         child: Padding(
           padding: const EdgeInsets.all(32.0),
           child: _buildForm(),
@@ -108,7 +113,7 @@ class _RegisterPage extends State<RegisterPage> {
                   color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
             ),
             _buildGreyText("Please Register with your information"),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +144,7 @@ class _RegisterPage extends State<RegisterPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             CustomInputField(
               keyboardType: TextInputType.emailAddress,
               hintText: "Email",
@@ -150,7 +155,7 @@ class _RegisterPage extends State<RegisterPage> {
                 LengthLimitingTextInputFormatter(360),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             CustomInputField(
               keyboardType: TextInputType.visiblePassword,
               hintText: "Password",
@@ -162,7 +167,7 @@ class _RegisterPage extends State<RegisterPage> {
                 LengthLimitingTextInputFormatter(100),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             CustomInputField(
               keyboardType: TextInputType.visiblePassword,
               hintText: "Password Confirmation",
@@ -170,15 +175,43 @@ class _RegisterPage extends State<RegisterPage> {
               obscureText: true,
               controller: _passwordConfirmationController,
               validator: (String? password) {
-                if (password == null) {
-                  return null;
-                }
-                if (password != _passwordConfirmationController.value.text) {
+                if (_passwordConfirmationController.text.isEmpty ||
+                    password != _passwordConfirmationController.text) {
                   return "Password is not confirmed";
+                }
+                if (password == _passwordConfirmationController.text) {
+                  return null;
                 }
               },
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomInputField(
+                    keyboardType: TextInputType.number,
+                    hintText: "Phone",
+                    label: "Phone",
+                    //obscureText: true,
+                    controller: _phoneController,
+                    validator: Validator.validatePhone,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(11),
+                    ],
+                    width: 260,
+                  ),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    child: Checkbox(
+                      value: hasWhatsApp,
+                      onChanged: (checked) =>
+                          setState(() => hasWhatsApp = checked ?? false),
+                    ),
+                  )
+                ]),
+            const SizedBox(height: 12),
             CustomCheckbox(
               label: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -204,41 +237,40 @@ class _RegisterPage extends State<RegisterPage> {
                                 alignment: Alignment.center,
                                 width: double.infinity,
                                 height: mediaSize.height,
-                                child: ListView(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
+                                child: ListView(children: [
+                                  Column(
+                                    crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
-                                        children: [
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: statusBarHeight),
-                                              child: null),
-                                          RichText(
-                                            text: TextSpan(
-                                              text: 'good to see you \n',
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.grey),
-                                              /*defining default style is optional */
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                    text:
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: statusBarHeight),
+                                          child: null),
+                                      RichText(
+                                        text: const TextSpan(
+                                          text: 'good to see you \n',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey),
+                                          /*defining default style is optional */
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text:
                                                     "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
-                                                        " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
-                                                    style: const TextStyle(
-                                                        color: Colors.black)),
-                                              ],
-                                            ),
-                                          ),
-                                          Image.asset(
-                                            "assets/Pharmacy.png",
-                                            scale: 1,
-                                          ),
-                                        ],
-                                      )
-                                    ])),
+                                                    " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
+                                                style: TextStyle(
+                                                    color: Colors.black)),
+                                          ],
+                                        ),
+                                      ),
+                                      Image.asset(
+                                        "assets/Pharmacy.png",
+                                        scale: 1,
+                                      ),
+                                    ],
+                                  )
+                                ])),
                           );
                         },
                       );
@@ -248,7 +280,7 @@ class _RegisterPage extends State<RegisterPage> {
               ),
               value: _agreeWithTermsAndConditions,
               onChanged: (checked) => setState(
-                      () => _agreeWithTermsAndConditions = checked ?? false),
+                  () => _agreeWithTermsAndConditions = checked ?? false),
             ),
           ]),
         ),
@@ -276,16 +308,19 @@ class _RegisterPage extends State<RegisterPage> {
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      actions: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("Close"))
-                      ],
-                      title: const Text("form content"),
-                      content: const Text("we are good"),
-                    ));
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: const Text("Close"))
+                          ],
+                          title: const Text("form content"),
+                          content: const Text("we are good"),
+                        ));
+                if (_agreeWithTermsAndConditions != true) {
+                  return;
+                }
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
@@ -295,7 +330,7 @@ class _RegisterPage extends State<RegisterPage> {
                 backgroundColor: myColor,
               ),
               child: const Text("Register")),
-          const SizedBox(height: 24),
+          const SizedBox(height: 12),
           _buildGreyText("Or Register with"),
           const SizedBox(height: 8),
           Row(
@@ -303,22 +338,22 @@ class _RegisterPage extends State<RegisterPage> {
             children: [
               Tab(
                   icon: Image.asset(
-                    "assets/socialIcons/google.png",
-                    width: 32,
-                    height: 32,
-                  )),
+                "assets/socialIcons/google.png",
+                width: 32,
+                height: 32,
+              )),
               Tab(
                   icon: Image.asset(
-                    "assets/socialIcons/facebook.png",
-                    width: 32,
-                    height: 32,
-                  )),
+                "assets/socialIcons/facebook.png",
+                width: 32,
+                height: 32,
+              )),
               Tab(
                   icon: Image.asset(
-                    "assets/socialIcons/github.png",
-                    width: 32,
-                    height: 32,
-                  )),
+                "assets/socialIcons/github.png",
+                width: 32,
+                height: 32,
+              )),
             ],
           ),
           Row(
@@ -334,10 +369,7 @@ class _RegisterPage extends State<RegisterPage> {
               TextButton(
                 child: const Text("Login"),
                 onPressed: () => {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/login', (Route<dynamic> route) => false);
-                  })
+                  Get.offAll(const LoginPage()),
                 },
               ),
             ],

@@ -4,6 +4,8 @@ import '../../constants/app_colors.dart';
 import 'dart:math' as math;
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../constants/app_images.dart';
+
 late Color storageColor;
 
 class ShowPharm extends StatelessWidget {
@@ -42,10 +44,8 @@ class ShowPharm extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(30)),
                         color: Colors.black54.withOpacity(0.8),
                       ),
                       child: IconButton(
@@ -68,12 +68,25 @@ class ShowPharm extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.only(top: statusBarHeight), child: null),
             Stack(children: <Widget>[
-              ClipRRect(
-                child: Image.network(
-                  pharm.img,
-                  width: 400,
-                  height: 230,
-                  fit: BoxFit.fitWidth,
+              AspectRatio(
+                aspectRatio: 2 / 1,
+                child: ClipRRect(
+                  // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(20.0)),
+                  //const BorderRadius.all(Radius.circular(20.0)),
+                  child:
+                  FadeInImage(
+                    image:NetworkImage(pharm.img),
+                    placeholder: const AssetImage(AppImages.noImage),
+                    imageErrorBuilder:(context, error, stackTrace) {
+                      return Image.asset(AppImages.noImage,
+                          fit: BoxFit.fitWidth
+                      );
+                    },
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
               const Center(
@@ -170,7 +183,7 @@ class ShowPharm extends StatelessWidget {
               endIndent: 15,
               thickness: 1.2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             CircularPercentIndicator(

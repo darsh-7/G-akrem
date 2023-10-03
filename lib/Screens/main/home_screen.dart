@@ -2,33 +2,23 @@ import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
-import 'dart:io';
 
 class Home extends StatefulWidget {
-  final List<CameraDescription> cameraDescription;
-
   Home({
-    required this.cameraDescription,
     super.key,
   });
 
   @override
-  State<Home> createState() => _HomeState(cameraDescription: cameraDescription);
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  late List<CameraDescription> cameraDescription;
-
-  _HomeState({
-    required this.cameraDescription,
-  });
 
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
@@ -260,7 +250,6 @@ class _HomeState extends State<Home> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => MedicList(
-                              cameraDescription: cameraDescription,
                             )),
                   );
                 }

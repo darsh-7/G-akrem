@@ -3,7 +3,7 @@ class Validator {
 
   static String? validateName(String? name) {
     if ((name?.length ?? 0) < 3 ) {
-      return "Provided name is very short" ;
+      return "Name is very short" ;
     }
     if (name == null) {
       return null;
@@ -11,7 +11,7 @@ class Validator {
     bool nameValid = RegExp(r"^[a-zA-Z]+").hasMatch(name);
     return nameValid ? null : "Name is not valid p";
   }
-  static String? validatePhone({String? phone}) {
+  static String? validatePhone(String? phone) {
     return (phone?.length ?? 0) != 11 ? "Provided phone number like 01XXXXXXXXX" : null;
   }
   static String? validateCity(String? city) {

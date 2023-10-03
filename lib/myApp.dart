@@ -11,6 +11,7 @@ import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'Screens/main/show_pharm.dart';
 import 'Screens/main/testpop.datr.dart';
@@ -18,15 +19,13 @@ import 'Screens/main/testpop.datr.dart';
 const mainColor = Color(0xFF4672ff);
 
 class MyApp extends StatelessWidget {
-  final List<CameraDescription> cameraDescription;
 
-  MyApp({super.key,
-    required this.cameraDescription,});
+  MyApp({super.key,});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       // debugShowCheckedModeBanner: false,
       title: 'Akrem',
       theme: ThemeData(
@@ -53,15 +52,15 @@ class MyApp extends StatelessWidget {
         //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
         '/loginn': (context) => LoginPagee(),
-        '/main': (context) => NavigationBarApp(cameraDescription: cameraDescription,),
+        '/main': (context) => NavigationBarApp(),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
-        '/basket': (context) => MedicList(cameraDescription: cameraDescription,),
+        '/basket': (context) => MedicList(),
         '/addMedic': (context) => AddMedic(pic: File(AppImages.profileIcon)),
         '/showPharm': (context) =>
             ShowPharm(pharm: Pharmacy.pharmacyList.first),
         '/cam': (context) =>
-            TakePic(cameraDescription: cameraDescription),
+            TakePic(),
 
       },
     );

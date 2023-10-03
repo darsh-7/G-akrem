@@ -1,3 +1,4 @@
+import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,9 @@ import 'package:akrem/widgets/input.dart';
 import 'package:akrem/services/validator.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+
+import '../main/NavigationBar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage() : super();
@@ -36,7 +40,7 @@ class _LoginPage extends State<LoginPage> {
           image: const AssetImage("assets/medicBackground.png"),
           fit: BoxFit.cover,
           colorFilter:
-          ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
+              ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
         ),
       ),
       child: Scaffold(
@@ -79,11 +83,11 @@ class _LoginPage extends State<LoginPage> {
       child: Card(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
-            )),
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        )),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 4,right: 8,left: 8),
+          padding: const EdgeInsets.only(bottom: 4, right: 8, left: 8),
           child: _buildForm(),
         ),
       ),
@@ -97,7 +101,7 @@ class _LoginPage extends State<LoginPage> {
         Container(
           height: 572,
           width: double.infinity,
-          child:         ListView(
+          child: ListView(
             children: [
               Form(
                 key: _formKey,
@@ -105,7 +109,9 @@ class _LoginPage extends State<LoginPage> {
                   Text(
                     "Welcome",
                     style: TextStyle(
-                        color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
+                        color: myColor,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w500),
                   ),
                   _buildGreyText("Please login with your information"),
                   const SizedBox(height: 20),
@@ -170,13 +176,6 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  Widget _buildGreyText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(color: Colors.grey),
-    );
-  }
-
   Widget _buildOtherLogin() {
     return Center(
       child: Column(
@@ -205,10 +204,7 @@ class _LoginPage extends State<LoginPage> {
               //   return;
               // }
 
-              SchedulerBinding.instance.addPostFrameCallback((_) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/main', (Route<dynamic> route) => false);
-              });
+              Get.offAll( NavigationBarApp());
             },
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
@@ -231,13 +227,10 @@ class _LoginPage extends State<LoginPage> {
                 shape: const StadiumBorder(),
                 child: const Text(
                   "Skip",
-                  style: TextStyle(fontSize: 20,color: Colors.grey),
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
                 onPressed: () {
-                  SchedulerBinding.instance.addPostFrameCallback((_) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/main', (Route<dynamic> route) => false);
-                  });
+                  Get.offAll(  NavigationBarApp());
                 }),
           ),
           _buildGreyText("Or Login with"),
@@ -245,9 +238,24 @@ class _LoginPage extends State<LoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Tab(icon: Image.asset("assets/socialIcons/google.png",width: 32,height: 32,)),
-              Tab(icon: Image.asset("assets/socialIcons/facebook.png",width: 32,height: 32,)),
-              Tab(icon: Image.asset("assets/socialIcons/github.png",width: 32,height: 32,)),
+              Tab(
+                  icon: Image.asset(
+                "assets/socialIcons/google.png",
+                width: 32,
+                height: 32,
+              )),
+              Tab(
+                  icon: Image.asset(
+                "assets/socialIcons/facebook.png",
+                width: 32,
+                height: 32,
+              )),
+              Tab(
+                  icon: Image.asset(
+                "assets/socialIcons/github.png",
+                width: 32,
+                height: 32,
+              )),
             ],
           ),
           Row(
@@ -262,13 +270,19 @@ class _LoginPage extends State<LoginPage> {
               ),
               TextButton(
                 child: const Text("Register"),
-                onPressed: () =>
-                {Navigator.of(context).pushNamed("/register")},
+                onPressed: () => {Navigator.of(context).pushNamed("/register")},
               ),
             ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildGreyText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(color: Colors.grey),
     );
   }
 }

@@ -9,24 +9,18 @@ import 'add_medic.dart';
 import 'empty_items.dart';
 
 class MedicList extends StatefulWidget {
-  final List<CameraDescription> cameraDescription;
 
   MedicList({
     super.key,
-    required this.cameraDescription,
   });
 
   @override
   State<MedicList> createState() =>
-      _MedicList(cameraDescription: cameraDescription);
+      _MedicList();
 }
 
 class _MedicList extends State<MedicList> {
-  final List<CameraDescription> cameraDescription;
 
-  _MedicList({
-    required this.cameraDescription,
-  });
 
   static List<Medic> foundMedic = MedicManager.medics;
   late List<Medic> _foundMedic;
@@ -66,7 +60,7 @@ class _MedicList extends State<MedicList> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      TakePic(cameraDescription: cameraDescription)));
+                      TakePic()));
 
           // await Navigator.push(
           //   context,

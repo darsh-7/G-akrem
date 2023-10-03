@@ -7,31 +7,22 @@ import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// Flutter code sample for [NavigationBar].
 
 // void main() => runApp(const NavigationBarApp());
 
 class NavigationBarApp extends StatefulWidget {
-  final List<CameraDescription> cameraDescription;
-
   NavigationBarApp({
     super.key,
-    required this.cameraDescription,
   });
 
   @override
-  State<NavigationBarApp> createState() =>
-      _NavigationBarApp(cameraDescription: cameraDescription);
+  State<NavigationBarApp> createState() => _NavigationBarApp();
 }
 
 class _NavigationBarApp extends State<NavigationBarApp> {
-  final List<CameraDescription> cameraDescription;
-
-  _NavigationBarApp({
-    required this.cameraDescription,
-  });
-
   int currentPageIndex = 0;
   Image image = Image.asset(
     AppImages.profileIcon,
@@ -63,7 +54,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 0, left: 0, right: 0),
         child: ClipRRect(
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
@@ -95,18 +86,24 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: const Icon(Icons.explore),
+                  icon: SvgPicture.asset(
+                    AppImages.fastDonation,
+                    color: Colors.black,
+                  ),
                   selectedIcon: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        color: AppColors.mainColor,
-                      ),
-                      child: const Icon(Icons
-                          .explore) //Image.asset(AppImages.boxIcon,scale: 6),
-                      ),
-                  label: "fast order",
+                    width: 40,
+                    height: 40,
+                    padding: EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      color: AppColors.mainColor,
+                    ),
+                    child: SvgPicture.asset(
+                      AppImages.fastDonation,
+                      color: Colors.black,
+                    ),
+                  ),
+                  label: "Donation",
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.attach_money),
@@ -120,16 +117,20 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                       child: const Icon(Icons
                           .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
                       ),
-                  label: "fund score",
+                  label: "Fund",
                 ),
                 NavigationDestination(
                   //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
-                  selectedIcon: CircleAvatar(
-                    radius: 22,
-                    backgroundColor: AppColors.mainColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4), // Border radius
-                      child: ClipOval(child: image),
+                  selectedIcon: Container(
+                    height: 40,
+                    width: 40,
+                    child: CircleAvatar(
+                      radius: 22,
+                      backgroundColor: AppColors.mainColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4), // Border radius
+                        child: ClipOval(child: image),
+                      ),
                     ),
                   ),
 
@@ -150,9 +151,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
         ),
       ),
       body: <Widget>[
-        Home(
-          cameraDescription: cameraDescription,
-        ),
+        Home(),
         const Center(
           child: Text("fast order"),
         ),

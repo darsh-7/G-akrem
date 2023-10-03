@@ -1,18 +1,14 @@
 import 'dart:io';
 
 import 'package:akrem/Screens/basket/ImagePreview.dart';
-import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-
 import '../../services/log_manager.dart';
 
 class TakePic extends StatefulWidget {
-  final List<CameraDescription> cameraDescription;
 
   TakePic({
     super.key,
-    required this.cameraDescription,
   });
 
   @override
@@ -23,9 +19,15 @@ class _TakePic extends State<TakePic> {
   bool lodding = false;
   bool camOn = true;
   late CameraController _cameraController;
+  late List<CameraDescription> cameras;
 
   @override
-  void initState() {
+  Future<void> initState() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    cameras = await availableCameras();
+
+    super.initState();
+
     cameraInitialize();
   }
   @override
@@ -35,7 +37,7 @@ class _TakePic extends State<TakePic> {
   }
  void cameraInitialize(){
    _cameraController = CameraController(
-       widget.cameraDescription[0], ResolutionPreset.max,
+       cameras[0], ResolutionPreset.max,
        enableAudio: false);
    _cameraController.initialize().then((_) {
      if (!mounted) {}
@@ -54,9 +56,6 @@ class _TakePic extends State<TakePic> {
    });
 
  }
-  void _moveToScreen2(BuildContext context) =>
-      Navigator.pushReplacementNamed(context, "screen2");
-
   @override
   Widget build(BuildContext context) {
     _cameraController.setFlashMode(FlashMode.auto);
@@ -71,8 +70,8 @@ class _TakePic extends State<TakePic> {
           ),
           Visibility(
             visible: lodding,
-            child: Center(
-              child: const CircularProgressIndicator(),
+            child: const Center(
+              child: CircularProgressIndicator(),
             ),
           ),
           Column(
@@ -81,13 +80,13 @@ class _TakePic extends State<TakePic> {
             children: [
               Center(
                 child: Container(
-                  margin: EdgeInsets.all(30),
+                  margin: const EdgeInsets.all(30),
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: RawMaterialButton(
-                      child: Icon(Icons.camera),
+                      child: const Icon(Icons.camera),
                       onPressed: () async {
                         setState(() {
                           lodding = true;
