@@ -202,12 +202,23 @@ class _RegisterPage extends State<RegisterPage> {
                     width: 260,
                   ),
                   Container(
-                    width: 40,
-                    height: 40,
-                    child: Checkbox(
-                      value: hasWhatsApp,
-                      onChanged: (checked) =>
-                          setState(() => hasWhatsApp = checked ?? false),
+                    width: 50,
+                    height: 60,
+                    child:
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("WhatsApp",style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.green[300],
+                        ),),
+                        Checkbox(
+                          value: hasWhatsApp,
+                          activeColor: Colors.green,
+                          onChanged: (checked) =>
+                              setState(() => hasWhatsApp = checked ?? false),
+                        ),
+                      ],
                     ),
                   )
                 ]),

@@ -9,6 +9,8 @@ import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
 
+import '../../widgets/upcoming_order.dart';
+
 class Home extends StatefulWidget {
   Home({
     super.key,
@@ -19,7 +21,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
@@ -130,7 +131,39 @@ class _HomeState extends State<Home> {
                             vertical: 0, horizontal: 20),
                         child: RichText(
                           text: const TextSpan(
-                            text: 'Donation ',
+                            text: 'Upcoming Order ',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                            /*defining default style is optional */
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: "",
+                                  style: TextStyle(color: Colors.red)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 0,
+                          bottom: 10,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 20),
+                        child: UpcomingCard(),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 0,
+                          bottom: 10,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 20),
+                        child: RichText(
+                          text: const TextSpan(
+                            text: 'Donation Servers',
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
@@ -248,9 +281,7 @@ class _HomeState extends State<Home> {
                 {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => MedicList(
-                            )),
+                    MaterialPageRoute(builder: (context) => MedicList()),
                   );
                 }
                 break;

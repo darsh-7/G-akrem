@@ -93,7 +93,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                   selectedIcon: Container(
                     width: 40,
                     height: 40,
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                       color: AppColors.mainColor,
@@ -106,7 +106,11 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                   label: "Donation",
                 ),
                 NavigationDestination(
-                  icon: const Icon(Icons.attach_money),
+                  icon: const SizedBox(
+                    child: Icon(Icons.attach_money),
+                    width: 40,
+                    height: 40,
+                  ),
                   selectedIcon: Container(
                       width: 40,
                       height: 40,
