@@ -2,26 +2,27 @@ import 'dart:io';
 
 import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/constants/app_colors.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../services/log_manager.dart';
 
 class ImagePreview extends StatefulWidget {
-  final XFile file;
   ImagePreview({
     super.key,
-    required this.file,
   });
 
   @override
   State<ImagePreview> createState() => _ImagePreview();
 }
-
+late File pic;
 class _ImagePreview extends State<ImagePreview> {
   @override
+
+
+  @override
   Widget build(BuildContext context) {
-    File pic = File(widget.file.path);
+    File pic=Get.arguments["picFile"];
     return Scaffold(
       backgroundColor: Colors.white60,
       body: Stack(children: <Widget>[
@@ -89,4 +90,5 @@ class _ImagePreview extends State<ImagePreview> {
       ]),
     );
   }
+
 }

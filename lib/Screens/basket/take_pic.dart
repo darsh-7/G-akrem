@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:akrem/Screens/basket/ImagePreview.dart';
+import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../services/log_manager.dart';
 
 class TakePic extends StatefulWidget {
-
-  TakePic({
+  const TakePic({
     super.key,
   });
 
@@ -22,48 +23,56 @@ class _TakePic extends State<TakePic> {
   late List<CameraDescription> cameras;
 
   @override
-  Future<void> initState() async {
+  void initState() {
+    if (Get.arguments["camera"] == null) {
+      Get.offAll(NavigationBarApp());
+      return;
+    }
+    cameras = Get.arguments["camera"];
     WidgetsFlutterBinding.ensureInitialized();
-    cameras = await availableCameras();
 
     super.initState();
 
     cameraInitialize();
   }
+
   @override
   void dispose() {
     _cameraController.dispose();
     super.dispose();
   }
- void cameraInitialize(){
-   _cameraController = CameraController(
-       cameras[0], ResolutionPreset.max,
-       enableAudio: false);
-   _cameraController.initialize().then((_) {
-     if (!mounted) {}
-     setState(() {});
-   }).catchError((Object e) {
-     if (e is CameraException) {
-       switch (e.code) {
-         case 'CameraAccessDenied':
-           LogManager.logToConsole("CameraAccessDenied");
-           break;
-         default:
-           LogManager.logToConsole("${e.description}");
-           break;
-       }
-     }
-   });
 
- }
+  void cameraInitialize() {
+    _cameraController =
+        CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
+    _cameraController.initialize().then((_) {
+      if (!mounted) {}
+      setState(() {});
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            LogManager.logToConsole("CameraAccessDenied");
+            break;
+          default:
+            LogManager.logToConsole("${e.description}");
+            break;
+        }
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     _cameraController.setFlashMode(FlashMode.auto);
-    return Scaffold(
+    return Padding(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      child: Scaffold(
         body: Stack(children: <Widget>[
           Visibility(
             visible: camOn,
-            child: Container(
+            child: SizedBox(
               height: double.infinity,
               child: CameraPreview(_cameraController),
             ),
@@ -73,6 +82,46 @@ class _TakePic extends State<TakePic> {
             child: const Center(
               child: CircularProgressIndicator(),
             ),
+          ),
+          Container(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 100,
+                width: double.infinity,
+                color: Colors.red,
+                child: const Text(
+                  "please enter the medic in the lite box",
+                  style: TextStyle(fontSize: 40),
+                ),
+              )),
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.5),
+              BlendMode.srcOut,
+            ), // This one will create the magic
+            child: Stack(fit: StackFit.expand, children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  backgroundBlendMode: BlendMode.dstOut,
+                ), // This one will handle background + difference out
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: MediaQuery.of(context).size.height / 1.5,
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(left: 18, right: 18),
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(30), right: Radius.circular(30)
+                        // MediaQuery.of(context).size.width / 2,
+                        ),
+                  ),
+                ),
+              ),
+            ]),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -98,19 +147,16 @@ class _TakePic extends State<TakePic> {
                           return null;
                         }
                         try {
-                          XFile pic = await _cameraController.takePicture();
+                          XFile xPic = await _cameraController.takePicture();
                           //_cameraController.dispose();
                           setState(() {
                             lodding = false;
                             //camOn = false;
                           });
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ImagePreview(file: pic)),
-                          );
-
+                          File pic = File(xPic.path);
+                          Get.to(ImagePreview(), arguments: {
+                            "picFile": pic,
+                          });
                         } on CameraException catch (e) {
                           debugPrint("takePicture error");
                           return null;
@@ -119,13 +165,13 @@ class _TakePic extends State<TakePic> {
                         // setState(() {
                         //   camOn = true;
                         // });
-
                       }),
                 ),
               )
             ],
           ),
         ]),
-      );
+      ),
+    );
   }
 }

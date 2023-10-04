@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../constants/medic.dart';
 import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
@@ -9,22 +13,18 @@ import 'add_medic.dart';
 import 'empty_items.dart';
 
 class MedicList extends StatefulWidget {
-
   MedicList({
     super.key,
   });
 
   @override
-  State<MedicList> createState() =>
-      _MedicList();
+  State<MedicList> createState() => _MedicList();
 }
 
 class _MedicList extends State<MedicList> {
-
-
   static List<Medic> foundMedic = MedicManager.medics;
   late List<Medic> _foundMedic;
-
+  bool _isCameraPermissionGranted = false;
   Image image = Image.asset(AppImages.profileIcon);
 
   @override
@@ -47,7 +47,49 @@ class _MedicList extends State<MedicList> {
       _foundMedic = results;
     });
   }
+  getPermissionStatus() async {
+    //await Permission.camera.request();
+    var status = await Permission.camera.status;
+    if (status.isGranted) {
+      log('Camera Permission: GRANTED');
+      _isCameraPermissionGranted = true;
+      await Get.to(const TakePic(),
+          arguments: {"camera": await availableCameras()});
+    } else {
+      log('Camera Permission: DENIED');
+      Get.defaultDialog(
+        title: "Permission Needed",
+        titleStyle: const TextStyle(fontSize: 20),
+        content: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 15.0),
+          child: Text("On the next step we need to use the camera to take picture of the Medic you want to donate.\n if you agry pleas press agree"),
+        ),
+        confirm: Expanded(
+          child: ElevatedButton(
+            onPressed: () async {
+              // Get.back();
+              await Permission.camera.request();
+              status = await Permission.camera.status;
+              if (status.isGranted) {
+                await Get.to(const TakePic(),
+                    arguments: {"camera": await availableCameras()});
+              } else{
+                Get.defaultDialog(
+                    title: "Permission Needed",
+                    content: const Text("Sorry we cant add any medic with out the Camera"),
+                  cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("ok")),
+                );
+              }
 
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.mainColor, side: BorderSide.none),
+            child: const Text("Agree"),
+          ),
+        ),
+        cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No",style: TextStyle(color: Colors.red),)),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,12 +98,7 @@ class _MedicList extends State<MedicList> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      TakePic()));
-
+          getPermissionStatus();
           // await Navigator.push(
           //   context,
           //   MaterialPageRoute(builder: (context) => TakePic(cameraDescription: cameraDescription)),
@@ -123,7 +160,6 @@ class _MedicList extends State<MedicList> {
                     ),
                   ),
                 ),
-
             ],
           ))
         ],
@@ -159,7 +195,7 @@ class _MedicList extends State<MedicList> {
             color: Colors.red.withOpacity(0.8),
           ),
           child: TextButton(
-            child: Text(
+            child: const Text(
               "Clear",
               style: TextStyle(color: Colors.white),
             ),
@@ -167,22 +203,26 @@ class _MedicList extends State<MedicList> {
               showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("Close")),
-                      TextButton(
-                          onPressed: () {
-                            clearList();
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text("Clear",style: TextStyle(color: Colors.red),))
-                    ],
-                    title: const Text("are you sure"),
-                    content: const Text("click Clear if you are sure to remove all items from the basket"),
-                  ));
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Close")),
+                          TextButton(
+                              onPressed: () {
+                                clearList();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                "Clear",
+                                style: TextStyle(color: Colors.red),
+                              ))
+                        ],
+                        title: const Text("are you sure"),
+                        content: const Text(
+                            "click Clear if you are sure to remove all items from the basket"),
+                      ));
             },
           ),
         ),

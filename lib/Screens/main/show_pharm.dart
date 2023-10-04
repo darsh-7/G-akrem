@@ -71,11 +71,6 @@ class ShowPharm extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 2 / 1,
                 child: ClipRRect(
-                  // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(20.0)),
-                  //const BorderRadius.all(Radius.circular(20.0)),
                   child:
                   FadeInImage(
                     image:NetworkImage(pharm.img),
@@ -86,6 +81,7 @@ class ShowPharm extends StatelessWidget {
                       );
                     },
                     fit: BoxFit.fitWidth,
+                    placeholderFit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -94,9 +90,9 @@ class ShowPharm extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
               Container(
-                  height: 100,
+                  height: 80,
                   width: double.infinity,
-                  margin: const EdgeInsets.only(top: 180),
+                  margin: const EdgeInsets.only(top: 164),
                   padding: const EdgeInsets.all(0),
                   decoration: const BoxDecoration(
                     color: Colors.white,

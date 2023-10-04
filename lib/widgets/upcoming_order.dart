@@ -11,7 +11,7 @@ class UpcomingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      height: 140,
+      height: 124,
       padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 20),
       decoration: BoxDecoration(
         //color: Theme.of(context).primaryColor.withOpacity(0.8),
@@ -21,33 +21,52 @@ class UpcomingCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child:
-            SvgPicture.asset("assets/icons/delivery_van.svg" ,width: 45,fit: BoxFit.cover,),
+            child: SvgPicture.asset(
+              "assets/icons/delivery_van.svg",
+              width: 45,
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(width: 14),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Well be there",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Well be there",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 60,
+                  ),
+                  Container(
+                    height: 40,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.black.withOpacity(0.8),
+                    ),                    // padding: const EdgeInsets.symmetric(
+                    //     vertical: 22, horizontal: 20),
+                    child: TextButton(
+                      child: Text(
+                        "Edit",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {},
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 5),
-              Text(
-                "Text",
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Colors.white70,
-                ),
-              ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 6,

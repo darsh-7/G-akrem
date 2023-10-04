@@ -40,6 +40,7 @@ dependencies:
   flutter_stripe: ^9.4.0
   flutter_svg: ^2.0.7
   get: ^4.6.5
+  permission_handler: ^8.3.0
 
 dev_dependencies:
   flutter_test:

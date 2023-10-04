@@ -5,6 +5,7 @@ import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
@@ -279,19 +280,13 @@ class _HomeState extends State<Home> {
             switch (card.action) {
               case 1:
                 {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MedicList()),
-                  );
+                  Get.to(MedicList());
                 }
                 break;
 
               case 2:
                 {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ShowBranch()),
-                  );
+                  Get.to(ShowBranch());
                 }
                 break;
 
@@ -321,7 +316,7 @@ class _HomeState extends State<Home> {
                             actions: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    Get.back();
                                   },
                                   child: const Text("Close"))
                             ],

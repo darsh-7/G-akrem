@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'Screens/main/show_pharm.dart';
-import 'Screens/main/testpop.datr.dart';
 
 const mainColor = Color(0xFF4672ff);
 
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: 'Akrem',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -47,11 +46,10 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/login',
+      initialRoute: '/main',
       routes: {
         //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
-        '/loginn': (context) => LoginPagee(),
         '/main': (context) => NavigationBarApp(),
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
