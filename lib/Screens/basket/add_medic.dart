@@ -1,28 +1,22 @@
 import 'dart:io';
 
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/basket_controller.dart';
 import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/medic.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../../services/log_manager.dart';
 import '../../services/validator.dart';
 
-class AddMedic extends StatefulWidget {
-  final File? pic;
 
-  AddMedic({
-    super.key,
-    required this.pic,
-  });
-
-  @override
-  State<AddMedic> createState() => _AddMedic();
-}
-
-class _AddMedic extends State<AddMedic> {
+class AddMedic extends StatelessWidget {
+  AddMedic({super.key});
+  BasketController controller = Get.find();
+  File? pic=Get.arguments["picFile"];
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _barController = TextEditingController();
@@ -54,6 +48,7 @@ class _AddMedic extends State<AddMedic> {
         action: 4,
         trigger: false),
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +93,7 @@ class _AddMedic extends State<AddMedic> {
                       topRight: Radius.circular(20.0)),
                   //const BorderRadius.all(Radius.circular(20.0)),
                   child: Image.file(
-                    widget.pic ?? File(AppImages.pharmacy),
+                    pic ?? File(AppImages.noImage),
                     width: 400,
                     height: 300,
                     fit: BoxFit.fill,
@@ -183,10 +178,10 @@ class _AddMedic extends State<AddMedic> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Container(
+                                const SizedBox(
                                   width: 40,
                                   height: 60,
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.negative,
                                     child: Text(
@@ -212,10 +207,10 @@ class _AddMedic extends State<AddMedic> {
                                     ],
                                   ),
                                 ),
-                                Container(
+                                const SizedBox(
                                   width: 40,
                                   height: 40,
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.positives,
                                     child: Text(
@@ -263,10 +258,10 @@ class _AddMedic extends State<AddMedic> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Container(
+                                const SizedBox(
                                   width: 40,
                                   height: 60,
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.negative,
                                     child: Text(
@@ -292,10 +287,10 @@ class _AddMedic extends State<AddMedic> {
                                     ],
                                   ),
                                 ),
-                                Container(
+                                const SizedBox(
                                   width: 40,
                                   height: 40,
-                                  child: const CircleAvatar(
+                                  child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.positives,
                                     child: Text(
@@ -315,7 +310,7 @@ class _AddMedic extends State<AddMedic> {
                     label: "Expiration date",
                     readOnly: true,
                     validator: Validator.validateEmpty,
-                    icon: Icon(Icons.calendar_today),
+                    icon: const Icon(Icons.calendar_today),
                     onTap: () async {
                       DateTime? newDate = await showDatePicker(
                           context: context,
@@ -326,10 +321,8 @@ class _AddMedic extends State<AddMedic> {
                       if (newDate == null) return;
                       selectedDate = newDate;
 
-                      setState(() {
                         _dateController.text =
                             "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                      });
 
                       //Todo: Font asset "MaterialIcons-Regular.otf" was tree-shaken,
                       // reducing it from 1645184 to 4716 bytes (99.7% reduction).
@@ -365,8 +358,8 @@ class _AddMedic extends State<AddMedic> {
                                   ));
                           return;
                         }
-                        MedicManager.addMedic(
-                          img: widget.pic ?? File(AppImages.profileIcon),
+                        controller.addMedic(
+                          img: pic ?? File(AppImages.profileIcon),
                           name: _nameController.text,
                           bar: int.parse(_barController.text),
                           pills: int.parse(_pillController.text),
@@ -376,9 +369,8 @@ class _AddMedic extends State<AddMedic> {
                             "new Medic list now: ${MedicManager.medics.reversed}");
 
                         //Navigator.of(context).pop(medic);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                        Get.close(3);
+
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("New medic Saved"),
                         ));
@@ -418,9 +410,7 @@ class _AddMedic extends State<AddMedic> {
                         Icons.arrow_back,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                        Get.close(3);
                       },
                     )),
               ),
@@ -494,7 +484,7 @@ Widget buildCard({required Card card}) {
         children: [
           AspectRatio(
             aspectRatio: 1 / 1,
-            child: Container(
+            child: SizedBox(
                width: 50,
                height: 50,
               child: card.img,

@@ -25,6 +25,7 @@ class Medic {
 }
 
 class MedicManager {
+  //todo : add to local storage
   static List<Medic> medics = [
     // Medic(
     //     img: Image.asset(AppImages.pharmacy),

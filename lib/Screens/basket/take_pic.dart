@@ -1,12 +1,12 @@
 import 'dart:io';
+import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:akrem/Screens/basket/ImagePreview.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../services/log_manager.dart';
-
 class TakePic extends StatefulWidget {
   const TakePic({
     super.key,
@@ -46,16 +46,18 @@ class _TakePic extends State<TakePic> {
     _cameraController =
         CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
     _cameraController.initialize().then((_) {
-      if (!mounted) {}
-      setState(() {});
+      _cameraController.setFlashMode(FlashMode.auto);
+
+      // if (!mounted) {}
+      // setState(() {});
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
-            LogManager.logToConsole("CameraAccessDenied");
+            dev.log("CameraAccessDenied");
             break;
           default:
-            LogManager.logToConsole("${e.description}");
+            dev.log("${e.description}");
             break;
         }
       }
@@ -65,7 +67,6 @@ class _TakePic extends State<TakePic> {
 
   @override
   Widget build(BuildContext context) {
-    _cameraController.setFlashMode(FlashMode.auto);
     return Padding(
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       child: Scaffold(
@@ -141,9 +142,11 @@ class _TakePic extends State<TakePic> {
                           lodding = true;
                         });
                         if (!_cameraController.value.isInitialized) {
+                          dev.log('Camera is not Initialized : error');
                           return null;
                         }
                         if (_cameraController.value.isTakingPicture) {
+                          dev.log('Camera isTakingPicture: error');
                           return null;
                         }
                         try {
@@ -151,10 +154,9 @@ class _TakePic extends State<TakePic> {
                           //_cameraController.dispose();
                           setState(() {
                             lodding = false;
-                            //camOn = false;
                           });
                           File pic = File(xPic.path);
-                          Get.to(ImagePreview(), arguments: {
+                          Get.to(()=> ImagePreview(), arguments: {
                             "picFile": pic,
                           });
                         } on CameraException catch (e) {

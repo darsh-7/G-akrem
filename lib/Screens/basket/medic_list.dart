@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/basket_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,38 +23,36 @@ class MedicList extends StatefulWidget {
 }
 
 class _MedicList extends State<MedicList> {
-  static List<Medic> foundMedic = MedicManager.medics;
-  late List<Medic> _foundMedic;
-  bool _isCameraPermissionGranted = false;
-  Image image = Image.asset(AppImages.profileIcon);
+  final basketController = Get.put(BasketController());
+
+  List<Medic> get _foundMedic {
+    return basketController.medics;
+  }
+
+  //late get List<Medic> _foundMedic;
+  late bool _isCameraPermissionGranted;
+//  Image image = Image.asset(AppImages.profileIcon);
 
   @override
   void initState() {
-    _foundMedic = foundMedic;
+    //_foundMedic = foundMedic;
     super.initState();
   }
 
-  void refreshList() {
-    List<Medic> results = MedicManager.medics;
-    setState(() {
-      _foundMedic = results;
-    });
-  }
+  // void refreshList() {
+  //   List<Medic> results = MedicManager.medics;
+  //   setState(() {
+  //     _foundMedic = results;
+  //   });
+  // }
 
-  void clearList() {
-    MedicManager.medics.clear();
-    List<Medic> results = MedicManager.medics;
-    setState(() {
-      _foundMedic = results;
-    });
-  }
   getPermissionStatus() async {
     //await Permission.camera.request();
     var status = await Permission.camera.status;
     if (status.isGranted) {
       log('Camera Permission: GRANTED');
       _isCameraPermissionGranted = true;
-      await Get.to(const TakePic(),
+      await Get.to(() => const TakePic(),
           arguments: {"camera": await availableCameras()});
     } else {
       log('Camera Permission: DENIED');
@@ -62,7 +61,8 @@ class _MedicList extends State<MedicList> {
         titleStyle: const TextStyle(fontSize: 20),
         content: const Padding(
           padding: EdgeInsets.symmetric(vertical: 15.0),
-          child: Text("On the next step we need to use the camera to take picture of the Medic you want to donate.\n if you agry pleas press agree"),
+          child: Text(
+              "On the next step we need to use the camera to take picture of the Medic you want to donate.\n if you agry pleas press agree"),
         ),
         confirm: Expanded(
           child: ElevatedButton(
@@ -73,23 +73,31 @@ class _MedicList extends State<MedicList> {
               if (status.isGranted) {
                 await Get.to(const TakePic(),
                     arguments: {"camera": await availableCameras()});
-              } else{
+              } else {
                 Get.defaultDialog(
-                    title: "Permission Needed",
-                    content: const Text("Sorry we cant add any medic with out the Camera"),
-                  cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("ok")),
+                  title: "Permission Needed",
+                  content: const Text(
+                      "Sorry we cant add any medic with out the Camera"),
+                  cancel: OutlinedButton(
+                      onPressed: () => Get.back(), child: const Text("ok")),
                 );
               }
-
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.mainColor, side: BorderSide.none),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.mainColor, side: BorderSide.none),
             child: const Text("Agree"),
           ),
         ),
-        cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No",style: TextStyle(color: Colors.red),)),
+        cancel: OutlinedButton(
+            onPressed: () => Get.back(),
+            child: const Text(
+              "No",
+              style: TextStyle(color: Colors.red),
+            )),
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,50 +111,53 @@ class _MedicList extends State<MedicList> {
           //   context,
           //   MaterialPageRoute(builder: (context) => TakePic(cameraDescription: cameraDescription)),
           // );
-          refreshList();
+          //refreshList();
         },
       ),
 
       //appBar: _buildAppBar(),
       body: Stack(
         children: [
-          if (_foundMedic.isEmpty) const EmptyItemsScreen(),
-          Container(
-              child: Column(
-            children: [
-              //TextButton(onPressed: () => {refreshList()}, child: Text("tap")),
-              //const LinearProgressIndicator(),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.only(bottom: 80, top: 10),
-                  children: [
-                    for (var i = 0; i < _foundMedic.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: MedicCard(
-                          img: _foundMedic[i].img,
-                          name: _foundMedic[i].name,
-                          pill: _foundMedic[i].pill,
-                          bar: _foundMedic[i].bar,
-                          date: _foundMedic[i].date,
-                          index: i,
-                          onDelete: (i) {
-                            MedicManager.removeMedic(index: i);
-                            refreshList();
-                          },
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-              if (!_foundMedic.isEmpty)
+          GetBuilder<BasketController>(builder: (_) {
+            if (_foundMedic.isEmpty) return const EmptyItemsScreen();
+            return Container(
+                child: Column(
+              children: [
+                //TextButton(onPressed: () => {refreshList()}, child: Text("tap")),
+                //const LinearProgressIndicator(),
                 Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomCenter,
+                  child: ListView(
+                    padding: const EdgeInsets.only(bottom: 80, top: 10),
+                    children: [
+                      for (var i = 0; i < _foundMedic.length; i++)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 20),
+                          child: MedicCard(
+                            img: _foundMedic[i].img,
+                            name: _foundMedic[i].name,
+                            pill: _foundMedic[i].pill,
+                            bar: _foundMedic[i].bar,
+                            date: _foundMedic[i].date,
+                            index: i,
+                            onDelete: (i) {
+                              MedicManager.removeMedic(index: i);
+                              //refreshList();
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (_foundMedic.isNotEmpty)
+                  Container(
+                    // height: 100,
+                    width: 150,
+                    color: Colors.red,
                     child: Container(
-                      margin: const EdgeInsets.all(30),
-                      width: 120,
+                      //margin: const EdgeInsets.all(30),
+                      width: 140,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: AppColors.mainColor,
                         borderRadius: BorderRadius.circular(30),
@@ -155,13 +166,14 @@ class _MedicList extends State<MedicList> {
                           child: const Text("Proceed",
                               style: TextStyle(fontSize: 20)),
                           onPressed: () {
-                            Navigator.pop(context);
+                            Get.back();
                           }),
                     ),
-                  ),
-                ),
-            ],
-          ))
+                  )
+              ],
+            ));
+            //if (_foundMedic.isEmpty) const EmptyItemsScreen(),
+          }),
         ],
       ),
     );
@@ -206,13 +218,13 @@ class _MedicList extends State<MedicList> {
                         actions: [
                           TextButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Get.back();
                               },
                               child: const Text("Close")),
                           TextButton(
                               onPressed: () {
-                                clearList();
-                                Navigator.of(context).pop();
+                                basketController.clearList();
+                                Get.back();
                               },
                               child: const Text(
                                 "Clear",

@@ -54,14 +54,14 @@ class Pharmacy {
         time: 15,
         boxStorage:  0.1,
         phone: "01012345678"),
-    Pharmacy(
-        img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxZS5E87vjuXTgTQ4Qw3MAvtv3srWQwpg&usqp=CAU",
-        name: 'Pharmacy no pic',
-        locName: 'Cairo',
-        location: "iqkuwhdiauw213diaw12783",
-        time: 15,
-        boxStorage:  0.1,
-        phone: "01012345678"),
+    // Pharmacy(
+    //     img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxZS5E87vjuXTgTQ4Qw3MAvtv3srWQwpg&usqp=CAU",
+    //     name: 'Pharmacy no pic',
+    //     locName: 'Cairo',
+    //     location: "iqkuwhdiauw213diaw12783",
+    //     time: 15,
+    //     boxStorage:  0.1,
+    //     phone: "01012345678"),
 
   ];
 }

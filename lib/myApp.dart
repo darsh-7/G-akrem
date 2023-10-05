@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/main',
+      initialRoute: '/login',
       routes: {
         //  '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/map': (context) => MapSample(),
         '/basket': (context) => MedicList(),
-        '/addMedic': (context) => AddMedic(pic: File(AppImages.profileIcon)),
+        '/addMedic': (context) => AddMedic(),
         '/showPharm': (context) =>
             ShowPharm(pharm: Pharmacy.pharmacyList.first),
         '/cam': (context) =>

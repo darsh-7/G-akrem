@@ -15,32 +15,29 @@ class ImagePreview extends StatefulWidget {
   @override
   State<ImagePreview> createState() => _ImagePreview();
 }
+
 late File pic;
+
 class _ImagePreview extends State<ImagePreview> {
   @override
-
-
   @override
   Widget build(BuildContext context) {
-    File pic=Get.arguments["picFile"];
+    File pic = Get.arguments["picFile"];
     return Scaffold(
       backgroundColor: Colors.white60,
       body: Stack(children: <Widget>[
-
-          ClipRRect(
-            // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(20.0)),
-            //const BorderRadius.all(Radius.circular(20.0)),
-            child: Image.file(
-              pic,
-              // width: 400,
-              height: double.infinity,
-              fit: BoxFit.fitWidth,
-            ),
+        ClipRRect(
+          // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(30.0), topRight: Radius.circular(20.0)),
+          //const BorderRadius.all(Radius.circular(20.0)),
+          child: Image.file(
+            pic,
+            // width: 400,
+            height: double.infinity,
+            fit: BoxFit.fitWidth,
           ),
-
+        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,11 +55,12 @@ class _ImagePreview extends State<ImagePreview> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: RawMaterialButton(
-                        child: Text("Try Again",style: TextStyle(fontSize: 20)),
+                        child:
+                            Text("Try Again", style: TextStyle(fontSize: 20)),
                         onPressed: () {
                           pic.delete();
-                      Navigator.pop(context);
-                    }),
+                          Navigator.pop(context);
+                        }),
                   ),
                   Container(
                     margin: EdgeInsets.all(30),
@@ -72,16 +70,16 @@ class _ImagePreview extends State<ImagePreview> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: RawMaterialButton(
-                        child: Text("Save",style: TextStyle(fontSize: 20),), onPressed: ()  {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddMedic(pic: pic)),
-                      );
-
-                    }),
+                        child: Text(
+                          "Save",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () {
+                          Get.to(() => AddMedic(), arguments: {
+                            "picFile": pic,
+                          });
+                        }),
                   ),
-
                 ],
               ),
             )
@@ -90,5 +88,4 @@ class _ImagePreview extends State<ImagePreview> {
       ]),
     );
   }
-
 }
