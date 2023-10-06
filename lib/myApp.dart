@@ -8,6 +8,8 @@ import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/map_screen.dart';
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/Screens/welcome/introduction_page.dart';
+import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -46,19 +48,21 @@ class MyApp extends StatelessWidget {
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/login',
+      initialRoute: '/main',
       routes: {
         //  '/': (context) => SplashPage(),
-        '/login': (context) => LoginPage(),
+        '/test': (context) => const TouristDetailsPage(image: "https://via.placeholder.com/600/d32776"),
+        '/welcome': (context) => const WelcomePage(),
+        '/login': (context) => const LoginPage(),
         '/main': (context) => NavigationBarApp(),
-        '/register': (context) => RegisterPage(),
-        '/map': (context) => MapSample(),
+        '/register': (context) => const RegisterPage(),
+        '/map': (context) => const MapSample(),
         '/basket': (context) => MedicList(),
         '/addMedic': (context) => AddMedic(),
         '/showPharm': (context) =>
             ShowPharm(pharm: Pharmacy.pharmacyList.first),
         '/cam': (context) =>
-            TakePic(),
+            const TakePic(),
 
       },
     );

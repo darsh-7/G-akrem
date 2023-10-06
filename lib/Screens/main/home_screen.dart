@@ -1,14 +1,17 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
-import 'package:akrem/Screens/show_branchs.dart';
+import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
+import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/upcoming_order.dart';
 
@@ -25,8 +28,7 @@ class _HomeState extends State<Home> {
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
-  bool loddingBar = true;
-
+  bool _isLoading = true;
   final List<Card> cards = [
     Card(
         img: SvgPicture.asset(AppImages.donateFromHome),
@@ -34,7 +36,7 @@ class _HomeState extends State<Home> {
         action: 1),
     Card(
         img: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             child: SvgPicture.asset(
               AppImages.nearesBransh,
             )),
@@ -42,7 +44,7 @@ class _HomeState extends State<Home> {
         action: 2),
     Card(
         img: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             child: SvgPicture.asset(AppImages.donateBoxIcon)),
         title: "Donate to box",
         action: 3),
@@ -52,7 +54,7 @@ class _HomeState extends State<Home> {
         action: 4),
     Card(
         img: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             child: SvgPicture.asset(AppImages.donate)),
         title: "Support US",
         action: 5),
@@ -70,7 +72,7 @@ class _HomeState extends State<Home> {
   Future _getThingsOnStartup() async {
     await Future.delayed(const Duration(seconds: 4));
     setState(() {
-      loddingBar = false;
+      _isLoading = false;
     });
   }
 
@@ -84,18 +86,13 @@ class _HomeState extends State<Home> {
             builder: (context) => AlertDialog(
                   actions: [
                     TextButton(
-                        onPressed: () => {
-                              SystemNavigator.pop(),
-                            },
+                        onPressed: () => Get.back(),
                         child: const Text(
                           "NO",
                           style: TextStyle(color: AppColors.positives),
                         )),
                     TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        },
+                        onPressed: () => SystemNavigator.pop(),
                         child: const Text("Leave",
                             style: TextStyle(color: AppColors.negative)))
                   ],
@@ -113,140 +110,156 @@ class _HomeState extends State<Home> {
             Column(
               children: [
                 Visibility(
-                  visible: loddingBar,
+                  visible: _isLoading,
                   child: const LinearProgressIndicator(
                     minHeight: 8,
                   ),
                 ),
                 //searchBox(),
                 Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(bottom: 80, top: 10),
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 0,
-                          bottom: 10,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: RichText(
-                          text: const TextSpan(
-                            text: 'Upcoming Order ',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                            /*defining default style is optional */
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "",
-                                  style: TextStyle(color: Colors.red)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 0,
-                          bottom: 10,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: UpcomingCard(),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 0,
-                          bottom: 10,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: RichText(
-                          text: const TextSpan(
-                            text: 'Donation Servers',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                            /*defining default style is optional */
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "(5)",
-                                  style: TextStyle(color: Colors.red)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 108,
-                        child: ListView.separated(
-                          // This next line does the trick.
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              width: 0,
-                            );
-                          },
-                          itemCount: cards.length,
-                          itemBuilder: (context, index) {
-                            return buildCard(card: cards[index]);
-                          },
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 10,
-                          bottom: 10,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                  child:
+
+                  _isLoading
+                      ? ListView(
+                          padding: const EdgeInsets.all(40),
+                          children: [const SkeltonView()])
+                      // ListView.separated(
+                      //         itemCount: 5,
+                      //         itemBuilder: (context, index) =>
+                      //             const NewsCardSkelton(),
+                      //         separatorBuilder: (context, index) =>
+                      //             const SizedBox(height: 16),
+                      //       )
+                      : ListView(
+                          padding: const EdgeInsets.only(bottom: 80, top: 10),
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: RichText(
+                                text: const TextSpan(
+                                  text: 'Upcoming Order ',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                                  /*defining default style is optional */
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: "",
+                                        style: TextStyle(color: Colors.red)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: const UpcomingCard(),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: RichText(
+                                text: const TextSpan(
+                                  text: 'Donation Servers',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                                  /*defining default style is optional */
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: "(5)",
+                                        style: TextStyle(color: Colors.red)),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 108,
+                              child: ListView.separated(
+                                // This next line does the trick.
+                                scrollDirection: Axis.horizontal,
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    width: 0,
+                                  );
+                                },
+                                itemCount: cards.length,
+                                itemBuilder: (context, index) {
+                                  return buildCard(card: cards[index]);
+                                },
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        text: 'Nearby Branch ',
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black),
-                                        /*defining default style is optional */
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                              text:
-                                                  "(${_foundPharmacy.length})",
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              text: 'Nearby Branch ',
                                               style: const TextStyle(
-                                                  color: Colors.red)),
-                                        ],
-                                      ),
-                                    ),
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black),
+                                              /*defining default style is optional */
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text:
+                                                        "(${_foundPharmacy.length})",
+                                                    style: const TextStyle(
+                                                        color: Colors.red)),
+                                              ],
+                                            ),
+                                          ),
+                                        ]),
+                                    TextButton(
+                                        child: const Text(
+                                          "See all",
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        onPressed: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ShowBranch()),
+                                            )),
                                   ]),
-                              TextButton(
-                                  child: const Text(
-                                    "See all",
-                                    style: TextStyle(color: Colors.blue),
-                                  ),
-                                  onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ShowBranch()),
-                                      )),
-                            ]),
-                      ),
-                      for (Pharmacy Pharm in _foundPharmacy.reversed)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 20),
-                          child: PharmacyItem(
-                            pharm: Pharm,
-                          ),
-                        )
-                    ],
-                  ),
+                            ),
+                            for (Pharmacy Pharm in _foundPharmacy.reversed)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 20),
+                                child: PharmacyItem(
+                                  pharm: Pharm,
+                                ),
+                              )
+                          ],
+                        ),
                 )
               ],
             ),
@@ -431,14 +444,60 @@ class _HomeState extends State<Home> {
           width: 40,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: const Icon(
-              Icons.notifications,
-              color: Colors.black54,
-              size: 30,
-            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.notifications,
+                color: Colors.black54,
+                size: 30,
+              ),
+              onPressed: () => {
+              setState(() {
+              _isLoading = !_isLoading;
+              })
+            }),
           ),
         ),
       ]),
+    );
+  }
+}
+
+class SkeltonView extends StatelessWidget {
+  const SkeltonView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Skeleton(height: 24, width: 120),
+        SizedBox(
+          height: 12,
+        ),
+        Skeleton(height: 124, width: double.infinity),
+        SizedBox(
+          height: 12,
+        ),
+        Skeleton(height: 24, width: 120),
+        SizedBox(
+          height: 12,
+        ),
+        Skeleton(height: 70, width: double.infinity),
+        SizedBox(
+          height: 12,
+        ),
+        Skeleton(height: 24, width: 120),
+        SizedBox(
+          height: 12,
+        ),
+        Skeleton(height: 260, width: double.infinity),
+        SizedBox(
+          height: 12,
+        ),
+        Skeleton(height: 260, width: double.infinity),
+      ],
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:akrem/Screens/basket/add_medic.dart';
+import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,7 +49,7 @@ class _ImagePreview extends State<ImagePreview> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.all(30),
+                    margin: const EdgeInsets.all(30),
                     width: 100,
                     decoration: BoxDecoration(
                       color: AppColors.negative,
@@ -56,26 +57,26 @@ class _ImagePreview extends State<ImagePreview> {
                     ),
                     child: RawMaterialButton(
                         child:
-                            Text("Try Again", style: TextStyle(fontSize: 20)),
+                            const Text("Try Again", style: TextStyle(fontSize: 20)),
                         onPressed: () {
                           pic.delete();
-                          Navigator.pop(context);
+                          Get.back();
                         }),
                   ),
                   Container(
-                    margin: EdgeInsets.all(30),
+                    margin: const EdgeInsets.all(30),
                     width: 100,
                     decoration: BoxDecoration(
                       color: AppColors.mainColor,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: RawMaterialButton(
-                        child: Text(
+                        child: const Text(
                           "Save",
                           style: TextStyle(fontSize: 20),
                         ),
                         onPressed: () {
-                          Get.to(() => AddMedic(), arguments: {
+                          Get.off(() => AddMedic(), arguments: {
                             "picFile": pic,
                           });
                         }),

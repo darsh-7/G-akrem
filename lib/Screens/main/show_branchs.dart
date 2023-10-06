@@ -1,8 +1,8 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
-import '../widgets/pharmacy_card.dart';
-import '../constants/app_colors.dart';
+import '../../widgets/pharmacy_card.dart';
+import '../../constants/app_colors.dart';
 
 class ShowBranch extends StatefulWidget {
   ShowBranch({Key? key}) : super(key: key);

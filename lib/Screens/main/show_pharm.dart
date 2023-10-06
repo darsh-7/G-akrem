@@ -1,5 +1,6 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
 import 'package:percent_indicator/percent_indicator.dart';
@@ -18,7 +19,10 @@ class ShowPharm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery
+        .of(context)
+        .padding
+        .top;
     if (pharm.boxStorage < 0.4) {
       storageColor = Colors.green;
     } else if (pharm.boxStorage < 0.7) {
@@ -45,7 +49,7 @@ class ShowPharm extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(30)),
+                        const BorderRadius.all(Radius.circular(30)),
                         color: Colors.black54.withOpacity(0.8),
                       ),
                       child: IconButton(
@@ -73,9 +77,9 @@ class ShowPharm extends StatelessWidget {
                 child: ClipRRect(
                   child:
                   FadeInImage(
-                    image:NetworkImage(pharm.img),
+                    image: NetworkImage(pharm.img),
                     placeholder: const AssetImage(AppImages.noImage),
-                    imageErrorBuilder:(context, error, stackTrace) {
+                    imageErrorBuilder: (context, error, stackTrace) {
                       return Image.asset(AppImages.noImage,
                           fit: BoxFit.fitWidth
                       );
@@ -236,7 +240,15 @@ class ShowPharm extends StatelessWidget {
                             "Location",
                             style: TextStyle(fontSize: 20),
                           ),
-                          onPressed: () {}),
+                          onPressed: () async {
+                            final Uri _url = Uri.parse('https://flutter.dev');
+
+                            if (await canLaunch(_url.toString())) {
+                               await launchUrl(_url);
+                            } else {
+                              throw 'Could not launch ';
+                            }
+                          }),
                     ),
                   ],
                 ),

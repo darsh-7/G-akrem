@@ -46,10 +46,10 @@ class _TakePic extends State<TakePic> {
     _cameraController =
         CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
     _cameraController.initialize().then((_) {
-      _cameraController.setFlashMode(FlashMode.auto);
 
-      // if (!mounted) {}
-      // setState(() {});
+       if (!mounted) {}
+       setState(() {});
+       _cameraController.setFlashMode(FlashMode.auto);
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
@@ -156,7 +156,7 @@ class _TakePic extends State<TakePic> {
                             lodding = false;
                           });
                           File pic = File(xPic.path);
-                          Get.to(()=> ImagePreview(), arguments: {
+                           Get.to(()=> ImagePreview(), arguments: {
                             "picFile": pic,
                           });
                         } on CameraException catch (e) {

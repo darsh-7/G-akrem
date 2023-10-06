@@ -26,7 +26,7 @@ class UpcomingCard extends StatelessWidget {
             child: SvgPicture.asset(
               "assets/icons/delivery_van.svg",
               width: 45,
-              fit: BoxFit.cover,
+              fit: BoxFit.cover,color: Colors.white,
             ),
           ),
           const SizedBox(width: 14),
@@ -45,7 +45,7 @@ class UpcomingCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 60,
                   ),
                   Container(
@@ -53,11 +53,11 @@ class UpcomingCard extends StatelessWidget {
                     width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      color: Colors.black.withOpacity(0.8),
+                      color: Colors.deepOrange.shade700,
                     ),                    // padding: const EdgeInsets.symmetric(
                     //     vertical: 22, horizontal: 20),
                     child: TextButton(
-                      child: Text(
+                      child: const Text(
                         "Edit",
                         style: TextStyle(color: Colors.white),
                       ),

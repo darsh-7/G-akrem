@@ -6,7 +6,7 @@ class Pharmacy {
   String img;
   String? name;
   String? locName;
-  String? location;
+  String location;
   int? time;
   double boxStorage;
   String? phone;
