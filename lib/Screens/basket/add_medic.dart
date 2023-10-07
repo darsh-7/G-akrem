@@ -368,7 +368,7 @@ class AddMedic extends StatelessWidget {
                         LogManager.logToConsole(
                             "new Medic list now: ${MedicManager.medics.reversed}");
 
-                        Get.back();
+                        Get.close(3);
 
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("New medic Saved"),
@@ -409,7 +409,7 @@ class AddMedic extends StatelessWidget {
                         Icons.arrow_back,
                       ),
                       onPressed: () {
-                        Get.close(1);
+                        Get.close(3);
                       },
                     )),
               ),

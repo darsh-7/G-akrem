@@ -13,7 +13,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    var isDark = (MediaQuery.of(context).platformBrightness == Brightness.dark).obs;
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(onPressed:( )/* () => Get.back()*/, icon: const Icon(Icons.arrow_back)),
@@ -22,9 +22,11 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                //Get.changeTheme();
+                Get.changeTheme(
+                  Get.isDarkMode ? ThemeData.light():ThemeData.dark()
+                );
               },
-              icon: Icon(isDark ? Icons.sunny : Icons.nightlight))
+              icon: Obx(() => Icon(isDark.value ? Icons.nightlight : Icons.sunny)))
         ],
       ),
       body: SingleChildScrollView(

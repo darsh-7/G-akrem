@@ -2,6 +2,7 @@ import 'package:akrem/Screens/main/show_pharm.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../Api/fake_api.dart';
 import '../constants/app_images.dart';
@@ -52,7 +53,7 @@ class PharmacyItem extends StatelessWidget {
         ),
         contentPadding: const EdgeInsets.all(0),
         //const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        tileColor: Colors.white,
+        tileColor: Colors.transparent,
         // leading: Icon(
         //   todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
         //   color: tdBlue,
@@ -101,7 +102,6 @@ class PharmacyItem extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 170),
                   padding: const EdgeInsets.all(0),
                   decoration: const BoxDecoration(
-                    color: Colors.white,
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(30),
                         bottomLeft: Radius.circular(30)),

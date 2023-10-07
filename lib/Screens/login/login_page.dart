@@ -1,6 +1,7 @@
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/constants/font_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akrem/widgets/input.dart';
@@ -69,6 +70,7 @@ class _LoginPage extends State<LoginPage> {
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                fontFamily: "front",
                 fontSize: 40,
                 letterSpacing: 2),
           )

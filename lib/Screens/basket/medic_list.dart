@@ -149,27 +149,41 @@ class _MedicList extends State<MedicList> {
                     ],
                   ),
                 ),
-                if (_foundMedic.isNotEmpty)
-                  Container(
-                    // height: 100,
-                    width: 150,
-                    color: Colors.red,
-                    child: Container(
-                      //margin: const EdgeInsets.all(30),
-                      width: 140,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: AppColors.mainColor,
-                        borderRadius: BorderRadius.circular(30),
+                 if (_foundMedic.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      height: 45,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Checkout"),
+                        style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                        ),
                       ),
-                      child: RawMaterialButton(
-                          child: const Text("Proceed",
-                              style: TextStyle(fontSize: 20)),
-                          onPressed: () {
-                            Get.back();
-                          }),
                     ),
-                  )
+                  ),
+                  // Container(
+                  //   // height: 100,
+                  //   width: 150,
+                  //   color: Colors.red,
+                  //   child: Container(
+                  //     //margin: const EdgeInsets.all(30),
+                  //     width: 140,
+                  //     height: 40,
+                  //     decoration: BoxDecoration(
+                  //       color: AppColors.mainColor,
+                  //       borderRadius: BorderRadius.circular(30),
+                  //     ),
+                  //     child: RawMaterialButton(
+                  //         child: const Text("Proceed",
+                  //             style: TextStyle(fontSize: 20)),
+                  //         onPressed: () {
+                  //           Get.back();
+                  //         }),
+                  //   ),
+                  // )
               ],
             ));
             //if (_foundMedic.isEmpty) const EmptyItemsScreen(),

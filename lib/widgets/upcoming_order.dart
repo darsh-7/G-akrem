@@ -1,6 +1,7 @@
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class UpcomingCard extends StatelessWidget {
   const UpcomingCard({
@@ -15,7 +16,7 @@ class UpcomingCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 20),
       decoration: BoxDecoration(
         //color: Theme.of(context).primaryColor.withOpacity(0.8),
-        color: AppColors.mainColor,
+        color: Get.theme.shadowColor,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(

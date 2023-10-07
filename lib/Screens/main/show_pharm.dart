@@ -142,7 +142,7 @@ class ShowPharm extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                     /*defining default style is optional */
-                    children: <TextSpan>[
+                    children: const <TextSpan>[
                       // TextSpan(
                       //     text:
                       //     "($distance km)",
@@ -169,8 +169,8 @@ class ShowPharm extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                     /*defining default style is optional */
-                    children: <TextSpan>[
-                      const TextSpan(
+                    children: const <TextSpan>[
+                      TextSpan(
                           text: "• no EX km",
                           style: TextStyle(color: Colors.black)),
                     ],

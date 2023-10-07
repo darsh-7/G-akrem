@@ -7,11 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../widgets/pharmacy_card.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
-import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/upcoming_order.dart';
 
@@ -103,7 +101,6 @@ class _HomeState extends State<Home> {
         return false;
       },
       child: Scaffold(
-        backgroundColor: AppColors.backGround,
         appBar: _buildAppBar(),
         body: Stack(
           children: [
@@ -117,9 +114,7 @@ class _HomeState extends State<Home> {
                 ),
                 //searchBox(),
                 Expanded(
-                  child:
-
-                  _isLoading
+                  child: _isLoading
                       ? ListView(
                           padding: const EdgeInsets.all(40),
                           children: [const SkeltonView()])
@@ -144,9 +139,9 @@ class _HomeState extends State<Home> {
                                 text: const TextSpan(
                                   text: 'Upcoming Order ',
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
@@ -174,11 +169,11 @@ class _HomeState extends State<Home> {
                                   vertical: 0, horizontal: 20),
                               child: RichText(
                                 text: const TextSpan(
-                                  text: 'Donation Servers',
+                                  text: 'Donation Servers ',
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
@@ -223,9 +218,9 @@ class _HomeState extends State<Home> {
                                             text: TextSpan(
                                               text: 'Nearby Branch ',
                                               style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.black),
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                               /*defining default style is optional */
                                               children: <TextSpan>[
                                                 TextSpan(
@@ -417,7 +412,7 @@ class _HomeState extends State<Home> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: AppColors.mainColor,
+      backgroundColor: Get.theme.primaryColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -445,16 +440,16 @@ class _HomeState extends State<Home> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: IconButton(
-              icon: Icon(
-                Icons.notifications,
-                color: Colors.black54,
-                size: 30,
-              ),
-              onPressed: () => {
-              setState(() {
-              _isLoading = !_isLoading;
-              })
-            }),
+                icon: const Icon(
+                  Icons.notifications,
+                  color: Colors.black54,
+                  size: 30,
+                ),
+                onPressed: () => {
+                      setState(() {
+                        _isLoading = !_isLoading;
+                      })
+                    }),
           ),
         ),
       ]),

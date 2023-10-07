@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:akrem/Screens/main/Fund.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
@@ -8,6 +9,7 @@ import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 /// Flutter code sample for [NavigationBar].
 
@@ -54,8 +56,8 @@ class _NavigationBarApp extends State<NavigationBarApp> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 0, left: 0, right: 0),
         child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          // borderRadius: const BorderRadius.only(
+          //     topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
             child: NavigationBar(
@@ -67,7 +69,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
               height: 4 * 15,
               //surfaceTintColor: Colors.red,
               //shadowColor: Colors.red,
-              backgroundColor: Colors.white.withAlpha(150),
+              backgroundColor: Get.theme.shadowColor.withAlpha(150),
               indicatorColor: Colors.transparent,
               selectedIndex: currentPageIndex,
               destinations: <Widget>[
@@ -86,10 +88,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset(
-                    AppImages.fastDonation,
-                    color: Colors.black,
-                  ),
+                  icon: const Icon(Icons.fast_forward),
                   selectedIcon: Container(
                     width: 40,
                     height: 40,
@@ -98,18 +97,15 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                       borderRadius: BorderRadius.all(Radius.circular(8.0)),
                       color: AppColors.mainColor,
                     ),
-                    child: SvgPicture.asset(
-                      AppImages.fastDonation,
-                      color: Colors.black,
-                    ),
+                    child: const Icon(Icons.fast_forward),
                   ),
                   label: "Donation",
                 ),
                 NavigationDestination(
                   icon: const SizedBox(
-                    child: Icon(Icons.attach_money),
                     width: 40,
                     height: 40,
+                    child: Icon(Icons.attach_money),
                   ),
                   selectedIcon: Container(
                       width: 40,
@@ -159,9 +155,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
         const Center(
           child: Text("fast order"),
         ),
-        const Center(
-          child: Text("fund page"),
-        ),
+         Fund(),
         const ProfileScreen(),
       ][currentPageIndex],
     );
