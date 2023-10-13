@@ -25,7 +25,6 @@ class _ShowBranchState extends State<ShowBranch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backGround,
       extendBodyBehindAppBar: false,
       appBar: _buildAppBar(),
       body: Stack(

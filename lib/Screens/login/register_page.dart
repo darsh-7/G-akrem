@@ -52,7 +52,7 @@ class _RegisterPage extends State<RegisterPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(children: [
-          Positioned(top: 80, child: _buildTop()),
+         // Positioned(top: 80, child: _buildTop()),
           Positioned(bottom: 0, child: _buildBottom()),
         ]),
       ),
@@ -87,6 +87,7 @@ class _RegisterPage extends State<RegisterPage> {
     return SizedBox(
       width: mediaSize.width,
       child: Card(
+        color: Get.theme.colorScheme.onBackground,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
@@ -174,7 +175,7 @@ class _RegisterPage extends State<RegisterPage> {
               label: "Password Confirmation",
               obscureText: true,
               controller: _passwordConfirmationController,
-              validator: (String? password) {
+              validator: (password) {
                 if (_passwordConfirmationController.text.isEmpty ||
                     password != _passwordConfirmationController.text) {
                   return "Password is not confirmed";
@@ -184,44 +185,44 @@ class _RegisterPage extends State<RegisterPage> {
                 }
               },
             ),
-            const SizedBox(height: 12),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomInputField(
-                    keyboardType: TextInputType.number,
-                    hintText: "Phone",
-                    label: "Phone",
-                    //obscureText: true,
-                    controller: _phoneController,
-                    validator: Validator.validatePhone,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(11),
-                    ],
-                    width: 260,
-                  ),
-                  Container(
-                    width: 50,
-                    height: 60,
-                    child:
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("WhatsApp",style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.green[300],
-                        ),),
-                        Checkbox(
-                          value: hasWhatsApp,
-                          activeColor: Colors.green,
-                          onChanged: (checked) =>
-                              setState(() => hasWhatsApp = checked ?? false),
-                        ),
-                      ],
-                    ),
-                  )
-                ]),
+            // const SizedBox(height: 12),
+            // Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       CustomInputField(
+            //         keyboardType: TextInputType.number,
+            //         hintText: "Phone",
+            //         label: "Phone",
+            //         //obscureText: true,
+            //         controller: _phoneController,
+            //         validator: Validator.validatePhone,
+            //         inputFormatters: [
+            //           LengthLimitingTextInputFormatter(11),
+            //         ],
+            //         width: 260,
+            //       ),
+            //       Container(
+            //         width: 50,
+            //         height: 60,
+            //         child:
+            //         Column(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children: [
+            //             Text("WhatsApp",style: TextStyle(
+            //               fontSize: 10,
+            //               color: Colors.green[300],
+            //             ),),
+            //             Checkbox(
+            //               value: hasWhatsApp,
+            //               activeColor: Colors.green,
+            //               onChanged: (checked) =>
+            //                   setState(() => hasWhatsApp = checked ?? false),
+            //             ),
+            //           ],
+            //         ),
+            //       )
+            //     ]),
             const SizedBox(height: 12),
             CustomCheckbox(
               label: Column(
@@ -336,7 +337,7 @@ class _RegisterPage extends State<RegisterPage> {
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 elevation: 20,
-                shadowColor: Colors.grey,
+                shadowColor: Colors.grey.shade700,
                 minimumSize: const Size.fromHeight(48),
                 backgroundColor: myColor,
               ),
@@ -360,11 +361,8 @@ class _RegisterPage extends State<RegisterPage> {
                 height: 32,
               )),
               Tab(
-                  icon: Image.asset(
-                "assets/socialIcons/github.png",
-                width: 32,
-                height: 32,
-              )),
+                icon: Icon(Icons.discord,color: Colors.deepPurpleAccent,size: 35,),
+                ),
             ],
           ),
           Row(

@@ -1,10 +1,16 @@
 import 'dart:io';
 
-import 'package:akrem/constants/medic.dart';
+import 'package:akrem/model/medic.dart';
+import 'package:akrem/db/basket.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class BasketController extends GetxController {
-  List<Medic> medics = MedicManager.medics;
+
+
+ // final basket = DonationBasket() ;
+  List<Medic> medics = [];
 
 
   // [
@@ -48,9 +54,9 @@ class BasketController extends GetxController {
         Medic(img: img, name: name, bar: bar, pill: pills, date: date);
     medics.add(medic);
    // MedicManager.medics.add(medic);
+   //  basket.addMedic(medic);
     update();
     print("addMedic $medic");
-
   }
 
   void clearList() {
@@ -60,4 +66,12 @@ class BasketController extends GetxController {
     print("clearList ");
 
   }
+  void getMedics() {
+    // medics = basket.getMedics() ?? [];
+    // MedicManager.medics.clear();
+    update();
+    print("clearList ");
+
+  }
+
 }

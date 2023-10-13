@@ -23,6 +23,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  var pColor = Get.theme.primaryColor;
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
@@ -47,14 +48,14 @@ class _HomeState extends State<Home> {
         title: "Donate to box",
         action: 3),
     Card(
-        img: SvgPicture.asset(AppImages.fastDonation),
-        title: "Fast Donation order",
-        action: 4),
-    Card(
         img: Container(
             margin: const EdgeInsets.all(8),
             child: SvgPicture.asset(AppImages.donate)),
         title: "Support US",
+        action: 4),
+    Card(
+        img: SvgPicture.asset(AppImages.fastDonation),
+        title: "Fast Donation order",
         action: 5),
   ];
 
@@ -68,7 +69,7 @@ class _HomeState extends State<Home> {
   }
 
   Future _getThingsOnStartup() async {
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 3));
     setState(() {
       _isLoading = false;
     });
@@ -76,190 +77,154 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        // Do something here
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  actions: [
-                    TextButton(
-                        onPressed: () => Get.back(),
-                        child: const Text(
-                          "NO",
-                          style: TextStyle(color: AppColors.positives),
-                        )),
-                    TextButton(
-                        onPressed: () => SystemNavigator.pop(),
-                        child: const Text("Leave",
-                            style: TextStyle(color: AppColors.negative)))
-                  ],
-                  title: const Text("want to leave? "),
-                  content: const Text(
-                      "Are you sure you want to leave the app? \n if yse click leave other with click no"),
-                ));
-        return false;
-      },
-      child: Scaffold(
-        appBar: _buildAppBar(),
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                Visibility(
-                  visible: _isLoading,
-                  child: const LinearProgressIndicator(
-                    minHeight: 8,
-                  ),
+    return Scaffold(
+      appBar: _buildAppBar(),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Visibility(
+                visible: _isLoading,
+                child: const LinearProgressIndicator(
+                  minHeight: 8,
                 ),
-                //searchBox(),
-                Expanded(
-                  child: _isLoading
-                      ? ListView(
-                          padding: const EdgeInsets.all(40),
-                          children: [const SkeltonView()])
-                      // ListView.separated(
-                      //         itemCount: 5,
-                      //         itemBuilder: (context, index) =>
-                      //             const NewsCardSkelton(),
-                      //         separatorBuilder: (context, index) =>
-                      //             const SizedBox(height: 16),
-                      //       )
-                      : ListView(
-                          padding: const EdgeInsets.only(bottom: 80, top: 10),
-                          children: [
-                            Container(
+              ),
+              //searchBox(),
+              Expanded(
+                child: _isLoading
+                    ? ListView(
+                        padding: const EdgeInsets.all(40),
+                        children: [const SkeltonView()])
+                    // ListView.separated(
+                    //         itemCount: 5,
+                    //         itemBuilder: (context, index) =>
+                    //             const NewsCardSkelton(),
+                    //         separatorBuilder: (context, index) =>
+                    //             const SizedBox(height: 16),
+                    //       )
+                    : ListView(
+                        padding: const EdgeInsets.only(bottom: 80, top: 10),
+                        children: [
+                          Container(
                               margin: const EdgeInsets.only(
                                 top: 0,
                                 bottom: 10,
                               ),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 20),
-                              child: RichText(
-                                text: const TextSpan(
-                                  text: 'Upcoming Order ',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  /*defining default style is optional */
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: "",
-                                        style: TextStyle(color: Colors.red)),
-                                  ],
+                              child: const Text(
+                                'Upcoming Order ',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 10,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 20),
+                            child: const UpcomingCard(),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 10,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 20),
+                            child: const Row(children: [
+                              Text(
+                                'Donation Servers ',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 0,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: const UpcomingCard(),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 0,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: RichText(
-                                text: const TextSpan(
-                                  text: 'Donation Servers ',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  /*defining default style is optional */
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: "(5)",
-                                        style: TextStyle(color: Colors.red)),
-                                  ],
+                              Text(
+                                '(5)',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.red,
                                 ),
                               ),
+                            ]),
+                          ),
+                          SizedBox(
+                            height: 108,
+                            child: ListView.separated(
+                              // This next line does the trick.
+                              scrollDirection: Axis.horizontal,
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(
+                                  width: 0,
+                                );
+                              },
+                              itemCount: cards.length,
+                              itemBuilder: (context, index) {
+                                return buildCard(card: cards[index]);
+                              },
                             ),
-                            SizedBox(
-                              height: 108,
-                              child: ListView.separated(
-                                // This next line does the trick.
-                                scrollDirection: Axis.horizontal,
-                                separatorBuilder: (context, index) {
-                                  return const SizedBox(
-                                    width: 0,
-                                  );
-                                },
-                                itemCount: cards.length,
-                                itemBuilder: (context, index) {
-                                  return buildCard(card: cards[index]);
-                                },
-                              ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 10,
+                              bottom: 10,
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 10,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          RichText(
-                                            text: TextSpan(
-                                              text: 'Nearby Branch ',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              /*defining default style is optional */
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                    text:
-                                                        "(${_foundPharmacy.length})",
-                                                    style: const TextStyle(
-                                                        color: Colors.red)),
-                                              ],
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 20),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(children: [
+                                          const Text(
+                                            'Nearby Branch ',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            '(${_foundPharmacy.length})',
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.red,
                                             ),
                                           ),
                                         ]),
-                                    TextButton(
-                                        child: const Text(
-                                          "See all",
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                        onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ShowBranch()),
-                                            )),
-                                  ]),
-                            ),
-                            for (Pharmacy Pharm in _foundPharmacy.reversed)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 20),
-                                child: PharmacyItem(
-                                  pharm: Pharm,
-                                ),
-                              )
-                          ],
-                        ),
-                )
-              ],
-            ),
-          ],
-        ),
+                                      ]),
+                                  TextButton(
+                                      child: const Text(
+                                        "See all",
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
+                                      onPressed: () =>
+                                          Get.to(() => ShowBranch())),
+                                ]),
+                          ),
+                          for (Pharmacy Pharm in _foundPharmacy.reversed)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 20),
+                              child: PharmacyItem(
+                                pharm: Pharm,
+                              ),
+                            )
+                        ],
+                      ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -412,7 +377,7 @@ class _HomeState extends State<Home> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Get.theme.primaryColor,
+      backgroundColor: Get.theme.appBarTheme.backgroundColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -434,7 +399,7 @@ class _HomeState extends State<Home> {
                 child: const Icon(Icons.arrow_back_ios_new_rounded)),
           ),
         ]),
-        Container(
+        SizedBox(
           height: 40,
           width: 40,
           child: ClipRRect(

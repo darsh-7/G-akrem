@@ -4,7 +4,7 @@
     <uses-feature android:name="android.hardware.camera"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <application
-        android:label="akrem"
+        android:label="Akrem"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

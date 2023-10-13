@@ -16,7 +16,7 @@ class UpcomingCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 20),
       decoration: BoxDecoration(
         //color: Theme.of(context).primaryColor.withOpacity(0.8),
-        color: Get.theme.shadowColor,
+        color: Get.theme.primaryColor,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -42,7 +42,7 @@ class UpcomingCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Colors.white,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

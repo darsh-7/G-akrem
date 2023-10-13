@@ -89,10 +89,9 @@ class WelcomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  "The easiest way to donate your medic with us (),\njoin us NOW",
+                  "The easiest way to donate your medic\nwith us Akrem,\njoin NOW",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.black54,
                     fontSize: 16,
                   ),
                 ),

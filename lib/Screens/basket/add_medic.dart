@@ -5,7 +5,7 @@ import 'package:akrem/controller/basket_controller.dart';
 import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/constants/medic.dart';
+import 'package:akrem/model/medic.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

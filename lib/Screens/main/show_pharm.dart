@@ -1,5 +1,6 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../constants/app_colors.dart';
 import 'dart:math' as math;
@@ -19,10 +20,7 @@ class ShowPharm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
     if (pharm.boxStorage < 0.4) {
       storageColor = Colors.green;
     } else if (pharm.boxStorage < 0.7) {
@@ -49,7 +47,7 @@ class ShowPharm extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         borderRadius:
-                        const BorderRadius.all(Radius.circular(30)),
+                            const BorderRadius.all(Radius.circular(30)),
                         color: Colors.black54.withOpacity(0.8),
                       ),
                       child: IconButton(
@@ -64,7 +62,7 @@ class ShowPharm extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: AppColors.backGround,
+      //backgroundColor: AppColors.backGround,
       body: Stack(children: [
         Column(
           //crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,14 +73,12 @@ class ShowPharm extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 2 / 1,
                 child: ClipRRect(
-                  child:
-                  FadeInImage(
+                  child: FadeInImage(
                     image: NetworkImage(pharm.img),
                     placeholder: const AssetImage(AppImages.noImage),
                     imageErrorBuilder: (context, error, stackTrace) {
                       return Image.asset(AppImages.noImage,
-                          fit: BoxFit.fitWidth
-                      );
+                          fit: BoxFit.fitWidth);
                     },
                     fit: BoxFit.fitWidth,
                     placeholderFit: BoxFit.fill,
@@ -94,37 +90,47 @@ class ShowPharm extends StatelessWidget {
                 child: CircularProgressIndicator(),
               ),
               Container(
-                  height: 80,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 164),
-                  padding: const EdgeInsets.all(0),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(40),
-                        topLeft: Radius.circular(40)),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 70,
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 30, left: 16.0, right: 12.0),
-                          child: Text(
-                            ("${pharm.name}"),
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: tdBlack,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
+                height: 70,
+                width: double.infinity,
+                margin: const EdgeInsets.only(top: 126),
+                padding: const EdgeInsets.all(0),
+                decoration: const BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40),
+                      topLeft: Radius.circular(40)),
+                ),
+                child: Card(
+                    color: Colors.transparent,
+                    margin: const EdgeInsets.only(
+                        top: 0, left: 0, right: 0, bottom: 0),
+                    // shape: const RoundedRectangleBorder(
+                    //   borderRadius:
+                    //       BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50)),
+                    //   //set border radius more than 50% of height and width to make circle
+                    // ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 70,
+                          width: double.infinity,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 16.0, right: 12.0),
+                            child: Text(
+                              ("${pharm.name}"),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                //color: tdBlack,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  )),
+                      ],
+                    )),
+              ),
             ]),
             Padding(
               padding: const EdgeInsets.only(left: 5.0, right: 1.0),
@@ -138,9 +144,9 @@ class ShowPharm extends StatelessWidget {
                   text: TextSpan(
                     text: '${pharm.locName}',
                     style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                     /*defining default style is optional */
                     children: const <TextSpan>[
                       // TextSpan(
@@ -153,6 +159,7 @@ class ShowPharm extends StatelessWidget {
                 ),
               ]),
             ),
+            const SizedBox(height: 8,),
             Padding(
               padding: const EdgeInsets.only(left: 5.0, right: 1.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -165,14 +172,14 @@ class ShowPharm extends StatelessWidget {
                   text: TextSpan(
                     text: '${pharm.time} ',
                     style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                     /*defining default style is optional */
                     children: const <TextSpan>[
                       TextSpan(
-                          text: "• no EX km",
-                          style: TextStyle(color: Colors.black)),
+                        text: "• no EX km",
+                      ),
                     ],
                   ),
                 ),
@@ -244,7 +251,7 @@ class ShowPharm extends StatelessWidget {
                             final Uri _url = Uri.parse('https://flutter.dev');
 
                             if (await canLaunch(_url.toString())) {
-                               await launchUrl(_url);
+                              await launchUrl(_url);
                             } else {
                               throw 'Could not launch ';
                             }

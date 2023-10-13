@@ -1,11 +1,9 @@
 import 'dart:io';
 
-import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/constants/medic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MedicCard extends StatelessWidget {
   final File img;
@@ -37,18 +35,17 @@ class MedicCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.all(0),
         decoration: BoxDecoration(
-          color: Colors.transparent,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: const Offset(-6, -5), // Shadow position
+              offset: const Offset(0, -4), // Shadow position
             ),
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: const Offset(6, 5), // Shadow position
+              offset: const Offset(0, 5), // Shadow position
             ),
           ],
         ),
@@ -147,7 +144,7 @@ class MedicCard extends StatelessWidget {
           ),
           contentPadding: const EdgeInsets.all(0),
           //const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          tileColor: Colors.white,
+          tileColor: Colors.transparent,
           // leading: Icon(
           //   todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
           //   color: tdBlue,
@@ -194,8 +191,8 @@ class MedicCard extends StatelessWidget {
                   width: double.infinity,
                   margin: const EdgeInsets.only(top: 180),
                   padding: const EdgeInsets.all(0),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Get.theme.cardColor,
                     borderRadius: BorderRadius.only(
                         bottomRight: Radius.circular(30),
                         bottomLeft: Radius.circular(30)),
@@ -212,7 +209,6 @@ class MedicCard extends StatelessWidget {
                             (name ?? ""),
                             style: const TextStyle(
                               fontSize: 16,
-                              color: tdBlack,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),

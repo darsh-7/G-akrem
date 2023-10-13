@@ -11,14 +11,12 @@ import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/constants/app_images.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'Screens/main/show_pharm.dart';
 
-const mainColor = Color.fromRGBO(3, 134, 208, 1);
+const mainColor = AppColors.darkGround;
 
 class MyApp extends StatelessWidget {
   MyApp({
@@ -31,31 +29,61 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Akrem',
+
+      //themeMode: Get.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+       themeMode: ThemeMode.system,
+      /* ThemeMode.system to follow system theme,
+         ThemeMode.light for light theme,
+         ThemeMode.dark for dark theme
+      */
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        shadowColor: Colors.white,
-        scaffoldBackgroundColor: Colors.white,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(AppColors.mainColor),
-            minimumSize: MaterialStateProperty.all(
-              const Size.fromHeight(60),
-            ),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
+          // primarySwatch: Colors.blue,
+          primaryColor: AppColors.mainColor,
+          useMaterial3: true,
+          cardColor: Colors.white,
+          shadowColor: Colors.black,
+          colorScheme: const ColorScheme(
+              brightness: Brightness.light,
+              primary: AppColors.mainColor,
+              onPrimary: Colors.white,
+              secondary: AppColors.mainColor,
+              onSecondary: AppColors.mainColor,
+              error: Colors.red,
+              onError: Colors.red,
+              background: Colors.white,
+              onBackground: Colors.white,
+              surface: Colors.black,
+              onSurface: Colors.black),
+
+          //scaffoldBackgroundColor: Colors.white,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(AppColors.mainColor),
+              //textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+
+              // minimumSize: MaterialStateProperty.all(
+              //   const Size.fromHeight(60),
+              // ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
               ),
             ),
           ),
-        ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          backgroundColor: AppColors.backGround,
-        ),
-      ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: AppColors.backGround,
+          ),
+          appBarTheme: const AppBarTheme(backgroundColor: AppColors.mainColor)),
+
+      //dark
+
       darkTheme: ThemeData.dark().copyWith(
-          primaryColor: Colors.blue.shade800,
-          shadowColor: Colors.black,
-          cardColor: AppColors.darkBlue,
+          primaryColor: AppColors.darkBlue,
+          shadowColor: Colors.white,
+          useMaterial3: true,
+          cardColor: AppColors.darkGround,
           scaffoldBackgroundColor: AppColors.darkGround,
           colorScheme: const ColorScheme(
               brightness: Brightness.dark,
@@ -67,14 +95,16 @@ class MyApp extends StatelessWidget {
               onError: Colors.red,
               background: AppColors.darkGround,
               onBackground: AppColors.darkGround,
-              surface: Colors.greenAccent,
-              onSurface: Colors.greenAccent),
+              surface: Colors.white,
+              onSurface: Colors.white),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(AppColors.mainColor),
-              minimumSize: MaterialStateProperty.all(
-                const Size.fromHeight(60),
-              ),
+              backgroundColor: MaterialStateProperty.all(AppColors.darkBlue),
+              //textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+              foregroundColor: MaterialStateProperty.all(Colors.white),
+              // minimumSize: MaterialStateProperty.all(
+              //   const Size.fromHeight(60),
+              // ),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
@@ -83,14 +113,16 @@ class MyApp extends StatelessWidget {
             ),
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Colors.black,
+          ),
+          appBarTheme: const AppBarTheme(
             backgroundColor: AppColors.darkBlue,
-          )
-
-      ),
+          )),
       // navigatorObservers: [
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
-      initialRoute: '/login',
+
+      initialRoute: '/welcome',
       routes: {
         //  '/': (context) => SplashPage(),
         '/test': (context) => const TouristDetailsPage(
@@ -108,4 +140,14 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+
+  // ThemeData _buildTheme(Brightness brightness) {
+  //   var baseTheme = ThemeData(brightness: brightness);
+  //
+  //   return baseTheme.copyWith(
+  //     // colorScheme: _customColorScheme,
+  //     // textTheme: GoogleFonts.lobsterTextTheme(baseTheme.textTheme),
+  //     useMaterial3: true,
+  //   );
+  // }
 }

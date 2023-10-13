@@ -7,7 +7,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../constants/medic.dart';
+import '../../model/medic.dart';
 import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
 import 'add_medic.dart';
@@ -31,11 +31,13 @@ class _MedicList extends State<MedicList> {
 
   //late get List<Medic> _foundMedic;
   late bool _isCameraPermissionGranted;
+
 //  Image image = Image.asset(AppImages.profileIcon);
 
   @override
   void initState() {
     //_foundMedic = foundMedic;
+    basketController.getMedics();
     super.initState();
   }
 
@@ -64,29 +66,27 @@ class _MedicList extends State<MedicList> {
           child: Text(
               "On the next step we need to use the camera to take picture of the Medic you want to donate.\n if you agry pleas press agree"),
         ),
-        confirm: Expanded(
-          child: ElevatedButton(
-            onPressed: () async {
-              // Get.back();
-              await Permission.camera.request();
-              status = await Permission.camera.status;
-              if (status.isGranted) {
-                await Get.to(const TakePic(),
-                    arguments: {"camera": await availableCameras()});
-              } else {
-                Get.defaultDialog(
-                  title: "Permission Needed",
-                  content: const Text(
-                      "Sorry we cant add any medic with out the Camera"),
-                  cancel: OutlinedButton(
-                      onPressed: () => Get.back(), child: const Text("ok")),
-                );
-              }
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.mainColor, side: BorderSide.none),
-            child: const Text("Agree"),
-          ),
+        confirm: ElevatedButton(
+          onPressed: () async {
+            // Get.back();
+            await Permission.camera.request();
+            status = await Permission.camera.status;
+            if (status.isGranted) {
+              await Get.to(const TakePic(),
+                  arguments: {"camera": await availableCameras()});
+            } else {
+              Get.defaultDialog(
+                title: "Permission Needed",
+                content: const Text(
+                    "Sorry we cant add any medic with out the Camera"),
+                cancel: OutlinedButton(
+                    onPressed: () => Get.back(), child: const Text("ok")),
+              );
+            }
+          },
+          style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.mainColor, side: BorderSide.none),
+          child: const Text("Agree"),
         ),
         cancel: OutlinedButton(
             onPressed: () => Get.back(),
@@ -102,17 +102,32 @@ class _MedicList extends State<MedicList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      backgroundColor: AppColors.backGround,
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          getPermissionStatus();
-          // await Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => TakePic(cameraDescription: cameraDescription)),
-          // );
-          //refreshList();
-        },
+
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            backgroundColor: AppColors.positives,
+            child: const Icon(Icons.add),
+            onPressed: () async {
+              getPermissionStatus();
+            },
+          ),
+          SizedBox(
+            height: 16,
+          ),
+          if (_foundMedic.isNotEmpty)
+            FloatingActionButton(
+            backgroundColor: Get.theme.primaryColor,
+            child: const Icon(IconData(0xe156, fontFamily: 'MaterialIcons')),
+            onPressed: () async {
+              getPermissionStatus();
+            },
+          ),
+          SizedBox(
+            height: 8,
+          ),
+        ],
       ),
 
       //appBar: _buildAppBar(),
@@ -149,41 +164,21 @@ class _MedicList extends State<MedicList> {
                     ],
                   ),
                 ),
-                 if (_foundMedic.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: SizedBox(
-                      width: double.maxFinite,
-                      height: 45,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Checkout"),
-                        style: ElevatedButton.styleFrom(
-                          shape: StadiumBorder(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Container(
-                  //   // height: 100,
-                  //   width: 150,
-                  //   color: Colors.red,
-                  //   child: Container(
-                  //     //margin: const EdgeInsets.all(30),
-                  //     width: 140,
-                  //     height: 40,
-                  //     decoration: BoxDecoration(
-                  //       color: AppColors.mainColor,
-                  //       borderRadius: BorderRadius.circular(30),
-                  //     ),
-                  //     child: RawMaterialButton(
-                  //         child: const Text("Proceed",
-                  //             style: TextStyle(fontSize: 20)),
-                  //         onPressed: () {
-                  //           Get.back();
-                  //         }),
-                  //   ),
-                  // )
+                // if (_foundMedic.isNotEmpty)
+                //   Padding(
+                //     padding: const EdgeInsets.only(bottom: 8.0),
+                //     child: SizedBox(
+                //       width: double.maxFinite,
+                //       height: 45,
+                //       child: ElevatedButton(
+                //         onPressed: () {},
+                //         child: const Text("Checkout"),
+                //         style: ElevatedButton.styleFrom(
+                //           shape: StadiumBorder(),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
               ],
             ));
             //if (_foundMedic.isEmpty) const EmptyItemsScreen(),
@@ -195,7 +190,6 @@ class _MedicList extends State<MedicList> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: AppColors.mainColor,
       elevation: 0,
       title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         const Row(mainAxisAlignment: MainAxisAlignment.start, children: [

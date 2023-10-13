@@ -46,9 +46,13 @@ class _LoginPage extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: true,
         body: Stack(children: [
           Positioned(top: 80, child: _buildTop()),
-          Positioned(bottom: 0, child: _buildBottom()),
+          Positioned(
+            bottom: 0,
+            child: _buildBottom(),
+          ),
         ]),
       ),
     );
@@ -83,6 +87,7 @@ class _LoginPage extends State<LoginPage> {
     return SizedBox(
       width: mediaSize.width,
       child: Card(
+        color: Get.theme.colorScheme.onBackground,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
@@ -103,6 +108,7 @@ class _LoginPage extends State<LoginPage> {
         Container(
           height: 572,
           width: double.infinity,
+          color: Colors.transparent,
           child: ListView(
             children: [
               Form(
@@ -206,12 +212,12 @@ class _LoginPage extends State<LoginPage> {
               //   return;
               // }
 
-              Get.offAll( NavigationBarApp());
+              Get.offAll(NavigationBarApp());
             },
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
               elevation: 20,
-              shadowColor: Colors.grey,
+              shadowColor: Colors.grey.shade700,
               minimumSize: const Size.fromHeight(48),
               backgroundColor: myColor,
             ),
@@ -232,7 +238,7 @@ class _LoginPage extends State<LoginPage> {
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
                 onPressed: () {
-                  Get.offAll(  NavigationBarApp());
+                  Get.offAll(NavigationBarApp());
                 }),
           ),
           _buildGreyText("Or Login with"),
@@ -253,11 +259,12 @@ class _LoginPage extends State<LoginPage> {
                 height: 32,
               )),
               Tab(
-                  icon: Image.asset(
-                "assets/socialIcons/github.png",
-                width: 32,
-                height: 32,
-              )),
+                icon: Icon(
+                  Icons.discord,
+                  color: Colors.deepPurpleAccent,
+                  size: 35,
+                ),
+              ),
             ],
           ),
           Row(
@@ -267,7 +274,7 @@ class _LoginPage extends State<LoginPage> {
               const Text(
                 "Don't have an account",
                 style: TextStyle(
-                  color: AppColors.mainColor,
+                  color: Color(0xFFb8b8b8),
                 ),
               ),
               TextButton(

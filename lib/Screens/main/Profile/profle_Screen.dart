@@ -1,4 +1,5 @@
 import 'package:akrem/Screens/login/login_page.dart';
+import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/widgets/profle_menu.dart';
@@ -13,24 +14,25 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isDark = (MediaQuery.of(context).platformBrightness == Brightness.dark).obs;
     return Scaffold(
       appBar: AppBar(
         // leading: IconButton(onPressed:( )/* () => Get.back()*/, icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
-        title: Text("Profile"),
+        title: const Text("Profile"),
         actions: [
           IconButton(
-              onPressed: () {
-                Get.changeTheme(
-                  Get.isDarkMode ? ThemeData.light():ThemeData.dark()
-                );
+              onPressed: () async {
+                Get.changeTheme( Get.isDarkMode
+                    ? ThemeData.light()
+                    : ThemeData.dark());
+
+               // Get.offAll(NavigationBarApp());
               },
-              icon: Obx(() => Icon(isDark.value ? Icons.nightlight : Icons.sunny)))
+              icon: Icon(Get.isDarkMode ? Icons.nightlight : Icons.sunny))
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 80 ,right: 5,left: 5,top: 0),
+        padding: const EdgeInsets.only(bottom: 80, right: 5, left: 5, top: 0),
         child: Container(
           padding: const EdgeInsets.all(20),
           child: Column(children: [
@@ -91,10 +93,13 @@ class ProfileScreen extends StatelessWidget {
             /// -- MENU
             ProfileMenuWidget(
                 title: "Settings", icon: Icons.settings, onPress: () {}),
-            ProfileMenuWidget(title: "Donation History", icon: Icons.history, onPress: () {}),
-            ProfileMenuWidget(title: "Billing Details", icon: Icons.wallet, onPress: () {}),
+            ProfileMenuWidget(
+                title: "Donation History", icon: Icons.history, onPress: () {}),
+            ProfileMenuWidget(
+                title: "Billing Details", icon: Icons.wallet, onPress: () {}),
             // ProfileMenuWidget(title: "User Management", icon: Icons.verified_user, onPress: () {}),
-            ProfileMenuWidget(title: "Support", icon: Icons.support_agent, onPress: () {}),
+            ProfileMenuWidget(
+                title: "Support", icon: Icons.support_agent, onPress: () {}),
 
             const Divider(),
             const SizedBox(height: 10),
@@ -114,17 +119,18 @@ class ProfileScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       child: Text("Are you sure, you want to Logout?"),
                     ),
-                    confirm: Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.offAll(const LoginPage());
-                          // todo : remove all temp data and local storage
-                        },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, side: BorderSide.none),
-                        child: const Text("Yes"),
-                      ),
+                    confirm:  ElevatedButton(
+                      onPressed: () {
+                        Get.offAll(const LoginPage());
+                        // todo : remove all temp data and local storage
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          side: BorderSide.none),
+                      child: const Text("Yes"),
                     ),
-                    cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No")),
+                    cancel: OutlinedButton(
+                        onPressed: () => Get.back(), child: const Text("No")),
                   );
                 }),
             Column(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -139,12 +145,12 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             text: 'Developed by ',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.black),
+                                color: Get.theme.shadowColor),
                             /*defining default style is optional */
                             children: <TextSpan>[
                               TextSpan(
