@@ -1,7 +1,5 @@
 import 'package:akrem/Screens/login/register_page.dart';
-import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/constants/font_manager.dart';
+import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akrem/widgets/input.dart';
@@ -212,7 +210,7 @@ class _LoginPage extends State<LoginPage> {
               //   return;
               // }
 
-              Get.offAll(NavigationBarApp());
+              Get.offAll( Get.offAll(SelectLocation()));
             },
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
@@ -237,9 +235,8 @@ class _LoginPage extends State<LoginPage> {
                   "Skip",
                   style: TextStyle(fontSize: 20, color: Colors.grey),
                 ),
-                onPressed: () {
-                  Get.offAll(NavigationBarApp());
-                }),
+                onPressed: () => Get.offAll(SelectLocation()),
+                ),
           ),
           _buildGreyText("Or Login with"),
           const SizedBox(height: 8),
@@ -279,7 +276,7 @@ class _LoginPage extends State<LoginPage> {
               ),
               TextButton(
                 child: const Text("Register"),
-                onPressed: () => {Navigator.of(context).pushNamed("/register")},
+                onPressed: () => Get.offAll(RegisterPage()),
               ),
             ],
           ),

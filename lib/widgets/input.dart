@@ -1,6 +1,7 @@
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class CustomInputField extends StatefulWidget {
   final TextEditingController? controller;
@@ -17,6 +18,7 @@ class CustomInputField extends StatefulWidget {
   final double? width;
   final bool readOnly;
   final Icon? icon;
+  final double focusedRadius;
 
   final void Function()? onTap;
   final List<TextInputFormatter>? inputFormatters;
@@ -38,6 +40,7 @@ class CustomInputField extends StatefulWidget {
     this.readOnly =false,
     this.icon,
     this.onTap,
+    this.focusedRadius = 24,
   });
 
   @override
@@ -79,6 +82,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
       child: TextFormField(
         // onTap: () => setRadius(24.0),
         // onTapOutside: (PointerDownEvent) => setRadius(0.0),
+        scrollPadding: EdgeInsets.only(top:40), // THIS SHOULD SOLVE YOUR PROBLEM
         onChanged: widget.onChanged,
         controller: widget.controller,
         initialValue: widget.initialValue,
@@ -95,18 +99,18 @@ class _CustomInputFieldState extends State<CustomInputField> {
           enabled: widget.enabled,
           border: OutlineInputBorder(
             borderSide:
-            BorderSide(width: 1, color: AppColors.mainColor),
+            BorderSide(width: 1, color: Get.theme.primaryColor),
             borderRadius: BorderRadius.circular(0.0),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(width: 1, color: AppColors.mainColor),
+                BorderSide(width: 1, color: Get.theme.primaryColor),
             borderRadius: BorderRadius.circular(0.0),
           ),
           focusedBorder: defaultBorder.copyWith(
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(widget.focusedRadius),
             borderSide: BorderSide(
-              color: AppColors.mainColor,
+              color: Get.theme.primaryColor,
             ),
           ),
           errorBorder: defaultBorder.copyWith(
@@ -116,7 +120,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
           disabledBorder: defaultBorder.copyWith(
               borderRadius: BorderRadius.circular(24),
               borderSide: BorderSide(
-                color: AppColors.mainColor,
+                color:Get.theme.primaryColor,
               )),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

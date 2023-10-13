@@ -51,8 +51,10 @@ class _RegisterPage extends State<RegisterPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Stack(children: [
-         // Positioned(top: 80, child: _buildTop()),
+        resizeToAvoidBottomInset: true,
+        body:
+        Stack(children: [
+          // Positioned(top: 80, child: _buildTop()),
           Positioned(bottom: 0, child: _buildBottom()),
         ]),
       ),
@@ -94,7 +96,7 @@ class _RegisterPage extends State<RegisterPage> {
           topRight: Radius.circular(30),
         )),
         child: Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.only(bottom: 4, right: 8, left: 8),
           child: _buildForm(),
         ),
       ),
@@ -105,209 +107,212 @@ class _RegisterPage extends State<RegisterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Form(
-          key: _formKey,
-          child: Column(children: [
-            Text(
-              "Welcome to Akrem",
-              style: TextStyle(
-                  color: myColor, fontSize: 32, fontWeight: FontWeight.w500),
-            ),
-            _buildGreyText("Please Register with your information"),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomInputField(
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: "First Name",
-                  controller: _firstNameController,
-                  validator: Validator.validateName,
-                  label: "First Name",
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(46),
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
-                  ],
-                  width: 140,
+        Container(
+          height: 600,
+          width: double.infinity,
+          color: Colors.transparent,
+          child: ListView(children: [
+            Form(
+              key: _formKey,
+              child: Column(children: [
+                Text(
+                  "Welcome to Akrem",
+                  style: TextStyle(
+                      color: myColor,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w500),
                 ),
-                CustomInputField(
-                  keyboardType: TextInputType.emailAddress,
-                  hintText: "Last Name",
-                  controller: _lastNameController,
-                  validator: Validator.validateName,
-                  label: "Last Name",
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(46),
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
-                  ],
-                  width: 140,
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            CustomInputField(
-              keyboardType: TextInputType.emailAddress,
-              hintText: "Email",
-              controller: _emailController,
-              validator: Validator.validateEmail,
-              label: "Email",
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(360),
-              ],
-            ),
-            const SizedBox(height: 12),
-            CustomInputField(
-              keyboardType: TextInputType.visiblePassword,
-              hintText: "Password",
-              obscureText: true,
-              controller: _passwordController,
-              validator: Validator.validatePassword,
-              label: "Password",
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(100),
-              ],
-            ),
-            const SizedBox(height: 12),
-            CustomInputField(
-              keyboardType: TextInputType.visiblePassword,
-              hintText: "Password Confirmation",
-              label: "Password Confirmation",
-              obscureText: true,
-              controller: _passwordConfirmationController,
-              validator: (password) {
-                if (_passwordConfirmationController.text.isEmpty ||
-                    password != _passwordConfirmationController.text) {
-                  return "Password is not confirmed";
-                }
-                if (password == _passwordConfirmationController.text) {
-                  return null;
-                }
-              },
-            ),
-            // const SizedBox(height: 12),
-            // Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       CustomInputField(
-            //         keyboardType: TextInputType.number,
-            //         hintText: "Phone",
-            //         label: "Phone",
-            //         //obscureText: true,
-            //         controller: _phoneController,
-            //         validator: Validator.validatePhone,
-            //         inputFormatters: [
-            //           LengthLimitingTextInputFormatter(11),
-            //         ],
-            //         width: 260,
-            //       ),
-            //       Container(
-            //         width: 50,
-            //         height: 60,
-            //         child:
-            //         Column(
-            //           mainAxisSize: MainAxisSize.min,
-            //           children: [
-            //             Text("WhatsApp",style: TextStyle(
-            //               fontSize: 10,
-            //               color: Colors.green[300],
-            //             ),),
-            //             Checkbox(
-            //               value: hasWhatsApp,
-            //               activeColor: Colors.green,
-            //               onChanged: (checked) =>
-            //                   setState(() => hasWhatsApp = checked ?? false),
-            //             ),
-            //           ],
-            //         ),
-            //       )
-            //     ]),
-            const SizedBox(height: 12),
-            CustomCheckbox(
-              label: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: Text(
-                      "By creating an account you agree to our",
-                      style: TextStyle(
-                        color: Color(0xFFa8a8a7),
-                      ),
+                _buildGreyText("Please Register with your information"),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomInputField(
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: "First Name",
+                      controller: _firstNameController,
+                      validator: Validator.validateName,
+                      label: "First Name",
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(46),
+                        FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                      ],
+                      width: 140,
                     ),
-                  ),
-                  TextButton(
-                    child: const Text('Terms & Conditions'),
-                    onPressed: () {
-                      showCupertinoModalPopup(
-                        context: context,
-                        builder: (BuildContext builder) {
-                          return CupertinoPopupSurface(
-                            child: Container(
-                                color: Colors.white,
-                                alignment: Alignment.center,
-                                width: double.infinity,
-                                height: mediaSize.height,
-                                child: ListView(children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              top: statusBarHeight),
-                                          child: null),
-                                      RichText(
-                                        text: const TextSpan(
-                                          text: 'good to see you \n',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.grey),
-                                          /*defining default style is optional */
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text:
-                                                    "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
-                                                    " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
-                                                style: TextStyle(
-                                                    color: Colors.black)),
-                                          ],
-                                        ),
-                                      ),
-                                      Image.asset(
-                                        "assets/Pharmacy.png",
-                                        scale: 1,
-                                      ),
-                                    ],
-                                  )
-                                ])),
+                    CustomInputField(
+                      keyboardType: TextInputType.emailAddress,
+                      hintText: "Last Name",
+                      controller: _lastNameController,
+                      validator: Validator.validateName,
+                      label: "Last Name",
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(46),
+                        FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                      ],
+                      width: 140,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                CustomInputField(
+                  keyboardType: TextInputType.emailAddress,
+                  hintText: "Email",
+                  controller: _emailController,
+                  validator: Validator.validateEmail,
+                  label: "Email",
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(360),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                CustomInputField(
+                  keyboardType: TextInputType.visiblePassword,
+                  hintText: "Password",
+                  obscureText: true,
+                  controller: _passwordController,
+                  validator: Validator.validatePassword,
+                  label: "Password",
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(100),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                CustomInputField(
+                  keyboardType: TextInputType.visiblePassword,
+                  hintText: "Password Confirmation",
+                  label: "Password Confirmation",
+                  obscureText: true,
+                  controller: _passwordConfirmationController,
+                  validator: (password) {
+                    if (_passwordConfirmationController.text.isEmpty ||
+                        password != _passwordConfirmationController.text) {
+                      return "Password is not confirmed";
+                    }
+                    if (password == _passwordConfirmationController.text) {
+                      return null;
+                    }
+                  },
+                ),
+                // const SizedBox(height: 12),
+                // Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       CustomInputField(
+                //         keyboardType: TextInputType.number,
+                //         hintText: "Phone",
+                //         label: "Phone",
+                //         //obscureText: true,
+                //         controller: _phoneController,
+                //         validator: Validator.validatePhone,
+                //         inputFormatters: [
+                //           LengthLimitingTextInputFormatter(11),
+                //         ],
+                //         width: 260,
+                //       ),
+                //       Container(
+                //         width: 50,
+                //         height: 60,
+                //         child:
+                //         Column(
+                //           mainAxisSize: MainAxisSize.min,
+                //           children: [
+                //             Text("WhatsApp",style: TextStyle(
+                //               fontSize: 10,
+                //               color: Colors.green[300],
+                //             ),),
+                //             Checkbox(
+                //               value: hasWhatsApp,
+                //               activeColor: Colors.green,
+                //               onChanged: (checked) =>
+                //                   setState(() => hasWhatsApp = checked ?? false),
+                //             ),
+                //           ],
+                //         ),
+                //       )
+                //     ]),
+                const SizedBox(height: 12),
+                CustomCheckbox(
+                  label: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8),
+                        child: Text(
+                          "By creating an account you agree to our",
+                          style: TextStyle(
+                            color: Color(0xFFa8a8a7),
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        child: const Text('Terms & Conditions'),
+                        onPressed: () {
+                          showCupertinoModalPopup(
+                            context: context,
+                            builder: (BuildContext builder) {
+                              return CupertinoPopupSurface(
+                                child: Container(
+                                    color: Colors.white,
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: mediaSize.height,
+                                    child: ListView(children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: statusBarHeight),
+                                              child: null),
+                                          RichText(
+                                            text: const TextSpan(
+                                              text: 'good to see you \n',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.grey),
+                                              /*defining default style is optional */
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text:
+                                                        "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
+                                                        " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
+                                                    style: TextStyle(
+                                                        color: Colors.black)),
+                                              ],
+                                            ),
+                                          ),
+                                          Image.asset(
+                                            "assets/Pharmacy.png",
+                                            scale: 1,
+                                          ),
+                                        ],
+                                      )
+                                    ])),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              value: _agreeWithTermsAndConditions,
-              onChanged: (checked) => setState(
-                  () => _agreeWithTermsAndConditions = checked ?? false),
+                  value: _agreeWithTermsAndConditions,
+                  onChanged: (checked) => setState(
+                      () => _agreeWithTermsAndConditions = checked ?? false),
+                ),
+              ]),
             ),
-          ]),
-        ),
         const SizedBox(height: 4),
         _buildOtherLogin(),
+          ]),
+        ),
       ],
     );
   }
 
-  Widget _buildGreyText(String text) {
-    return Text(
-      text,
-      style: const TextStyle(color: Colors.grey),
-    );
-  }
 
   Widget _buildOtherLogin() {
     return Center(
@@ -361,8 +366,12 @@ class _RegisterPage extends State<RegisterPage> {
                 height: 32,
               )),
               Tab(
-                icon: Icon(Icons.discord,color: Colors.deepPurpleAccent,size: 35,),
+                icon: Icon(
+                  Icons.discord,
+                  color: Colors.deepPurpleAccent,
+                  size: 35,
                 ),
+              ),
             ],
           ),
           Row(
@@ -388,3 +397,10 @@ class _RegisterPage extends State<RegisterPage> {
     );
   }
 }
+Widget _buildGreyText(String text) {
+  return Text(
+    text,
+    style: const TextStyle(color: Colors.grey),
+  );
+}
+

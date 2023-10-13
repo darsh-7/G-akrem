@@ -72,7 +72,7 @@ class _TakePic extends State<TakePic> {
       child: Scaffold(
         body: Stack(children: <Widget>[
           Visibility(
-            visible: camOn,
+            // visible: camOn,
             child: SizedBox(
               height: double.infinity,
               child: CameraPreview(_cameraController),

@@ -6,7 +6,7 @@ import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
-import 'package:akrem/Screens/map_screen.dart';
+import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
@@ -122,7 +122,7 @@ class MyApp extends StatelessWidget {
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
 
-      initialRoute: '/welcome',
+      initialRoute: '/map',
       routes: {
         //  '/': (context) => SplashPage(),
         '/test': (context) => const TouristDetailsPage(
@@ -131,7 +131,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/main': (context) => NavigationBarApp(),
         '/register': (context) => const RegisterPage(),
-        '/map': (context) => const MapSample(),
+        '/map': (context) => const SelectLocation(),
         '/basket': (context) => MedicList(),
         '/addMedic': (context) => AddMedic(),
         '/showPharm': (context) =>

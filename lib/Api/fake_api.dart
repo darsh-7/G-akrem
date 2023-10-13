@@ -1,4 +1,4 @@
-import 'package:akrem/Screens/map_screen.dart';
+import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 
