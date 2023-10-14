@@ -1,17 +1,25 @@
-import 'dart:async';
 import 'dart:io';
 
-import 'package:akrem/constants/app_images.dart';
-import 'package:flutter/material.dart';
-import 'package:akrem/constants/app_colors.dart';
-import 'dart:math' as math;
+import 'package:hive/hive.dart';
 
+import 'package:hive/hive.dart';
+part 'medic.g.dart';
+@HiveType(typeId: 2)
 class Medic {
  // final int id;
+  @HiveField(0)
   final File img;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final int? bar;
+
+  @HiveField(3)
   final int? pill;
+
+  @HiveField(4)
   final DateTime? date;
 
   //String formattedDate = DateFormat('d MMMM yyyy', 'fr_FR').format(now);

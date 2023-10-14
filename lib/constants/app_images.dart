@@ -22,6 +22,12 @@ class AppImages {
   static const String donate = "assets/icons/donate.svg";
 
 
+
+  static const String akremLogo = "assets/icons/akremLogo.png";
+  static const String akremLogoSVG = "assets/icons/akremLogoSVG.svg";
+
+  static const String akrem = "assets/icons/akrem.png";
+  static const String akremSVG = "assets/icons/akremSVG.svg";
   static const String pillIcon = "assets/icons/pill.svg";
   static const String homeIcon = "assets/icons/icon-box.png";
   static const String backIcon = "assets/icons/vector.png";

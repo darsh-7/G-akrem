@@ -78,6 +78,11 @@ class MyApp extends StatelessWidget {
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: AppColors.backGround,
           ),
+          datePickerTheme: DatePickerThemeData(
+            surfaceTintColor: Colors.black, // header text color
+            backgroundColor: Get.theme.cardColor,
+
+          ),
           appBarTheme: const AppBarTheme(backgroundColor: AppColors.mainColor)),
 
       //dark
@@ -114,6 +119,11 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          datePickerTheme: DatePickerThemeData(
+            surfaceTintColor: Colors.black, // header text color
+            backgroundColor: Get.theme.cardColor,
+
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             backgroundColor: Colors.black,

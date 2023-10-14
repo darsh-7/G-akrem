@@ -1,11 +1,13 @@
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/map/map_screen.dart';
+import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akrem/widgets/input.dart';
 import 'package:akrem/services/validator.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../main/NavigationBar.dart';
@@ -59,23 +61,33 @@ class _LoginPage extends State<LoginPage> {
   Widget _buildTop() {
     return SizedBox(
       width: mediaSize.width,
-      child: const Column(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            Icons.health_and_safety_outlined,
-            size: 50,
-            color: Colors.white,
+          SizedBox(
+              height: 100,
+              width: 180,
+              child: Image.asset(AppImages.akrem)
+              
+              // SvgPicture.asset(
+              //   AppImages.akremSVG,
+              //   fit: BoxFit.scaleDown,
+              // )
           ),
-          Text(
-            "Akrem",
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontFamily: "front",
-                fontSize: 40,
-                letterSpacing: 2),
-          )
+          // Icon(
+          //   Icons.health_and_safety_outlined,
+          //   size: 50,
+          //   color: Colors.white,
+          // ),
+          // Text(
+          //   "Akrem",
+          //   style: TextStyle(
+          //       color: Colors.white,
+          //       fontWeight: FontWeight.bold,
+          //       fontFamily: "front",
+          //       fontSize: 40,
+          //       letterSpacing: 2),
+          // )
         ],
       ),
     );
@@ -210,7 +222,7 @@ class _LoginPage extends State<LoginPage> {
               //   return;
               // }
 
-              Get.offAll( Get.offAll(SelectLocation()));
+              Get.offAll(Get.offAll(SelectLocation()));
             },
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
@@ -230,13 +242,13 @@ class _LoginPage extends State<LoginPage> {
               borderRadius: BorderRadius.circular(30),
             ),
             child: RawMaterialButton(
-                shape: const StadiumBorder(),
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(fontSize: 20, color: Colors.grey),
-                ),
-                onPressed: () => Get.offAll(SelectLocation()),
-                ),
+              shape: const StadiumBorder(),
+              child: const Text(
+                "Skip",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+              onPressed: () => Get.offAll(SelectLocation()),
+            ),
           ),
           _buildGreyText("Or Login with"),
           const SizedBox(height: 8),

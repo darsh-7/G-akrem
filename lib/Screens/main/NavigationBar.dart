@@ -111,7 +111,16 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         child: const Icon(Icons
                             .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
-                    icon: const Icon(Icons.home_outlined),
+                    icon: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          // color: AppColors.mainColor,
+                        ),
+                        child: const Icon(Icons
+                            .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+                    ),
                     label: 'Home',
                   ),
                   NavigationDestination(
@@ -119,7 +128,6 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     selectedIcon: Container(
                       width: 40,
                       height: 40,
-                      padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         //color: AppColors.mainColor,
@@ -129,16 +137,15 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     label: "Map",
                   ),
                   NavigationDestination(
-                    icon: const Icon(Icons.fast_forward),
+                    icon:  Container(
+                      width: 40,
+                      height: 40,
+                      child: SvgPicture.asset(AppImages.akremLogoSVG,color: Colors.white,)),
                     selectedIcon: Container(
                       width: 40,
                       height: 40,
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        //color: AppColors.mainColor,
-                      ),
-                      child: const Icon(Icons.fast_forward),
+                      child: SvgPicture.asset(AppImages.akremLogoSVG,color: Get.theme.primaryColor,),
+                      //child: const Icon(Icons.fast_forward),
                     ),
                     label: "Donation",
                   ),
@@ -148,13 +155,9 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                       height: 40,
                       child: Icon(Icons.attach_money),
                     ),
-                    selectedIcon: Container(
+                    selectedIcon: SizedBox(
                         width: 40,
                         height: 40,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          //color: AppColors.mainColor,
-                        ),
                         child: const Icon(Icons
                             .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
@@ -167,7 +170,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                       width: 40,
                       child: CircleAvatar(
                         radius: 22,
-                        backgroundColor: AppColors.mainColor,
+                        backgroundColor: Get.theme.primaryColor,
                         child: Padding(
                           padding: const EdgeInsets.all(4), // Border radius
                           child: ClipOval(child: image),

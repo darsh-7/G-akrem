@@ -108,7 +108,9 @@ class _MedicList extends State<MedicList> {
         children: [
           FloatingActionButton(
             backgroundColor: AppColors.positives,
-            child: const Icon(Icons.add,),
+            child: const Icon(
+              Icons.add,
+            ),
             onPressed: () async {
               getPermissionStatus();
             },
@@ -116,17 +118,20 @@ class _MedicList extends State<MedicList> {
           SizedBox(
             height: 16,
           ),
-          if (_foundMedic.isNotEmpty)
-            FloatingActionButton(
-            backgroundColor: Get.theme.primaryColor,
-            child: const Icon(IconData(0xe156, fontFamily: 'MaterialIcons')),
-            onPressed: () async {
-              getPermissionStatus();
-            },
-          ),
-          SizedBox(
-            height: 8,
-          ),
+          GetBuilder<BasketController>(builder: (_) {
+            if (_foundMedic.isNotEmpty)
+              return FloatingActionButton(
+                backgroundColor: Get.theme.primaryColor,
+                child:
+                    const Icon(IconData(0xe156, fontFamily: 'MaterialIcons'),color: Colors.white,),
+                onPressed: () async {
+                },
+              );
+            else
+              return SizedBox(
+                height: 8,
+              );
+          }),
         ],
       ),
 
@@ -181,7 +186,6 @@ class _MedicList extends State<MedicList> {
                 //   ),
               ],
             ));
-            //if (_foundMedic.isEmpty) const EmptyItemsScreen(),
           }),
         ],
       ),
