@@ -313,6 +313,24 @@ class AddMedic extends StatelessWidget {
                     icon: const Icon(Icons.calendar_today),
                     onTap: () async {
                       DateTime? newDate = await showDatePicker(
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: ColorScheme.light(
+                                  primary: Get.theme.primaryColor, // header background color
+                                  onPrimary: Colors.black, // header text color
+                                  onSurface: Colors.white,
+                                  background: Get.theme.cardColor// body text color
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Get.theme.primaryColor, // button text color
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2020),
@@ -368,7 +386,7 @@ class AddMedic extends StatelessWidget {
                         LogManager.logToConsole(
                             "new Medic list now: ${MedicManager.medics.reversed}");
 
-                        Get.close(3);
+                        Get.close(2);
 
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("New medic Saved"),

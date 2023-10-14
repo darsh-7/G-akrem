@@ -1,6 +1,7 @@
 import 'package:akrem/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class EmptyItemsScreen extends StatelessWidget {
   const EmptyItemsScreen({super.key});
@@ -31,15 +32,15 @@ class EmptyItemsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 18),
             child: FilledButton(
-              style: const ButtonStyle(
+              style: ButtonStyle(
                 backgroundColor:
-                    MaterialStatePropertyAll<Color>(Colors.lightBlue),
+                    MaterialStatePropertyAll<Color>(Get.theme.primaryColor),
                 //TODO: add video
               ),
               onPressed: () {
                 //Provider.of<TabManager>(context, listen: false).goToRecipes();
               },
-              child: const Text('How it works'),
+              child: Text('How it works',style: TextStyle(color: Get.theme.colorScheme.secondary),),
             ),
           )
         ],

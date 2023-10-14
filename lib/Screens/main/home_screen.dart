@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
-  bool _isLoading = true;
+  var _isLoading = true.obs;
   final List<Card> cards = [
     Card(
         img: SvgPicture.asset(AppImages.donateFromHome),
@@ -70,9 +70,7 @@ class _HomeState extends State<Home> {
 
   Future _getThingsOnStartup() async {
     await Future.delayed(const Duration(seconds: 3));
-    setState(() {
-      _isLoading = false;
-    });
+      _isLoading.value = false;
   }
 
   @override
@@ -81,149 +79,150 @@ class _HomeState extends State<Home> {
       appBar: _buildAppBar(),
       body: Stack(
         children: [
-          Column(
+          Obx(() =>           Column(
             children: [
               Visibility(
-                visible: _isLoading,
+                visible: _isLoading.value,
                 child: const LinearProgressIndicator(
                   minHeight: 8,
                 ),
               ),
               //searchBox(),
               Expanded(
-                child: _isLoading
+                child: _isLoading.value
                     ? ListView(
-                        padding: const EdgeInsets.all(40),
-                        children: [const SkeltonView()])
-                    // ListView.separated(
-                    //         itemCount: 5,
-                    //         itemBuilder: (context, index) =>
-                    //             const NewsCardSkelton(),
-                    //         separatorBuilder: (context, index) =>
-                    //             const SizedBox(height: 16),
-                    //       )
+                    padding: const EdgeInsets.all(40),
+                    children: [const SkeltonView()])
+                // ListView.separated(
+                //         itemCount: 5,
+                //         itemBuilder: (context, index) =>
+                //             const NewsCardSkelton(),
+                //         separatorBuilder: (context, index) =>
+                //             const SizedBox(height: 16),
+                //       )
                     : ListView(
-                        padding: const EdgeInsets.only(bottom: 80, top: 10),
-                        children: [
-                          Container(
-                              margin: const EdgeInsets.only(
-                                top: 0,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: const Text(
-                                'Upcoming Order ',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )),
-                          Container(
-                            margin: const EdgeInsets.only(
-                              top: 0,
-                              bottom: 10,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 20),
-                            child: const UpcomingCard(),
+                  padding: const EdgeInsets.only(bottom: 80, top: 10),
+                  children: [
+                    Container(
+                        margin: const EdgeInsets.only(
+                          top: 0,
+                          bottom: 10,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 20),
+                        child: const Text(
+                          'Upcoming Order ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                              top: 0,
-                              bottom: 10,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 20),
-                            child: const Row(children: [
-                              Text(
-                                'Donation Servers ',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                '(5)',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ]),
-                          ),
-                          SizedBox(
-                            height: 108,
-                            child: ListView.separated(
-                              // This next line does the trick.
-                              scrollDirection: Axis.horizontal,
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(
-                                  width: 0,
-                                );
-                              },
-                              itemCount: cards.length,
-                              itemBuilder: (context, index) {
-                                return buildCard(card: cards[index]);
-                              },
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 20),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Row(children: [
-                                          const Text(
-                                            'Nearby Branch ',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Text(
-                                            '(${_foundPharmacy.length})',
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        ]),
-                                      ]),
-                                  TextButton(
-                                      child: const Text(
-                                        "See all",
-                                        style: TextStyle(color: Colors.blue),
-                                      ),
-                                      onPressed: () =>
-                                          Get.to(() => ShowBranch())),
-                                ]),
-                          ),
-                          for (Pharmacy Pharm in _foundPharmacy.reversed)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 20),
-                              child: PharmacyItem(
-                                pharm: Pharm,
-                              ),
-                            )
-                        ],
+                        )),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 0,
+                        bottom: 10,
                       ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 20),
+                      child: const UpcomingCard(),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 0,
+                        bottom: 10,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 20),
+                      child: const Row(children: [
+                        Text(
+                          'Donation Servers ',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          '(5)',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ]),
+                    ),
+                    SizedBox(
+                      height: 108,
+                      child: ListView.separated(
+                        // This next line does the trick.
+                        scrollDirection: Axis.horizontal,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            width: 0,
+                          );
+                        },
+                        itemCount: cards.length,
+                        itemBuilder: (context, index) {
+                          return buildCard(card: cards[index]);
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 20),
+                      child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  Row(children: [
+                                    const Text(
+                                      'Nearby Branch ',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      '(${_foundPharmacy.length})',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ]),
+                                ]),
+                            TextButton(
+                                child: const Text(
+                                  "See all",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                                onPressed: () =>
+                                    Get.to(() => ShowBranch())),
+                          ]),
+                    ),
+                    for (Pharmacy Pharm in _foundPharmacy.reversed)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 20),
+                        child: PharmacyItem(
+                          pharm: Pharm,
+                        ),
+                      )
+                  ],
+                ),
               )
             ],
           ),
+          )
         ],
       ),
     );
@@ -411,9 +410,9 @@ class _HomeState extends State<Home> {
                   size: 30,
                 ),
                 onPressed: () => {
-                      setState(() {
-                        _isLoading = !_isLoading;
-                      })
+                      // setState(() {
+                      //   _isLoading = !_isLoading;
+                      // })
                     }),
           ),
         ),

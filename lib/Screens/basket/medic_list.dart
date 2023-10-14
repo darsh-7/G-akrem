@@ -108,7 +108,7 @@ class _MedicList extends State<MedicList> {
         children: [
           FloatingActionButton(
             backgroundColor: AppColors.positives,
-            child: const Icon(Icons.add),
+            child: const Icon(Icons.add,),
             onPressed: () async {
               getPermissionStatus();
             },

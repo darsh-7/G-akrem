@@ -1,8 +1,10 @@
 //AIzaSyC79noCguhAfYieDJejvlj9gfXBwm1sFhY
 //import 'package:geolocator/geolocator.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
+import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -17,8 +19,6 @@ Map<String, Marker> _markers = {};
 
 class _SelectLocation extends State<SelectLocation> {
   late GoogleMapController mapController;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +59,17 @@ class _SelectLocation extends State<SelectLocation> {
                         //controller: _dateController,
                         //label: "Expiration date",
                         readOnly: true,
-                        icon: Icon(Icons.location_on,color: Get.theme.primaryColor,size: 30,),
-
+                        icon: Icon(
+                          Icons.location_on,
+                          color: Get.theme.primaryColor,
+                          size: 30,
+                        ),
                       ),
                       ElevatedButton(
                           child: const Text("Set Location"),
-                          onPressed: () async {}),
+                          onPressed: () async {
+                            Get.offAll(NavigationBarApp());
+                          }),
                     ],
                   ),
                 ),
@@ -101,17 +106,17 @@ class _SelectLocation extends State<SelectLocation> {
     );
   }
 
-  addMarker(String id,LatLng location){
-    var marker = Marker(markerId: MarkerId(id),
-    position: location,
-        infoWindow: InfoWindow(
-          title: "MTI",
-          snippet: "MTI"
-        ),
+  addMarker(String id, LatLng location) async {
+    var markerIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), AppImages.mvrk);
+    var marker = Marker(
+      markerId: MarkerId(id),
+      position: location,
+      infoWindow: InfoWindow(title: "MTI", snippet: "MTI"),
+      //icon: markerIcon,
     );
 
-    _markers[id]=marker;
-    setState(() {
-    });
+    _markers[id] = marker;
+    setState(() {});
   }
 }

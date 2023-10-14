@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
               primary: AppColors.mainColor,
               onPrimary: Colors.white,
-              secondary: AppColors.mainColor,
+              secondary:  Colors.white,
               onSecondary: AppColors.mainColor,
               error: Colors.red,
               onError: Colors.red,
@@ -55,6 +55,9 @@ class MyApp extends StatelessWidget {
               surface: Colors.black,
               onSurface: Colors.black),
 
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+
+          ),
           //scaffoldBackgroundColor: Colors.white,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
@@ -89,7 +92,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.dark,
               primary: AppColors.darkBlue,
               onPrimary: AppColors.mainColor,
-              secondary: AppColors.mainColor,
+              secondary:  Colors.white,
               onSecondary: AppColors.mainColor,
               error: Colors.red,
               onError: Colors.red,
@@ -122,7 +125,7 @@ class MyApp extends StatelessWidget {
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
 
-      initialRoute: '/map',
+      initialRoute: '/main',
       routes: {
         //  '/': (context) => SplashPage(),
         '/test': (context) => const TouristDetailsPage(

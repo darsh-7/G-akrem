@@ -106,13 +106,27 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         height: 40,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          color: AppColors.mainColor,
+                         // color: AppColors.mainColor,
                         ),
                         child: const Icon(Icons
                             .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
                     icon: const Icon(Icons.home_outlined),
                     label: 'Home',
+                  ),
+                  NavigationDestination(
+                    icon: const Icon(Icons.location_on_rounded),
+                    selectedIcon: Container(
+                      width: 40,
+                      height: 40,
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        //color: AppColors.mainColor,
+                      ),
+                      child: const Icon(Icons.location_on_rounded),
+                    ),
+                    label: "Map",
                   ),
                   NavigationDestination(
                     icon: const Icon(Icons.fast_forward),
@@ -122,7 +136,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                       padding: const EdgeInsets.all(8),
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        color: AppColors.mainColor,
+                        //color: AppColors.mainColor,
                       ),
                       child: const Icon(Icons.fast_forward),
                     ),
@@ -139,7 +153,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         height: 40,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          color: AppColors.mainColor,
+                          //color: AppColors.mainColor,
                         ),
                         child: const Icon(Icons
                             .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
@@ -181,6 +195,9 @@ class _NavigationBarApp extends State<NavigationBarApp> {
           Home(),
           Center(
             child: ElevatedButton(onPressed: () => {}, child: Text("Start")),
+          ),
+          Center(
+            child: Text("Start"),
           ),
           Fund(),
           const ProfileScreen(),
