@@ -19,7 +19,6 @@ class Fund extends StatefulWidget {
 }
 
 class _Fund extends State<Fund> {
-  List<Pharmacy> _foundPharmacy = [];
   final testController = Get.put(TestController());
 
   List<Products> get _productsList {
@@ -64,7 +63,7 @@ class _Fund extends State<Fund> {
                               name: product.title,
                               location: " ",
                               locName: "",
-                              boxStorage: 2.1),
+                              boxStorage: 0.0),
                         ),
                     ],
                   ),
@@ -85,7 +84,7 @@ class _Fund extends State<Fund> {
       backgroundColor: AppColors.mainColor,
       elevation: 0,
       centerTitle: true,
-      title: const Text("Test api"),
+      title: const Text("Temp Test api"),
     );
   }
 }

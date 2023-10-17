@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:akrem/model/medic.dart';
 import 'package:akrem/db/basket.dart';
@@ -11,7 +12,7 @@ class BasketController extends GetxController {
 
  // final basket = DonationBasket() ;
   List<Medic> medics = [];
-
+  final DonationBasket _basket = DonationBasket();
 
   // [
     // Medic(
@@ -38,20 +39,22 @@ class BasketController extends GetxController {
     required int index,
   }) {
     medics.removeAt(index);
+    _basket.deleteAt(index);
     //MedicManager.medics.removeAt(index);
     print("removed item $index");
     update();
   }
 
-  void addMedic({
-    required File img,
+  Future<void> addMedic({
+    required Uint8List img,
     required String name,
     int? bar,
     int? pills,
     DateTime? date,
-  }) {
+  }) async {
     Medic medic =
         Medic(img: img, name: name, bar: bar, pill: pills, date: date);
+    await _basket.addMedic(medic);
     medics.add(medic);
    // MedicManager.medics.add(medic);
    //  basket.addMedic(medic);
@@ -60,17 +63,20 @@ class BasketController extends GetxController {
   }
 
   void clearList() {
+    _basket.deleteAll();
     medics.clear();
    // MedicManager.medics.clear();
     update();
     print("clearList ");
 
   }
-  void getMedics() {
+  Future<void> getMedics() async {
     // medics = basket.getMedics() ?? [];
     // MedicManager.medics.clear();
+    medics = await _basket.getAll();
+
     update();
-    print("clearList ");
+    print("getMedics ");
 
   }
 

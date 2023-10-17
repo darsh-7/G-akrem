@@ -1,3 +1,4 @@
+import 'package:akrem/Api/user_api.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/constants/app_images.dart';
@@ -36,12 +37,12 @@ class _LoginPage extends State<LoginPage> {
     mediaSize = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color: myColor,
+        color: Colors.white,
         image: DecorationImage(
           image: const AssetImage("assets/medicBackground.png"),
           fit: BoxFit.cover,
           colorFilter:
-              ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.dstATop),
+              ColorFilter.mode(Colors.white.withOpacity(0.3), BlendMode.dstATop),
         ),
       ),
       child: Scaffold(
@@ -200,29 +201,38 @@ class _LoginPage extends State<LoginPage> {
         children: [
           const SizedBox(height: 12),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState?.validate() == false) return;
 
-              // if (_emailController.text == "admin@gmail.com" &&
-              //     _passwordController.text == "admin") {
-              //   showDialog(
-              //       context: context,
-              //       builder: (context) => AlertDialog(
-              //             actions: [
-              //               TextButton(
-              //                   onPressed: () {
-              //                     Navigator.of(context).pop();
-              //                   },
-              //                   child: const Text("Close"))
-              //             ],
-              //             title: const Text("Data not valued"),
-              //             content: const Text(
-              //                 "Pls try again using different email or password"),
-              //           ));
-              //   return;
-              // }
+              var respond = await UserAPI.getUser(
+                  _emailController.text,
+                  _passwordController.text);
 
-              Get.offAll(Get.offAll(SelectLocation()));
+
+              if (respond["statusCode"]==200) {
+
+
+
+
+
+                Get.offAll(NavigationBarApp());
+              } else{
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Close"))
+                      ],
+                      title: const Text("Data not valued"),
+                      content: const Text(
+                          "Please try again using different email or password"),
+                    ));
+                return;
+              }
             },
             style: ElevatedButton.styleFrom(
               shape: const StadiumBorder(),
@@ -247,7 +257,7 @@ class _LoginPage extends State<LoginPage> {
                 "Skip",
                 style: TextStyle(fontSize: 20, color: Colors.grey),
               ),
-              onPressed: () => Get.offAll(SelectLocation()),
+              onPressed: () => Get.offAll(NavigationBarApp()),
             ),
           ),
           _buildGreyText("Or Login with"),

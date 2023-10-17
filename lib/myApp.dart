@@ -12,9 +12,10 @@ import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'Screens/main/show_pharm.dart';
+import 'Screens/main/show_branch.dart';
 
 const mainColor = AppColors.darkGround;
 
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Akrem',
@@ -121,8 +126,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
           datePickerTheme: DatePickerThemeData(
-            surfaceTintColor: Colors.black, // header text color
-            backgroundColor: Get.theme.cardColor,
+            surfaceTintColor: Colors.white, // header text color
+            backgroundColor: Colors.black,
 
           ),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -135,7 +140,7 @@ class MyApp extends StatelessWidget {
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
 
-      initialRoute: '/main',
+      initialRoute: '/welcome',
       routes: {
         //  '/': (context) => SplashPage(),
         '/test': (context) => const TouristDetailsPage(

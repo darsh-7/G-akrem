@@ -23,7 +23,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  var pColor = Get.theme.primaryColor;
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
@@ -63,7 +62,7 @@ class _HomeState extends State<Home> {
   void initState() {
     _foundPharmacy = pharmacyList;
     _getThingsOnStartup().then((value) {
-      print('Async done');
+     // print('Async done');
     });
     super.initState();
   }
@@ -385,7 +384,7 @@ class _HomeState extends State<Home> {
             color: Colors.deepOrange,
             size: 30,
           ),
-          const Text("Location"),
+          const Text("Location",style: TextStyle(color: Colors.white),),
           Transform.rotate(
             angle: 270 * math.pi / 180,
             child: Container(
@@ -393,9 +392,9 @@ class _HomeState extends State<Home> {
                 height: 30,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withOpacity(0.23),
                 ),
-                child: const Icon(Icons.arrow_back_ios_new_rounded)),
+                child: const Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,)),
           ),
         ]),
         SizedBox(

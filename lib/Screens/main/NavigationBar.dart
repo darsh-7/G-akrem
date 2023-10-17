@@ -124,7 +124,15 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     label: 'Home',
                   ),
                   NavigationDestination(
-                    icon: const Icon(Icons.location_on_rounded),
+                    icon:  Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        //color: AppColors.mainColor,
+                      ),
+                      child: const Icon(Icons.location_on_rounded),
+                    ),
                     selectedIcon: Container(
                       width: 40,
                       height: 40,
@@ -140,7 +148,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     icon:  Container(
                       width: 40,
                       height: 40,
-                      child: SvgPicture.asset(AppImages.akremLogoSVG,color: Colors.white,)),
+                      child: SvgPicture.asset(AppImages.akremLogoSVG,color: Get.theme.colorScheme.onSurface,)),
                     selectedIcon: Container(
                       width: 40,
                       height: 40,

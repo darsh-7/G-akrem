@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MedicCard extends StatelessWidget {
-  final File img;
+  final Uint8List img;
   final String? name;
   final int? bar;
   final int? pill;
@@ -39,13 +40,13 @@ class MedicCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
-              blurRadius: 4,
-              offset: const Offset(0, -4), // Shadow position
+              blurRadius: 5,
+              offset: const Offset(0, 4), // Shadow position
             ),
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               blurRadius: 4,
-              offset: const Offset(0, 5), // Shadow position
+              offset: const Offset(0, 8), // Shadow position
             ),
           ],
         ),
@@ -159,7 +160,7 @@ class MedicCard extends StatelessWidget {
                       topLeft: Radius.circular(30.0),
                       topRight: Radius.circular(20.0)),
                   //const BorderRadius.all(Radius.circular(20.0)),
-                  child: Image.file(
+                  child: Image.memory(
                     img,
                     width: 400,
                     height: 230,
@@ -179,7 +180,7 @@ class MedicCard extends StatelessWidget {
                       child: IconButton(
                         icon: const Icon(Icons.close,size: 30,color: Colors.white,),
                         onPressed: () {
-                          img.delete();
+                          //img.delete();
                           onDelete(index);
                         },
                       ),

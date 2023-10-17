@@ -6,9 +6,6 @@ import 'package:akrem/widgets/profle_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Color tPrimaryColor = AppColors.mainColor;
-Color tDarkColor = AppColors.backGroundBar;
-
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -21,12 +18,11 @@ class ProfileScreen extends StatelessWidget {
         title: const Text("Profile"),
         actions: [
           IconButton(
-              onPressed: () async {
-                Get.changeTheme( Get.isDarkMode
-                    ? ThemeData.light()
-                    : ThemeData.dark());
-
-               // Get.offAll(NavigationBarApp());
+              onPressed: () {
+                Get.changeThemeMode(
+                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                // Get.offAll(NavigationBarApp());
+               // print("change theme");
               },
               icon: Icon(Get.isDarkMode ? Icons.nightlight : Icons.sunny))
         ],
@@ -119,7 +115,7 @@ class ProfileScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 15.0),
                       child: Text("Are you sure, you want to Logout?"),
                     ),
-                    confirm:  ElevatedButton(
+                    confirm: ElevatedButton(
                       onPressed: () {
                         Get.offAll(const LoginPage());
                         // todo : remove all temp data and local storage

@@ -16,9 +16,9 @@ class AppImages {
   //icons
   static const String donateBoxIcon = "assets/icons/donateBox.svg";
   static const String emptyBoxIcon = "assets/icons/box-open-fill.svg";
-  static const String donateFromHome = "assets/icons/hospital-doctor-medical-home-virus-mask-care-svgrepo-com.svg";
-  static const String nearesBransh = "assets/icons/navigation-arrow-bold-svgrepo-com.svg";
-  static const String fastDonation = "assets/icons/fast-forward-svgrepo-com.svg";
+  static const String donateFromHome = "assets/icons/hospital-doctor-medical-home-virus-mask-care.svg";
+  static const String nearesBransh = "assets/icons/navigation-arrow-bold.svg";
+  static const String fastDonation = "assets/icons/fast-forward.svg";
   static const String donate = "assets/icons/donate.svg";
 
 

@@ -68,7 +68,7 @@ class _MedicList extends State<MedicList> {
         ),
         confirm: ElevatedButton(
           onPressed: () async {
-            // Get.back();
+            Get.back();
             await Permission.camera.request();
             status = await Permission.camera.status;
             if (status.isGranted) {
@@ -108,6 +108,7 @@ class _MedicList extends State<MedicList> {
         children: [
           FloatingActionButton(
             backgroundColor: AppColors.positives,
+            heroTag: "btn1",
             child: const Icon(
               Icons.add,
             ),
@@ -122,6 +123,7 @@ class _MedicList extends State<MedicList> {
             if (_foundMedic.isNotEmpty)
               return FloatingActionButton(
                 backgroundColor: Get.theme.primaryColor,
+                heroTag: "btn2",
                 child:
                     const Icon(IconData(0xe156, fontFamily: 'MaterialIcons'),color: Colors.white,),
                 onPressed: () async {
@@ -161,8 +163,7 @@ class _MedicList extends State<MedicList> {
                             date: _foundMedic[i].date,
                             index: i,
                             onDelete: (i) {
-                              MedicManager.removeMedic(index: i);
-                              //refreshList();
+                              basketController.removeMedic(index: i);
                             },
                           ),
                         ),

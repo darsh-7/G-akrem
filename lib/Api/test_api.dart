@@ -23,7 +23,7 @@ class APIHandler {
       //     BASE_URL,
       //     "api/v1/products",);
       // var response = await http.get(uri);
-      var response = await http.get(Uri.parse("$BASE_URL"+"api/v1/products?offset=0&limit=10"));
+      var response = await http.get(Uri.parse("$TEST_URL"+"api/v1/products?offset=0&limit=10"));
       // print("response : ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 

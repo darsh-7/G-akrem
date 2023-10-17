@@ -17,7 +17,7 @@ class MedicAdapter extends TypeAdapter<Medic> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Medic(
-      img: fields[0] as File,
+      img: fields[0] as Uint8List,
       name: fields[1] as String,
       bar: fields[2] as int?,
       pill: fields[3] as int?,

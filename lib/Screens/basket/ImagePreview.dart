@@ -75,9 +75,11 @@ class _ImagePreview extends State<ImagePreview> {
                           "Save",
                           style: TextStyle(fontSize: 20),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
+                          var imgBytes = await pic.readAsBytes();
+                          pic.delete();
                           Get.off(() => AddMedic(), arguments: {
-                            "picFile": pic,
+                            "picFile": imgBytes,
                           });
                         }),
                   ),

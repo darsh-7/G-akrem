@@ -1,9 +1,9 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../constants/app_colors.dart';
-import 'dart:math' as math;
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../constants/app_images.dart';
@@ -33,7 +33,14 @@ class ShowPharm extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          // Status bar color
+          statusBarColor: Get.theme.primaryColor,
+
+          // Status bar brightness (optional)
+          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        ),        elevation: 0,
         leading: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -51,10 +58,11 @@ class ShowPharm extends StatelessWidget {
                         color: Colors.black54.withOpacity(0.8),
                       ),
                       child: IconButton(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.arrow_back,
+                          color: Colors.white,
                         ),
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => Get.back(),
                       )),
                 ),
               ],
@@ -85,38 +93,36 @@ class ShowPharm extends StatelessWidget {
                   ),
                 ),
               ),
-              const Center(
-                heightFactor: 4,
-                child: CircularProgressIndicator(),
-              ),
+              // const Center(
+              //   heightFactor: 4,
+              //   child: CircularProgressIndicator(),
+              // ),
               Container(
-                height: 70,
+                height: 50,
                 width: double.infinity,
-                margin: const EdgeInsets.only(top: 126),
-                padding: const EdgeInsets.all(0),
-                decoration: const BoxDecoration(
-                  color: Colors.transparent,
+                margin: const EdgeInsets.only(top: 150),
+                padding: const EdgeInsets.only(top: 2),
+                decoration: BoxDecoration(
+                  color: Get.theme.primaryColor,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(40),
                       topLeft: Radius.circular(40)),
                 ),
-                child: Card(
-                    color: Colors.transparent,
-                    margin: const EdgeInsets.only(
-                        top: 0, left: 0, right: 0, bottom: 0),
-                    // shape: const RoundedRectangleBorder(
-                    //   borderRadius:
-                    //       BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50)),
-                    //   //set border radius more than 50% of height and width to make circle
-                    // ),
-                    child: Column(
+                child: Column(
                       children: [
-                        SizedBox(
-                          height: 70,
+                        Container(
+                          height: 48,
                           width: double.infinity,
+                          padding: EdgeInsets.only(top: 4),
+                          decoration: BoxDecoration(
+                            color: Get.theme.scaffoldBackgroundColor,
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(100),
+                                topLeft: Radius.circular(100)),
+                          ),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                top: 30, left: 16.0, right: 12.0),
+                                top: 8, left: 16.0, right: 12.0),
                             child: Text(
                               ("${pharm.name}"),
                               style: const TextStyle(
@@ -129,7 +135,7 @@ class ShowPharm extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )),
+                    ),
               ),
             ]),
             Padding(
@@ -143,9 +149,10 @@ class ShowPharm extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: '${pharm.locName}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Get.theme.colorScheme.onSurface,
                     ),
                     /*defining default style is optional */
                     children: const <TextSpan>[
@@ -159,7 +166,9 @@ class ShowPharm extends StatelessWidget {
                 ),
               ]),
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 5.0, right: 1.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -171,14 +180,20 @@ class ShowPharm extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text: '${pharm.time} ',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Get.theme.colorScheme.onSurface,
                     ),
                     /*defining default style is optional */
-                    children: const <TextSpan>[
+                    children: <TextSpan>[
                       TextSpan(
                         text: "• no EX km",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Get.theme.colorScheme.onSurface,
+                        ),
                       ),
                     ],
                   ),

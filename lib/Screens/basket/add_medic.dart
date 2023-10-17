@@ -12,11 +12,11 @@ import 'package:get/get.dart';
 import '../../services/log_manager.dart';
 import '../../services/validator.dart';
 
-
 class AddMedic extends StatelessWidget {
   AddMedic({super.key});
+
   BasketController controller = Get.find();
-  File? pic=Get.arguments["picFile"];
+  Uint8List pic = Get.arguments["picFile"];
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _barController = TextEditingController();
@@ -49,6 +49,15 @@ class AddMedic extends StatelessWidget {
         trigger: false),
   ];
 
+  String plusOne(String num) {
+    if (num.isEmpty) return "1";
+    return (int.parse(_pillController.text) + 1).toString();
+  }
+
+  String minusOne(String num) {
+    if (num.isEmpty) return "0";
+    return (int.parse(_pillController.text) - 1).toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +66,8 @@ class AddMedic extends StatelessWidget {
       appBar: _buildAppBar(),
       extendBodyBehindAppBar: true,
       body: ListView(
-        padding: const EdgeInsets.only(bottom: 4, top: 0),
         children: [
-          Padding(
-              padding: EdgeInsets.only(top: statusBarHeight),
-              child: null
-          ),
+          Padding(padding: EdgeInsets.only(top: statusBarHeight), child: null),
           Container(
             height: 250,
             width: double.infinity,
@@ -76,29 +81,26 @@ class AddMedic extends StatelessWidget {
               color: Colors.transparent,
             ),
             child: Container(
-
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(30),
                     bottomRight: Radius.circular(30)),
                 color: Colors.transparent,
               ),
-               child:
-              AspectRatio(
+              child: AspectRatio(
                 aspectRatio: 2 / 1,
                 child: ClipRRect(
-                  // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(20.0)),
-                  //const BorderRadius.all(Radius.circular(20.0)),
-                  child: Image.file(
-                    pic ?? File(AppImages.noImage),
-                    width: 400,
-                    height: 300,
-                    fit: BoxFit.fill,
-                  )
-                ),
+                    // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(20.0)),
+                    //const BorderRadius.all(Radius.circular(20.0)),
+                    child: Image.memory(
+                      pic,
+                      width: 400,
+                      height: 300,
+                      fit: BoxFit.fill,
+                    )),
               ),
 
               // ClipRRect(
@@ -178,15 +180,19 @@ class AddMedic extends StatelessWidget {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                const SizedBox(
+                                SizedBox(
                                   width: 40,
                                   height: 60,
                                   child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.negative,
-                                    child: Text(
-                                      '-',
-                                      style: TextStyle(fontSize: 30),
+                                    child: TextButton(
+                                      child: Icon(
+                                        Icons.exposure_plus_1,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () => _barController.text =
+                                          plusOne(_barController.text),
                                     ),
                                   ),
                                 ),
@@ -207,15 +213,19 @@ class AddMedic extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 40,
                                   height: 40,
                                   child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.positives,
-                                    child: Text(
-                                      '+',
-                                      style: TextStyle(fontSize: 30),
+                                    child: TextButton(
+                                      child: Icon(
+                                        Icons.exposure_plus_1,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () => _barController.text =
+                                          plusOne(_barController.text),
                                     ),
                                   ),
                                 )
@@ -258,15 +268,19 @@ class AddMedic extends StatelessWidget {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                const SizedBox(
+                                SizedBox(
                                   width: 40,
                                   height: 60,
                                   child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.negative,
-                                    child: Text(
-                                      '-',
-                                      style: TextStyle(fontSize: 30),
+                                    child: TextButton(
+                                      child: Icon(
+                                        Icons.exposure_minus_1,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () => _pillController.text =
+                                          minusOne(_pillController.text),
                                     ),
                                   ),
                                 ),
@@ -287,15 +301,19 @@ class AddMedic extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
+                                SizedBox(
                                   width: 40,
                                   height: 40,
                                   child: CircleAvatar(
                                     radius: 100,
                                     backgroundColor: AppColors.positives,
-                                    child: Text(
-                                      '+',
-                                      style: TextStyle(fontSize: 30),
+                                    child: TextButton(
+                                      child: Icon(
+                                        Icons.exposure_plus_1,
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () => _pillController.text =
+                                          plusOne(_pillController.text),
                                     ),
                                   ),
                                 )
@@ -303,36 +321,49 @@ class AddMedic extends StatelessWidget {
                         ]),
                   ),
                   const SizedBox(height: 12),
-                  CustomInputField(
-                    keyboardType: TextInputType.emailAddress,
-                    hintText: "Expiration date",
-                    controller: _dateController,
-                    label: "Expiration date",
-                    readOnly: true,
-                    validator: Validator.validateEmpty,
-                    icon: const Icon(Icons.calendar_today),
-                    onTap: () async {
-                      DateTime? newDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2020),
-                          lastDate: DateTime(2100));
+                  Row(
+                    children: [
+                      CustomInputField(
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: "Expiration date",
+                        controller: _dateController,
+                        label: "Expiration date",
+                        readOnly: true,
+                        validator: Validator.validateEmpty,
+                        icon: const Icon(Icons.calendar_today),
+                        width: 300,
+                        onTap: () async {
+                          DateTime? newDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2100));
 
-                      if (newDate == null) return;
-                      selectedDate = newDate;
+                          if (newDate == null) return;
+                          selectedDate = newDate;
 
-                        _dateController.text =
-                            "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-
-                      //Todo: Font asset "MaterialIcons-Regular.otf" was tree-shaken,
-                      // reducing it from 1645184 to 4716 bytes (99.7% reduction).
-                      // Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
-                      //
-                      // setState(() {
-                      //   selectedDate = newDate;
-                      //   debugPrint("new date :\t ${newDate.toString()}");
-                      // });
-                    },
+                          _dateController.text =
+                              "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                        },
+                      ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        margin: const EdgeInsets.only(
+                              left: 8),
+                        child: CircleAvatar(
+                          radius: 100,
+                          backgroundColor: Get.theme.primaryColor,
+                          child: TextButton(
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => {},
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton(
@@ -359,18 +390,17 @@ class AddMedic extends StatelessWidget {
                           return;
                         }
                         controller.addMedic(
-                          img: pic ?? File(AppImages.profileIcon),
+                          img: pic,
                           name: _nameController.text,
                           bar: int.parse(_barController.text),
                           pills: int.parse(_pillController.text),
                           date: selectedDate,
                         );
-                        LogManager.logToConsole(
-                            "new Medic list now: ${MedicManager.medics.reversed}");
 
                         Get.close(2);
 
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
                           content: Text("New medic Saved"),
                         ));
                         //Navigator.popUntil(context, ModalRoute.withName('/basket'));
@@ -388,6 +418,9 @@ class AddMedic extends StatelessWidget {
   AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Get.theme.primaryColor,
+      ),
       elevation: 0,
       leading: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -407,6 +440,7 @@ class AddMedic extends StatelessWidget {
                     child: IconButton(
                       icon: const Icon(
                         Icons.arrow_back,
+                        color: Colors.white,
                       ),
                       onPressed: () {
                         Get.close(3);
@@ -484,8 +518,8 @@ Widget buildCard({required Card card}) {
           AspectRatio(
             aspectRatio: 1 / 1,
             child: SizedBox(
-               width: 50,
-               height: 50,
+              width: 50,
+              height: 50,
               child: card.img,
             ),
           ),
