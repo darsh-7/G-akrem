@@ -41,9 +41,9 @@ class LocationController extends GetxController {
       // for(int i =0 ; i <= results[0].addressComponents.length;i++){
       //   location = "${location},${results[0].addressComponents[i].shortName}";
       // }
-
+      //${results[0].addressComponents[3].shortName},
       final location =
-          "${results[0].addressComponents[3].shortName}, ${results[0].addressComponents[2].shortName}, ${results[0].formattedStreet}";
+          "${results[0].addressComponents[2].shortName}, ${results[0].formattedStreet}";
       searshController.text = location;
       update();
     });

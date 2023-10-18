@@ -3,6 +3,9 @@
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/location_controller.dart';
+import 'package:akrem/controller/user_controller.dart';
+import 'package:akrem/db/user_preference.dart';
+import 'package:akrem/model/user.dart';
 import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,10 +24,15 @@ class SelectLocation extends StatefulWidget {
 }
 
 Map<String, Marker> _markers = {};
+LatLng initialPoint = LatLng(29.9908511828, 31.2343635312);
+LatLng mti = LatLng(29.992895885508347, 31.31135928995078);
+
 
 class _SelectLocation extends State<SelectLocation> {
   LocationController googleMapController = Get.put(LocationController());
+  UserController userController = Get.put(UserController());
 
+  LatLng initialPoint = LatLng(29.992895885508347, 31.31135928995078);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +56,15 @@ class _SelectLocation extends State<SelectLocation> {
           compassEnabled: true,
           mapType: MapType.normal,
           initialCameraPosition: CameraPosition(
-            target: LatLng(29.992895885508347, 31.31135928995078),
+            target: initialPoint,
             zoom: 14,
           ),
           onMapCreated: (controller) {
             googleMapController.mapController = controller;
-            addMarker("mti", LatLng(29.992895885508347, 31.31135928995078));
+            addMarker("mti", mti);
+            addMarker("mti", initialPoint);
+            //googleMapController.cameraChanged(value);
+
           },
           onCameraMove: (value) {
             googleMapController.cameraChanged(value);
@@ -125,7 +136,8 @@ class _SelectLocation extends State<SelectLocation> {
                       ElevatedButton(
                           child: const Text("Set Location"),
                           onPressed: () async {
-                            Get.offAll(NavigationBarApp());
+                            userController.newUser(User(fName: "Mostafa",locationString: googleMapController.searshController.text));
+                            Get.offAll(()=>NavigationBarApp());
                           }),
                     ],
                   ),

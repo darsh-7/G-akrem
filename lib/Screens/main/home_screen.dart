@@ -3,6 +3,9 @@ import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/user_controller.dart';
+import 'package:akrem/db/user_preference.dart';
+import 'package:akrem/model/user.dart';
 import 'package:akrem/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +27,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  UserController userController = Get.find();
+  User get _userController {
+    return userController.user;
+  }
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
@@ -65,6 +73,7 @@ class _HomeState extends State<Home> {
     _getThingsOnStartup().then((value) {
       // print('Async done');
     });
+    userController.getUser();
     super.initState();
   }
 
@@ -386,10 +395,19 @@ class _HomeState extends State<Home> {
             color: Colors.deepOrange,
             size: 30,
           ),
-          const Text(
-            "Location",
-            style: TextStyle(color: Colors.white),
-          ),
+        GetBuilder<UserController>(builder: (_) {
+          print("location string ${_userController.locationString}");
+          return
+          SizedBox(
+            width: Get.mediaQuery.size.width-200,
+            child:
+              Text(
+                _userController.locationString ?? "Location",
+                style: TextStyle(color: Colors.white),
+                overflow: TextOverflow.ellipsis,
+              ),
+          );
+        }),
           Transform.rotate(
               angle: 270 * math.pi / 180,
               child: Container(

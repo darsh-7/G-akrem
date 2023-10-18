@@ -140,7 +140,7 @@ class MyApp extends StatelessWidget {
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
 
-      initialRoute: '/map',
+      initialRoute: '/welcome',
       routes: {
         //  '/': (context) => SplashPage(),
         '/test': (context) => const TouristDetailsPage(

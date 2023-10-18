@@ -393,8 +393,8 @@ class _RegisterPage extends State<RegisterPage> {
               )),
               Tab(
                 icon: Icon(
-                  Icons.discord,
-                  color: Colors.deepPurpleAccent,
+                  Icons.apple,
+                  color: Colors.grey,
                   size: 35,
                 ),
               ),

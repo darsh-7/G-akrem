@@ -42,12 +42,14 @@ dependencies:
   permission_handler: ^8.3.0
   url_launcher: ^6.1.14
   http: ^1.1.0
-  # google_mlkit_text_recognition: ^0.10.0
+  google_mlkit_text_recognition: ^0.10.0
   get_storage: ^2.1.1
   google_maps_flutter: ^2.5.0
+  #db
   hive: ^2.2.3
   hive_generator: any
   hive_flutter: ^1.1.0
+  #map
   google_places_flutter: ^2.0.6
   geolocator: ^10.1.0
   geocoding: ^2.1.1
