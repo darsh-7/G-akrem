@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image/image.dart' as img;
 
 import '../../services/log_manager.dart';
 
@@ -23,7 +25,7 @@ class _ImagePreview extends State<ImagePreview> {
   @override
   @override
   Widget build(BuildContext context) {
-    File pic = Get.arguments["picFile"];
+     pic = Get.arguments["image"];
     return Scaffold(
       backgroundColor: Colors.white60,
       body: Stack(children: <Widget>[
@@ -32,7 +34,8 @@ class _ImagePreview extends State<ImagePreview> {
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30.0), topRight: Radius.circular(20.0)),
           //const BorderRadius.all(Radius.circular(20.0)),
-          child: Image.file(
+          child:
+          Image.file(
             pic,
             // width: 400,
             height: double.infinity,
@@ -76,7 +79,7 @@ class _ImagePreview extends State<ImagePreview> {
                           style: TextStyle(fontSize: 20),
                         ),
                         onPressed: () async {
-                          var imgBytes = await pic.readAsBytes();
+                         var imgBytes = await pic.readAsBytes();
                           pic.delete();
                           Get.off(() => AddMedic(), arguments: {
                             "picFile": imgBytes,

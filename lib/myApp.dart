@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
@@ -6,8 +5,8 @@ import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
-import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_colors.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'Screens/main/show_branch.dart';
+import 'Screens/map/Select_location_text.dart';
 
 const mainColor = AppColors.darkGround;
 
@@ -108,7 +108,7 @@ class MyApp extends StatelessWidget {
               onError: Colors.red,
               background: AppColors.darkGround,
               onBackground: AppColors.darkGround,
-              surface: Colors.white,
+              surface: Colors.black,
               onSurface: Colors.white),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
@@ -140,7 +140,7 @@ class MyApp extends StatelessWidget {
       //   FirebaseAnalyticsObserver(analytics: analytics!),
       // ],
 
-      initialRoute: '/welcome',
+      initialRoute: '/map',
       routes: {
         //  '/': (context) => SplashPage(),
         '/test': (context) => const TouristDetailsPage(
@@ -149,7 +149,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/main': (context) => NavigationBarApp(),
         '/register': (context) => const RegisterPage(),
-        '/map': (context) => const SelectLocation(),
+        '/map': (context) => SelectLocation(),
         '/basket': (context) => MedicList(),
         '/addMedic': (context) => AddMedic(),
         '/showPharm': (context) =>

@@ -1,6 +1,7 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
+import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
@@ -62,14 +63,14 @@ class _HomeState extends State<Home> {
   void initState() {
     _foundPharmacy = pharmacyList;
     _getThingsOnStartup().then((value) {
-     // print('Async done');
+      // print('Async done');
     });
     super.initState();
   }
 
   Future _getThingsOnStartup() async {
     await Future.delayed(const Duration(seconds: 3));
-      _isLoading.value = false;
+    _isLoading.value = false;
   }
 
   @override
@@ -78,149 +79,150 @@ class _HomeState extends State<Home> {
       appBar: _buildAppBar(),
       body: Stack(
         children: [
-          Obx(() =>           Column(
-            children: [
-              Visibility(
-                visible: _isLoading.value,
-                child: const LinearProgressIndicator(
-                  minHeight: 8,
+          Obx(
+            () => Column(
+              children: [
+                Visibility(
+                  visible: _isLoading.value,
+                  child: const LinearProgressIndicator(
+                    minHeight: 8,
+                  ),
                 ),
-              ),
-              //searchBox(),
-              Expanded(
-                child: _isLoading.value
-                    ? ListView(
-                    padding: const EdgeInsets.all(40),
-                    children: [const SkeltonView()])
-                // ListView.separated(
-                //         itemCount: 5,
-                //         itemBuilder: (context, index) =>
-                //             const NewsCardSkelton(),
-                //         separatorBuilder: (context, index) =>
-                //             const SizedBox(height: 16),
-                //       )
-                    : ListView(
-                  padding: const EdgeInsets.only(bottom: 80, top: 10),
-                  children: [
-                    Container(
-                        margin: const EdgeInsets.only(
-                          top: 0,
-                          bottom: 10,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: const Text(
-                          'Upcoming Order ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 0,
-                        bottom: 10,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 20),
-                      child: const UpcomingCard(),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 0,
-                        bottom: 10,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 20),
-                      child: const Row(children: [
-                        Text(
-                          'Donation Servers ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          '(5)',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ]),
-                    ),
-                    SizedBox(
-                      height: 108,
-                      child: ListView.separated(
-                        // This next line does the trick.
-                        scrollDirection: Axis.horizontal,
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            width: 0,
-                          );
-                        },
-                        itemCount: cards.length,
-                        itemBuilder: (context, index) {
-                          return buildCard(card: cards[index]);
-                        },
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 20),
-                      child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
+                //searchBox(),
+                Expanded(
+                  child: _isLoading.value
+                      ? ListView(
+                          padding: const EdgeInsets.all(40),
+                          children: [const SkeltonView()])
+                      // ListView.separated(
+                      //         itemCount: 5,
+                      //         itemBuilder: (context, index) =>
+                      //             const NewsCardSkelton(),
+                      //         separatorBuilder: (context, index) =>
+                      //             const SizedBox(height: 16),
+                      //       )
+                      : ListView(
+                          padding: const EdgeInsets.only(bottom: 80, top: 10),
                           children: [
-                            Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: [
-                                  Row(children: [
-                                    const Text(
-                                      'Nearby Branch ',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    Text(
-                                      '(${_foundPharmacy.length})',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ]),
-                                ]),
-                            TextButton(
-                                child: const Text(
-                                  "See all",
-                                  style: TextStyle(color: Colors.blue),
+                            Container(
+                                margin: const EdgeInsets.only(
+                                  top: 0,
+                                  bottom: 10,
                                 ),
-                                onPressed: () =>
-                                    Get.to(() => ShowBranch())),
-                          ]),
-                    ),
-                    for (Pharmacy Pharm in _foundPharmacy.reversed)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 20),
-                        child: PharmacyItem(
-                          pharm: Pharm,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 20),
+                                child: const Text(
+                                  'Upcoming Order ',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: const UpcomingCard(),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: const Row(children: [
+                                Text(
+                                  'Donation Servers ',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '(5)',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.deepOrange,
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            SizedBox(
+                              height: 108,
+                              child: ListView.separated(
+                                // This next line does the trick.
+                                scrollDirection: Axis.horizontal,
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    width: 0,
+                                  );
+                                },
+                                itemCount: cards.length,
+                                itemBuilder: (context, index) {
+                                  return buildCard(card: cards[index]);
+                                },
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Row(children: [
+                                            const Text(
+                                              'Nearby Branch ',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            Text(
+                                              '(${_foundPharmacy.length})',
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.deepOrange,
+                                              ),
+                                            ),
+                                          ]),
+                                        ]),
+                                    TextButton(
+                                        child: const Text(
+                                          "See all",
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                        onPressed: () =>
+                                            Get.to(() => ShowBranch())),
+                                  ]),
+                            ),
+                            for (Pharmacy Pharm in _foundPharmacy.reversed)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 20),
+                                child: PharmacyItem(
+                                  pharm: Pharm,
+                                ),
+                              )
+                          ],
                         ),
-                      )
-                  ],
-                ),
-              )
-            ],
-          ),
+                )
+              ],
+            ),
           )
         ],
       ),
@@ -384,18 +386,29 @@ class _HomeState extends State<Home> {
             color: Colors.deepOrange,
             size: 30,
           ),
-          const Text("Location",style: TextStyle(color: Colors.white),),
-          Transform.rotate(
-            angle: 270 * math.pi / 180,
-            child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.grey.withOpacity(0.23),
-                ),
-                child: const Icon(Icons.arrow_back_ios_new_rounded,color: Colors.white,)),
+          const Text(
+            "Location",
+            style: TextStyle(color: Colors.white),
           ),
+          Transform.rotate(
+              angle: 270 * math.pi / 180,
+              child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.grey.withOpacity(0.23),
+                  ),
+                  child: SizedBox(
+                    width: 100,
+                    child: IconButton(
+                        padding: EdgeInsets.only(top: 8, right: 8, left: 0),
+                        onPressed: () => Get.offAll(SelectLocation()),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                        )),
+                  ))),
         ]),
         SizedBox(
           height: 40,

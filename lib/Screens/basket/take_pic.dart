@@ -7,6 +7,7 @@ import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image/image.dart' as img;
 class TakePic extends StatefulWidget {
   const TakePic({
     super.key,
@@ -155,9 +156,17 @@ class _TakePic extends State<TakePic> {
                           setState(() {
                             lodding = false;
                           });
+                          // final path = xPic.path;
+                          // final bytes = await File(path).readAsBytes();
+                          // img.Image? image = img.decodeImage(bytes);
+                          // if (image == null) {
+                          //   return;
+                          // }
+                          // image = img.copyCrop(image, x:5, y:5, width: 100, height:100);
                           File pic = File(xPic.path);
+                          //var pic =image.buffer.asUint8List();
                            Get.to(()=> ImagePreview(), arguments: {
-                            "picFile": pic,
+                            "image": pic,
                           });
                         } on CameraException catch (e) {
                           debugPrint("takePicture error");
