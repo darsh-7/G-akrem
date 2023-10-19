@@ -10,6 +10,7 @@ import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_colors.dart';
+import 'package:akrem/constants/app_local.dart';
 import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/model/user.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
     return GetBuilder<UserController>(builder: (_){
       return GetMaterialApp(
         localizationsDelegates: [
+          AppLocale.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
@@ -66,17 +68,18 @@ class MyApp extends StatelessWidget {
           Locale('en'), // English
           Locale('ar'), // Arabic
         ],
-        // localeResolutionCallback: (currentLang, supportLang) {
-        //   if (currentLang != null) {
-        //     for (Locale locale in supportLang) {
-        //       if (locale.languageCode == currentLang.languageCode) {
-        //         mySharedPreferences.setString("lang",currentLang.languageCode) ;
-        //         return currentLang;
-        //       }
-        //     }
-        //   }
-        //   return supportLang.first;
-        // },
+        //locale: Locale('ar'),
+        localeResolutionCallback: (currentLang, supportLang) {
+          if (currentLang != null) {
+            for (Locale locale in supportLang) {
+              if (locale.languageCode == currentLang.languageCode) {
+                //mySharedPreferences.setString("lang",currentLang.languageCode) ;
+                return currentLang;
+              }
+            }
+          }
+          return supportLang.first;
+        },
         debugShowCheckedModeBanner: false,
         title: 'Akrem',
 

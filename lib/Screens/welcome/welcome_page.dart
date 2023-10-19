@@ -2,6 +2,7 @@ import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/constants/app_local.dart';
 import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/db/user_preference.dart';
 import 'package:akrem/model/user.dart';
@@ -83,6 +84,15 @@ class WelcomePage extends StatelessWidget {
                 //   AppImages.emptyList,
                 // ),
                 const SizedBox(height: 40),
+                Text(
+                  "${getLang(context, "welcome")}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 20),
                 const Text(
                   "Donate your Medic to people who needed",
                   textAlign: TextAlign.center,
@@ -116,7 +126,8 @@ class WelcomePage extends StatelessWidget {
                           horizontal: 8.0,
                         ),
                       ),
-                      child: const Text("Get Started"),
+
+                      child: Text("${getLang(context, "Get Started")}"),
                     ),
                   ),
                 ),

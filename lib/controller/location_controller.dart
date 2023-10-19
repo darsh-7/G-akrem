@@ -9,7 +9,6 @@ import 'package:google_places_flutter/model/prediction.dart';
 import 'package:fl_geocoder/fl_geocoder.dart' as fl;
 
 class LocationController extends GetxController {
-  // Placemark _placemark ;
   late GoogleMapController mapController;
   final geocoder = fl.FlGeocoder(map);
   TextEditingController searshController = TextEditingController();

@@ -78,8 +78,10 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/
+    - assets/lang/
     - assets/icons/
     - assets/socialIcons/
+
 
   fonts:
     - family: front
