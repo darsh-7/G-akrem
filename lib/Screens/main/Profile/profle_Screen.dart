@@ -1,13 +1,26 @@
+import 'dart:async';
+
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/controller_mang.dart';
+import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/widgets/profle_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  ProfileScreen({
+    super.key,
+  });
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreen();
+}
+
+class _ProfileScreen extends State<ProfileScreen> {
+  UserController userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +32,14 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
+                // const fiveSec = const Duration(seconds: 2);
+                // new Timer.periodic(fiveSec, (Timer T) {
+                // });
                 Get.changeThemeMode(
                     Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                // Get.offAll(NavigationBarApp());
-               // print("change theme");
+                setState(() {});
+                //Get.offAll(NavigationBarApp());
+                // print("change theme");
               },
               icon: Icon(Get.isDarkMode ? Icons.nightlight : Icons.sunny))
         ],
@@ -117,6 +134,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     confirm: ElevatedButton(
                       onPressed: () {
+                        userController.clearUser();
                         Get.offAll(const LoginPage());
                         // todo : remove all temp data and local storage
                       },

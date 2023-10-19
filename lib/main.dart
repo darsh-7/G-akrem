@@ -1,4 +1,6 @@
 import 'package:akrem/constants/app_colors.dart';
+import 'package:akrem/controller/controller_mang.dart';
+import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/db/user_preference.dart';
 import 'package:akrem/model/medic.dart';
 import 'package:akrem/model/user.dart';
@@ -17,5 +19,9 @@ void main() async {
     systemNavigationBarColor: (Get.isDarkMode ? AppColors.mainColor:AppColors.darkBlue), // navigation bar color
     statusBarColor: (Get.isDarkMode ? AppColors.mainColor:AppColors.darkBlue),  // status bar color
   ));
-  runApp( MyApp());
+
+  var user = Get.put(UserController());
+  await user.getUser();
+
+  runApp( MyApp(userController: user,));
 }

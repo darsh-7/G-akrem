@@ -2,25 +2,27 @@ import 'dart:ffi';
 
 import 'package:akrem/model/medic.dart';
 import 'package:akrem/model/user.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class UserPreference {
-  final _boxName = "user";
+  final _boxName = "User";
 
-  //Future<Box<User>> get _box async => await Hive.openBox<User>(_boxName);
-  late Box _box ;
+  late Box _box;
 
  UserPreference(){
    // for(int i = 1 ;box.values.toList()[0] )
 
-   newbox();
+     openBox();
+
 }
-  Future<void> newbox() async {
-    _box = await Hive.openBox(_boxName);
+  Future<void> openBox() async {
+
+  _box = await Hive.openBox(_boxName);
   }
 
   Future<void> newUser(User user) async {
-   _box.put("User", user);
+   _box.put(_boxName, user);
     // var box = await _box;
     // box.clear();
     // box.add(user);
@@ -30,12 +32,23 @@ class UserPreference {
   //   box.values.toList()[0] = user ;
   // }
 
-  Future<User> getUser() async {
+  Future<User?> getUser() async {
 
     // var box = await _box;
     // return box.values.toList()[0];
-    return _box.get("User");
+    _box = await Hive.openBox(_boxName);
+    return _box.get(_boxName) ;
+
   }
+  Future<void> editUser(User user) async {
+    User? oldUser = await _box.get(_boxName);
+    User(fName: user.fName ?? oldUser?.fName ,lName: user.lName??oldUser?.lName ,token: user.token ?? oldUser?.token );
+    _box.put(_boxName, user);
+    // var box = await _box;
+    // box.clear();
+    // box.add(user);
+  }
+
   Future<void> deleteUser() async {
     var box = await _box;
     box.clear();
@@ -46,7 +59,7 @@ class UserPreference {
 //   var box = await _box;
 //
 //   //edit medic
-//   //todo: update medic
+//   //todo: update User
 //   await box.putAt(index, medic);
 // }
 }

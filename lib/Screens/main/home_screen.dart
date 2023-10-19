@@ -3,6 +3,7 @@ import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/db/user_preference.dart';
 import 'package:akrem/model/user.dart';
@@ -27,11 +28,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   UserController userController = Get.find();
-  User get _userController {
-    return userController.user;
-  }
+
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
@@ -73,12 +71,14 @@ class _HomeState extends State<Home> {
     _getThingsOnStartup().then((value) {
       // print('Async done');
     });
-    userController.getUser();
+    // print(" token val :${(ControllerManager.userController.user).token}");
+    // print("locationString val :${(ControllerManager.userController.user).locationString}");
+
     super.initState();
   }
 
   Future _getThingsOnStartup() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     _isLoading.value = false;
   }
 
@@ -395,57 +395,55 @@ class _HomeState extends State<Home> {
             color: Colors.deepOrange,
             size: 30,
           ),
-        GetBuilder<UserController>(builder: (_) {
-          print("location string ${_userController.locationString}");
-          return
-          SizedBox(
-            width: Get.mediaQuery.size.width-200,
-            child:
-              Text(
-                _userController.locationString ?? "Location",
-                style: TextStyle(color: Colors.white),
-                overflow: TextOverflow.ellipsis,
-              ),
-          );
-        }),
-          Transform.rotate(
-              angle: 270 * math.pi / 180,
-              child: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey.withOpacity(0.23),
+          GetBuilder<UserController>(builder: (_) {
+            print("location string ${userController.user.locationString}");
+            return GestureDetector(
+              child: Row(
+                children: [
+                  Text(
+                    userController.user.locationString ?? "Location",
+                    style: TextStyle(color: Colors.white),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  child: SizedBox(
-                    width: 100,
-                    child: IconButton(
-                        padding: EdgeInsets.only(top: 8, right: 8, left: 0),
-                        onPressed: () => Get.offAll(SelectLocation()),
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
-                        )),
-                  ))),
+                  Transform.rotate(
+                      angle: 270 * math.pi / 180,
+                      child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.grey.withOpacity(0.23),
+                          ),
+                          child: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: Colors.white,
+                          ))),
+                ],
+              ),
+              onTap: () {
+                Get.offAll(() => SelectLocation());
+              },
+            );
+          }),
         ]),
-        SizedBox(
-          height: 40,
-          width: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: IconButton(
-                icon: const Icon(
-                  Icons.notifications,
-                  color: Colors.black54,
-                  size: 30,
-                ),
-                onPressed: () => {
-                      // setState(() {
-                      //   _isLoading = !_isLoading;
-                      // })
-                    }),
-          ),
-        ),
+        // SizedBox(
+        //   height: 40,
+        //   width: 40,
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.circular(20),
+        //     child: IconButton(
+        //         icon: const Icon(
+        //           Icons.notifications,
+        //           color: Colors.black54,
+        //           size: 30,
+        //         ),
+        //         onPressed: () => {
+        //               // setState(() {
+        //               //   _isLoading = !_isLoading;
+        //               // })
+        //             }),
+        //   ),
+        // ),
       ]),
     );
   }

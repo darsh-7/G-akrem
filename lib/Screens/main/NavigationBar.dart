@@ -4,6 +4,7 @@ import 'package:akrem/Screens/main/Fund.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
+import 'package:akrem/Screens/map/branchs_map.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:camera/camera.dart';
@@ -96,7 +97,8 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                 //shadowColor: Colors.red,
                 //backgroundColor: Get.theme.navigationBarTheme.backgroundColor,
 
-                backgroundColor: Get.theme.colorScheme.background.withAlpha(150),
+                backgroundColor:
+                    Get.theme.colorScheme.background.withAlpha(150),
                 indicatorColor: Colors.transparent,
                 selectedIndex: currentPageIndex,
                 destinations: <Widget>[
@@ -106,7 +108,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         height: 40,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                         // color: AppColors.mainColor,
+                          // color: AppColors.mainColor,
                         ),
                         child: const Icon(Icons
                             .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
@@ -120,11 +122,11 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         ),
                         child: const Icon(Icons
                             .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
-                    ),
+                        ),
                     label: 'Home',
                   ),
                   NavigationDestination(
-                    icon:  Container(
+                    icon: Container(
                       width: 40,
                       height: 40,
                       decoration: const BoxDecoration(
@@ -145,14 +147,20 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     label: "Map",
                   ),
                   NavigationDestination(
-                    icon:  Container(
-                      width: 40,
-                      height: 40,
-                      child: SvgPicture.asset(AppImages.akremLogoSVG,color: Get.theme.colorScheme.onSurface,)),
+                    icon: Container(
+                        width: 40,
+                        height: 40,
+                        child: SvgPicture.asset(
+                          AppImages.akremLogoSVG,
+                          color: Get.theme.colorScheme.onSurface,
+                        )),
                     selectedIcon: Container(
                       width: 40,
                       height: 40,
-                      child: SvgPicture.asset(AppImages.akremLogoSVG,color: Get.theme.primaryColor,),
+                      child: SvgPicture.asset(
+                        AppImages.akremLogoSVG,
+                        color: Get.theme.primaryColor,
+                      ),
                       //child: const Icon(Icons.fast_forward),
                     ),
                     label: "Donation",
@@ -204,14 +212,12 @@ class _NavigationBarApp extends State<NavigationBarApp> {
         ),
         body: <Widget>[
           Home(),
+          BranchMap(),
           Center(
-            child: ElevatedButton(onPressed: () => {}, child: Text("Start")),
-          ),
-          Center(
-            child: Text("Start"),
+            child: Text("Akrem"),
           ),
           Fund(),
-          const ProfileScreen(),
+          ProfileScreen(),
         ][currentPageIndex],
       ),
     );

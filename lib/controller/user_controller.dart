@@ -6,13 +6,21 @@ import 'package:akrem/model/medic.dart';
 import 'package:akrem/model/user.dart';
 import 'package:get/get.dart';
 
+
+
+
 class UserController extends GetxController {
 
 
   // final basket = DonationBasket() ;
-  late User user = User();
+   late User user = User();
 
-  final UserPreference _user = UserPreference();
+  late UserPreference _user ;
+
+  UserController(){
+    _user = UserPreference();
+    //getUser();
+  }
 
   // [
   // Medic(
@@ -38,7 +46,7 @@ class UserController extends GetxController {
   Future<void> newUser(User newUser) async {
 
     _user.newUser(newUser);
-    user= await _user.getUser();
+    user= await _user.getUser() ?? User();
   update();
   print("newUser called $user");
   }
@@ -52,10 +60,19 @@ class UserController extends GetxController {
   Future<void> getUser() async {
   // medics = basket.getMedics() ?? [];
   // MedicManager.medics.clear();
-  user = await _user.getUser();
+  user = await _user.getUser() ?? User();
   update();
-  print("getMedics ");
+  print("getuser ");
 
   }
+   Future<void> editUser(User user) async {
+     // medics = basket.getMedics() ?? [];
+     // MedicManager.medics.clear();
+     await _user.editUser(user);
+     getUser();
+     update();
+     print("edit user ");
+
+   }
 
 }

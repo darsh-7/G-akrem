@@ -17,31 +17,36 @@ import 'package:google_places_flutter/model/prediction.dart';
 
 import '../../Api/api_key.dart';
 
-class SelectLocation extends StatefulWidget {
-  const SelectLocation({super.key});
+class BranchMap extends StatefulWidget {
+  const BranchMap({super.key});
 
   @override
-  State<SelectLocation> createState() => _SelectLocation();
+  State<BranchMap> createState() => _BranchMap();
 }
 
 Map<String, Marker> _markers = {};
 LatLng initialPoint = LatLng(29.9908511828, 31.2343635312);
 LatLng mti = LatLng(29.992895885508347, 31.31135928995078);
 
-class _SelectLocation extends State<SelectLocation> {
+class _BranchMap extends State<BranchMap> {
   LocationController googleMapController = Get.put(LocationController());
   UserController userController = Get.find();
 
   LatLng initialPoint = LatLng(29.992895885508347, 31.31135928995078);
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pick Location"),
+        title: Text("Akrem Map"),
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 108),
+        padding: EdgeInsets.only(bottom: 70),
         child: FloatingActionButton(
           onPressed: () => googleMapController.determinePosition(),
           child: Icon(
@@ -64,13 +69,13 @@ class _SelectLocation extends State<SelectLocation> {
           ),
           onMapCreated: (controller) {
             googleMapController.mapController = controller;
+            addMarker("mti", mti);
+            addMarker("mti", initialPoint);
             //googleMapController.cameraChanged(value);
             googleMapController.cameraChanged(
                 initialPoint.latitude, initialPoint.longitude);
           },
           onCameraMove: (value) {
-            googleMapController.cameraChanged(
-                value.target.latitude, value.target.longitude);
             print("Camere Move: ${value.zoom} , ${value.target}");
             // setState(() {
             //   zoomCamera = value.zoom;
@@ -117,36 +122,6 @@ class _SelectLocation extends State<SelectLocation> {
                       //     size: 30,
                       //   ),
                       // ),
-                      Container(
-                        //color: Get.theme.primaryColor,
-                        padding: EdgeInsets.all(0),
-                        //margin: EdgeInsets.only(left: 20, right: 20, top: 8),
-                        height: 50,
-                        child: Center(
-                          child: Container(
-                            //margin: const EdgeInsets.only(bottom: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              //color: Get.theme.primaryColor
-                            ),
-                            child: CustomInputField(
-                              controller: googleMapController.searshController,
-                             // onChanged: (value) {},
-                            ),
-                          ),
-                        ),
-                      ),
-                      ElevatedButton(
-                          child: const Text("Set Location"),
-                          onPressed: () async {
-                            userController.newUser(User(
-                                fName: "Mostafa",
-                                locationString:
-                                    googleMapController.searshController.text,
-                                token: "akshjdgaiuwgiuagwd"));
-
-                            Get.offAll(() => NavigationBarApp());
-                          }),
                     ],
                   ),
                 ),
@@ -156,6 +131,20 @@ class _SelectLocation extends State<SelectLocation> {
         ),
       ]),
     );
+  }
+
+  addMarker(String id, LatLng location) async {
+    var markerIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), AppImages.mvrk);
+    var marker = Marker(
+      markerId: MarkerId(id),
+      position: location,
+      infoWindow: InfoWindow(title: "MTI", snippet: "MTI"),
+      //icon: markerIcon,
+    );
+
+    _markers[id] = marker;
+    setState(() {});
   }
 
 // placesAutoCompleteTextField() {

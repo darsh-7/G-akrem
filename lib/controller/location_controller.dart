@@ -14,7 +14,7 @@ class LocationController extends GetxController {
   final geocoder = fl.FlGeocoder(map);
   TextEditingController searshController = TextEditingController();
 
-  Future<void> cameraChanged(CameraPosition poss) async {
+  Future<void> cameraChanged(double latitude, double longitude) async {
     // List<Placemark> placemarks = await placemarkFromCoordinates(poss.target.latitude, poss.target.longitude);
     // Placemark place1 = placemarks[0];
     // Placemark place2 = placemarks[1];
@@ -24,29 +24,28 @@ class LocationController extends GetxController {
     //     "${place1.name} ${place2.name} ${place1.subLocality} ${place1.subAdministrativeArea} ${place1.postalCode}";
     // print("${place1.name} ${place2.name} ${place1.subLocality} ${place1.subAdministrativeArea} ${place1.postalCode}");
 
-    placemarkFromCoordinates(poss.target.latitude, poss.target.longitude)
-        .then((placemarks) async {
+    placemarkFromCoordinates(latitude, longitude).then((placemarks) async {
       var output = 'No results found.';
       if (placemarks.isNotEmpty) {
         output = placemarks[0].toString();
       }
       //mapController.moveCamera(CameraUpdate.newLatLngZoom(poss.target, 14));
-      final results = await geocoder.findAddressesFromLocationCoordinates(
-        location: fl.Location(poss.target.latitude, poss.target.longitude),
-        useDefaultResultTypeFilter: true,
-        // resultType: 'route', // Optional. For custom filtering.
-      );
-      // ${results[0].country?.shortName?.toUpperCase()},
-      // String location = "";
-      // for(int i =0 ; i <= results[0].addressComponents.length;i++){
-      //   location = "${location},${results[0].addressComponents[i].shortName}";
-      // }
-      //${results[0].addressComponents[3].shortName},
-      final location =
-          "${results[0].addressComponents[2].shortName}, ${results[0].formattedStreet}";
-      searshController.text = location;
-      update();
     });
+    final results = await geocoder.findAddressesFromLocationCoordinates(
+      location: fl.Location(latitude, longitude),
+      useDefaultResultTypeFilter: true,
+      // resultType: 'route', // Optional. For custom filtering.
+    );
+    // ${results[0].country?.shortName?.toUpperCase()},
+    // String location = "";
+    // for(int i =0 ; i <= results[0].addressComponents.length;i++){
+    //   location = "${location},${results[0].addressComponents[i].shortName}";
+    // }
+    //${results[0].addressComponents[3].shortName},
+    final location =
+        "${results[0].addressComponents[2].shortName}, ${results[0].formattedStreet}";
+    searshController.text = location;
+    update();
   }
 
   Future<void> changePositionn(double lat, double log) async {
@@ -117,7 +116,7 @@ class LocationController extends GetxController {
           ),
           16),
     );
-    changePosition(pos.latitude,pos.longitude);
+    changePosition(pos.latitude, pos.longitude);
     update();
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.

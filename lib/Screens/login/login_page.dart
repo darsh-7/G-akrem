@@ -2,6 +2,9 @@ import 'package:akrem/Api/user_api.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/map/map_screen.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/controller_mang.dart';
+import 'package:akrem/controller/user_controller.dart';
+import 'package:akrem/model/user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akrem/widgets/input.dart';
@@ -30,6 +33,19 @@ class _LoginPage extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool rememberUser = false;
+
+  // UserController get userController  => ControllerManager.userController;
+  // User get user  => ControllerManager.userController.user;
+
+  UserController userController = Get.find();
+
+  @override
+  void initState() {
+    print(" token val :${(userController.user).token}");
+    print("locationString val :${(userController.user).locationString}");
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -246,6 +262,30 @@ class _LoginPage extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.all(20),
             height: 28,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: RawMaterialButton(
+              shape: const StadiumBorder(),
+              child: const Text(
+                "Fake Login",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+              onPressed: () {
+                print("token val :${(userController.user).token}");
+                print("locationString val :${(userController.user).locationString}");
+
+                userController.editUser(User(fName: "Mostafa",token: "kajshdkashjd"));
+                Get.off(() => SelectLocation());
+
+              }
+            ),
+          ),
+          Container(
+            //margin: const EdgeInsets.all(20),
+            height: 28,
             width: 80,
             decoration: BoxDecoration(
               color: Colors.transparent,
@@ -257,9 +297,10 @@ class _LoginPage extends State<LoginPage> {
                 "Skip",
                 style: TextStyle(fontSize: 20, color: Colors.grey),
               ),
-              onPressed: () => Get.offAll(NavigationBarApp()),
+              onPressed: () => Get.offAll(SelectLocation()),
             ),
           ),
+
           _buildGreyText("Or Login with"),
           const SizedBox(height: 8),
           Row(
@@ -279,8 +320,8 @@ class _LoginPage extends State<LoginPage> {
               )),
               Tab(
                 icon: Icon(
-                  Icons.discord,
-                  color: Colors.deepPurpleAccent,
+                  Icons.apple,
+                  color: Colors.grey,
                   size: 35,
                 ),
               ),
