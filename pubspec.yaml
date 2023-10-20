@@ -54,6 +54,8 @@ dependencies:
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   fl_geocoder: ^0.1.0+1
+
+
   flutter_localizations:
     sdk: flutter
   intl: any

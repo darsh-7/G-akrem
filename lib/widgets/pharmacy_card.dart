@@ -68,7 +68,7 @@ class PharmacyItem extends StatelessWidget {
                   // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30.0),
-                      topRight: Radius.circular(20.0)),
+                      topRight: Radius.circular(30.0)),
                   //const BorderRadius.all(Radius.circular(20.0)),
                   child: FadeInImage(
                     image: NetworkImage(pharm.img),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:akrem/Screens/basket/checkout.dart';
 import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/basket_controller.dart';
@@ -127,6 +128,7 @@ class _MedicList extends State<MedicList> {
                 child:
                     const Icon(IconData(0xe156, fontFamily: 'MaterialIcons'),color: Colors.white,),
                 onPressed: () async {
+                  Get.to(Checkout());
                 },
               );
             else

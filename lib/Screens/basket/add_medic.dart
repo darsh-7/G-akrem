@@ -67,19 +67,19 @@ class AddMedic extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: ListView(
         children: [
-          Padding(padding: EdgeInsets.only(top: statusBarHeight), child: null),
+          //Padding(padding: EdgeInsets.only(top: statusBarHeight), child: null),
           Container(
             height: 250,
             width: double.infinity,
             padding: const EdgeInsets.only(
               bottom: 12,
             ),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30)),
-              color: Colors.transparent,
-            ),
+            // decoration: const BoxDecoration(
+            //   borderRadius: BorderRadius.only(
+            //       bottomLeft: Radius.circular(30),
+            //       bottomRight: Radius.circular(30)),
+            //   color: Colors.transparent,
+            // ),
             child: Container(
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
@@ -91,9 +91,9 @@ class AddMedic extends StatelessWidget {
                 aspectRatio: 2 / 1,
                 child: ClipRRect(
                     // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(20.0)),
+                    // borderRadius: const BorderRadius.only(
+                    //     topLeft: Radius.circular(30.0),
+                    //     topRight: Radius.circular(20.0)),
                     //const BorderRadius.all(Radius.circular(20.0)),
                     child: Image.memory(
                       pic,

@@ -83,13 +83,6 @@ class _BranchMap extends State<BranchMap> {
             // });
           },
         ),
-        Center(
-          child: Icon(
-            Icons.location_on,
-            color: Get.theme.primaryColor,
-            size: 40,
-          ),
-        ),
         // const Center(
         //   heightFactor: 30,
         //   child: CircularProgressIndicator(),

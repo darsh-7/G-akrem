@@ -24,11 +24,17 @@ class UpcomingCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: SvgPicture.asset(
+            child:
+            SvgPicture.asset(
               "assets/icons/delivery_van.svg",
               width: 45,
-              fit: BoxFit.cover,color: Colors.white,
+              fit: BoxFit.cover,colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),
             ),
+            // SvgPicture.asset(
+            //   "assets/icons/delivery_van.svg",
+            //   width: 45,
+            //   fit: BoxFit.cover,color: Colors.white,
+            // ),
           ),
           const SizedBox(width: 14),
           Column(
