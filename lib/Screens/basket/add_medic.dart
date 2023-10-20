@@ -170,9 +170,9 @@ class AddMedic extends StatelessWidget {
                                         color: Colors.grey),
                                     /*defining default style is optional */
                                     children: <TextSpan>[
-                                      TextSpan(
-                                          text: "*",
-                                          style: TextStyle(color: Colors.red)),
+                                      // TextSpan(
+                                      //     text: "*",
+                                      //     style: TextStyle(color: Colors.red)),
                                     ],
                                   ),
                                 ),
@@ -188,7 +188,7 @@ class AddMedic extends StatelessWidget {
                                     backgroundColor: AppColors.negative,
                                     child: TextButton(
                                       child: Icon(
-                                        Icons.exposure_plus_1,
+                                        Icons.exposure_minus_1,
                                         color: Colors.white,
                                       ),
                                       onPressed: () => _barController.text =

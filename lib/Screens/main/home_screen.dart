@@ -1,7 +1,7 @@
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
-import 'package:akrem/Screens/map/map_screen.dart';
+import 'package:akrem/Screens/map/Select_location.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
@@ -71,8 +71,8 @@ class _HomeState extends State<Home> {
     _getThingsOnStartup().then((value) {
       // print('Async done');
     });
-    // print(" token val :${(ControllerManager.userController.user).token}");
-    // print("locationString val :${(ControllerManager.userController.user).locationString}");
+    print(" token val :${(userController.user).token}");
+    print("locationString val :${(userController.user).locationString}");
 
     super.initState();
   }
@@ -388,63 +388,65 @@ class _HomeState extends State<Home> {
     return AppBar(
       backgroundColor: Get.theme.appBarTheme.backgroundColor,
       elevation: 0,
-      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const Icon(
-            Icons.location_on_rounded,
-            color: Colors.deepOrange,
-            size: 30,
-          ),
-          GetBuilder<UserController>(builder: (_) {
-            print("location string ${userController.user.locationString}");
-            return GestureDetector(
-              child: Row(
-                children: [
-                  Text(
-                    userController.user.locationString ?? "Location",
+      title: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const Icon(
+          Icons.location_on_rounded,
+          color: Colors.deepOrange,
+          size: 30,
+        ),
+        GetBuilder<UserController>(builder: (_) {
+          print("location string ${userController.user.locationString}");
+          return GestureDetector(
+
+            child: Row(
+              children: [
+                SizedBox(
+                  width:Get.mediaQuery.size.width-200,
+                  child: Text(
+                    userController.user.locationString ?? "No Location",
                     style: TextStyle(color: Colors.white),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Transform.rotate(
-                      angle: 270 * math.pi / 180,
-                      child: Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.grey.withOpacity(0.23),
-                          ),
-                          child: Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Colors.white,
-                          ))),
-                ],
-              ),
-              onTap: () {
-                Get.offAll(() => SelectLocation());
-              },
-            );
-          }),
-        ]),
-        // SizedBox(
-        //   height: 40,
-        //   width: 40,
-        //   child: ClipRRect(
-        //     borderRadius: BorderRadius.circular(20),
-        //     child: IconButton(
-        //         icon: const Icon(
-        //           Icons.notifications,
-        //           color: Colors.black54,
-        //           size: 30,
-        //         ),
-        //         onPressed: () => {
-        //               // setState(() {
-        //               //   _isLoading = !_isLoading;
-        //               // })
-        //             }),
-        //   ),
-        // ),
+                ),
+                Transform.rotate(
+                    angle: 270 * math.pi / 180,
+                    child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.grey.withOpacity(0.23),
+                        ),
+                        child: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                        ))),
+              ],
+            ),
+            onTap: () {
+              Get.offAll(() => SelectLocation());
+            },
+          );
+        }),
       ]),
+      // SizedBox(
+      //   height: 40,
+      //   width: 40,
+      //   child: ClipRRect(
+      //     borderRadius: BorderRadius.circular(20),
+      //     child: IconButton(
+      //         icon: const Icon(
+      //           Icons.notifications,
+      //           color: Colors.black54,
+      //           size: 30,
+      //         ),
+      //         onPressed: () => {
+      //               // setState(() {
+      //               //   _isLoading = !_isLoading;
+      //               // })
+      //             }),
+      //   ),
+      // ),
     );
   }
 }

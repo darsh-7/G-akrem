@@ -10,56 +10,54 @@ class UserPreference {
 
   late Box _box;
 
- UserPreference(){
-   // for(int i = 1 ;box.values.toList()[0] )
+  UserPreference() {
+    // for(int i = 1 ;box.values.toList()[0] )
 
-     openBox();
+    openBox();
+  }
 
-}
   Future<void> openBox() async {
-
-  _box = await Hive.openBox(_boxName);
+    _box = await Hive.openBox(_boxName);
   }
 
   Future<void> newUser(User user) async {
-   _box.put(_boxName, user);
+    _box.put(_boxName, user);
+
     // var box = await _box;
     // box.clear();
     // box.add(user);
   }
+
   // Future<void> editUser(User user) async {
   //   var box = await _box;
   //   box.values.toList()[0] = user ;
   // }
 
   Future<User?> getUser() async {
-
-    // var box = await _box;
-    // return box.values.toList()[0];
     _box = await Hive.openBox(_boxName);
-    return _box.get(_boxName) ;
-
+    return _box.get(_boxName);
   }
+  Future<User?> registerUser() async {
+    return _box.get(_boxName);
+  }
+
   Future<void> editUser(User user) async {
     User? oldUser = await _box.get(_boxName);
-    User(fName: user.fName ?? oldUser?.fName ,lName: user.lName??oldUser?.lName ,token: user.token ?? oldUser?.token );
-    _box.put(_boxName, user);
-    // var box = await _box;
-    // box.clear();
-    // box.add(user);
+
+    final User nUser = User(
+        fName: user.fName ?? oldUser?.fName,
+        lName: user.lName ?? oldUser?.lName,
+        location: user.location ?? oldUser?.location,
+        locationString: user.locationString ?? oldUser?.locationString,
+        darkTheme: user.darkTheme,
+        phone: user.lName ?? oldUser?.lName,
+        token: user.token ?? oldUser?.token);
+
+    _box.put(_boxName, nUser);
   }
 
   Future<void> deleteUser() async {
     var box = await _box;
     box.clear();
   }
-
-
-// Future<void> updateMedic(int index, Medic medic) async {
-//   var box = await _box;
-//
-//   //edit medic
-//   //todo: update User
-//   await box.putAt(index, medic);
-// }
 }

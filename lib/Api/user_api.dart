@@ -2,12 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:akrem/Api/api_key.dart';
+import 'package:akrem/Api/user_api_model.dart';
 import 'package:http/http.dart' as http;
-
-// import 'package:store_api_flutter_course/consts/api_consts.dart';
-// import 'package:store_api_flutter_course/models/categories_model.dart';
-// import 'package:store_api_flutter_course/models/products_model.dart';
-// import 'package:store_api_flutter_course/models/users_model.dart';
 
 class UserAPI {
   static Future<int> registerUser(String fName, String lName, String email,
@@ -18,23 +14,27 @@ class UserAPI {
       // final uri = Uri.https(
       //     akrem_url,
       //     "api/v1/products",);
-      // print("send:\n" +
-      //     "FirstName : $fName LastName: $lName Email : $email Password : $password ConfirmPassword : $confPassword");
-      //
-      var response = await http.post(
-          Uri.parse(
-            "$akrem_url" + "api/Authentication/Registeration",
-          ),
-          body: {
-            'FirstName': fName.toString(),
-            'LastName': lName.toString(),
-            "Email": email.toString(),
-            "Password": password.toString(),
-            "ConfirmPassword": confPassword.toString(),
-          });
+      print("send:\n" +
+          "FirstName : $fName LastName: $lName Email : $email Password : $password ConfirmPassword : $confPassword");
 
-      // print(
-      //     "post : ${response.headers}\n else: ${response.persistentConnection}");
+      var response = await http.post(
+        Uri.parse(
+          "$akrem_url" + "api/Authentication/Registeration",
+        ),
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+        },
+        body: jsonEncode({
+          "firstName": fName.toString(),
+          "lastName": lName.toString(),
+          "email": email.toString(),
+          "password": password.toString(),
+          "confirmPassword": confPassword.toString(),
+        }),
+      );
+      print(
+          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
       print("${response.body}");
       return response.statusCode;
     } catch (error) {
@@ -43,7 +43,7 @@ class UserAPI {
     }
   }
 
-  static Future<Map<String, dynamic>> getUser(
+  static Future<UserApiModel> getUser(
       String email, String password) async {
     //var response = await http.get(Uri.parse(BASE_URL));
 
@@ -52,28 +52,30 @@ class UserAPI {
           Uri.parse(
             "$akrem_url" + "api/Authentication/Login",
           ),
-          body: {
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json",
+          },
+          body: jsonEncode({
             "Email": email.toString(),
             "Password": password.toString(),
-          });
+          }));
 
-      // print(
-      //     "post : ${response.headers}\n else: ${response.persistentConnection}");
-
+      print(
+          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
       print("${response.body}");
+
       var data = jsonDecode(response.body);
 
-      return <String, dynamic>{
-        "statusCode": response.statusCode,
-        "token": data["token"],
-        "expireOn": data["expireOn"],
-        "roles": data["roles"],
-      };
+
+      return UserApiModel.fromJson(data);
     } catch (error) {
       log("An error occurred $error");
       throw error.toString();
     }
   }
+
+
 
 // static Future<List<Products>> getAllProducts({required String limit}) async {
 //   List temp = await getData(

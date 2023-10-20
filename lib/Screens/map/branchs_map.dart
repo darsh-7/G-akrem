@@ -57,6 +57,7 @@ class _BranchMap extends State<BranchMap> {
       ),
       body: Stack(children: <Widget>[
         GoogleMap(
+
           markers: _markers.values.toSet(),
           zoomControlsEnabled: false,
           //myLocationButtonEnabled: true,
@@ -77,10 +78,6 @@ class _BranchMap extends State<BranchMap> {
           },
           onCameraMove: (value) {
             print("Camere Move: ${value.zoom} , ${value.target}");
-            // setState(() {
-            //   zoomCamera = value.zoom;
-            //   latLngCamera = value.target;
-            // });
           },
         ),
         // const Center(
@@ -103,18 +100,6 @@ class _BranchMap extends State<BranchMap> {
                   ),
                   child: Column(
                     children: [
-                      // CustomInputField(
-                      //   focusedRadius: 0,
-                      //   hintText: "Expiration date",
-                      //   //controller: _dateController,
-                      //   //label: "Expiration date",
-                      //   readOnly: true,
-                      //   icon: Icon(
-                      //     Icons.location_on,
-                      //     color: Get.theme.primaryColor,
-                      //     size: 30,
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
@@ -140,57 +125,4 @@ class _BranchMap extends State<BranchMap> {
     setState(() {});
   }
 
-// placesAutoCompleteTextField() {
-//   return Container(
-//     //padding: EdgeInsets.symmetric(horizontal: 20),
-//     child: GooglePlaceAutoCompleteTextField(
-//       textEditingController: googleMapController.searshController,
-//
-//       googleAPIKey: map,
-//       inputDecoration: InputDecoration(
-//         hintText: "Search your location",
-//         border: InputBorder.none,
-//         enabledBorder: InputBorder.none,
-//         fillColor: Colors.red,
-//       ),
-//       debounceTime: 400,
-//       countries: ["eg"],
-//       isLatLngRequired: false,
-//       getPlaceDetailWithLatLng: (Prediction prediction) {
-//         print("placeDetails" + prediction.lat.toString());
-//       },
-//
-//       itemClick: (Prediction prediction) {
-//         googleMapController.searshController.text =
-//             prediction.description ?? "";
-//         googleMapController.searshController.selection =
-//             TextSelection.fromPosition(
-//                 TextPosition(offset: prediction.description?.length ?? 0));
-//
-//         //googleMapController.changePosition(double.parse(prediction.??""),double.parse(prediction.lng??""));
-//         //mapController = prediction.placeId;
-//       },
-//       seperatedBuilder: Divider(),
-//       // OPTIONAL// If you want to customize list view item builder
-//       itemBuilder: (context, index, Prediction prediction) {
-//         return Container(
-//           padding: EdgeInsets.all(10),
-//           child: Row(
-//             children: [
-//               Icon(Icons.location_on),
-//               SizedBox(
-//                 width: 7,
-//               ),
-//               Expanded(child: Text("${prediction.description ?? ""}"))
-//             ],
-//           ),
-//         );
-//       },
-//
-//       isCrossBtnShown: true,
-//
-//       // default 600 ms ,
-//     ),
-//   );
-// }
 }

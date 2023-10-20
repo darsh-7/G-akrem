@@ -65,10 +65,10 @@ class UserController extends GetxController {
   print("getuser ");
 
   }
-   Future<void> editUser(User user) async {
+   Future<void> editUser(User eUser) async {
      // medics = basket.getMedics() ?? [];
      // MedicManager.medics.clear();
-     await _user.editUser(user);
+     await _user.editUser(eUser);
      getUser();
      update();
      print("edit user ");

@@ -6,7 +6,7 @@ import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Api/fake_api.dart';
-import 'package:akrem/Screens/map/map_screen.dart';
+import 'package:akrem/Screens/map/Select_location.dart';
 import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_colors.dart';
@@ -19,7 +19,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Screens/main/show_branch.dart';
-import 'Screens/map/Select_location_text.dart';
 
 String startScreen="";
 class MyApp extends StatelessWidget {

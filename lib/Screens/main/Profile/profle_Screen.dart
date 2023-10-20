@@ -38,25 +38,25 @@ class _ProfileScreen extends State<ProfileScreen> {
           //   child: Text("Set locale to Arabic"),
           //   onPressed: () => Get.updateLocale(Locale("ar")),
           // ),
-          IconButton(
-              onPressed: () {
-                // const fiveSec = const Duration(seconds: 2);
-                // new Timer.periodic(fiveSec, (Timer T) {
-                // });
-                // Get.updateLocale(Get.deviceLocale == Locale("en")
-                //     ? Locale("ar")
-                //     : Locale("en"));
-                Get.updateLocale(
-                  Locale('ar', "EG"), // Arabic
-                );
-
-                setState(() {});
-                //Get.offAll(NavigationBarApp());
-                // print("change theme");
-              },
-              icon: Icon(Get.locale == Locale('en')
-                  ? Icons.maps_home_work
-                  : Icons.outbond_outlined)),
+          // IconButton(
+          //     onPressed: () {
+          //       // const fiveSec = const Duration(seconds: 2);
+          //       // new Timer.periodic(fiveSec, (Timer T) {
+          //       // });
+          //       // Get.updateLocale(Get.deviceLocale == Locale("en")
+          //       //     ? Locale("ar")
+          //       //     : Locale("en"));
+          //       Get.updateLocale(
+          //         Locale('ar', "EG"), // Arabic
+          //       );
+          //
+          //       setState(() {});
+          //       //Get.offAll(NavigationBarApp());
+          //       // print("change theme");
+          //     },
+          //     icon: Icon(Get.locale == Locale('en')
+          //         ? Icons.maps_home_work
+          //         : Icons.outbond_outlined)),
           IconButton(
               onPressed: () {
                 // const fiveSec = const Duration(seconds: 2);
@@ -64,9 +64,9 @@ class _ProfileScreen extends State<ProfileScreen> {
                 // });
                 Get.changeThemeMode(
                     Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+
                 setState(() {});
-                //Get.offAll(NavigationBarApp());
-                // print("change theme");
+                 print("change theme");
               },
               icon: Icon(Get.isDarkMode ? Icons.nightlight : Icons.sunny))
         ],

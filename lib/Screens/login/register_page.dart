@@ -339,16 +339,22 @@ class _RegisterPage extends State<RegisterPage> {
                                     Get.back();
                                     Get.offAll(const LoginPage());
                                   },
-                                  child: const Text("Close"))
+                                  child: const Text("login")),
+                              TextButton(
+
+                                  onPressed: () {
+                                    // Get.back();
+                                  },
+                                  child: const Text("open Gmail",style: TextStyle(color: Colors.redAccent),))
                             ],
-                            title: const Text("Welcome to Akrem"),
+                            title: Text("Welcome ${_firstNameController.text}"),
                             content: const Text(
-                                "Your Account has been created. \nplease check your email to activate your account."),
+                                "Please check your email to activate your account."),
                           ));
                   // if (_agreeWithTermsAndConditions != true) {
                   //   return;
                   // }
-                } else {
+                } else if(respond == 409) {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -359,10 +365,25 @@ class _RegisterPage extends State<RegisterPage> {
                                   },
                                   child: const Text("Close"))
                             ],
-                            title: const Text("Error"),
+                            title: const Text("Data not valued"),
                             content: const Text(
-                                "Email already used or the data not valued"),
+                                "This Email Address is already exist"),
                           ));
+                }else {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text("Close"))
+                        ],
+                        title: const Text("Data not accepted"),
+                        content: const Text(
+                            "Your data not valued or try again later"),
+                      ));
                 }
               },
               style: ElevatedButton.styleFrom(

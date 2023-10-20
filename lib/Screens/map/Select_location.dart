@@ -32,6 +32,8 @@ class _SelectLocation extends State<SelectLocation> {
   LocationController googleMapController = Get.put(LocationController());
   UserController userController = Get.find();
 
+  late CameraPosition _currenCordenat ;
+
   LatLng initialPoint = LatLng(29.992895885508347, 31.31135928995078);
 
   @override
@@ -52,6 +54,9 @@ class _SelectLocation extends State<SelectLocation> {
       ),
       body: Stack(children: <Widget>[
         GoogleMap(
+          onCameraIdle: () {
+            googleMapController.cameraChanged(_currenCordenat.target.latitude,_currenCordenat.target.longitude);
+          },
           markers: _markers.values.toSet(),
           zoomControlsEnabled: false,
           //myLocationButtonEnabled: true,
@@ -69,14 +74,10 @@ class _SelectLocation extends State<SelectLocation> {
                 initialPoint.latitude, initialPoint.longitude);
           },
           onCameraMove: (value) {
-            googleMapController.cameraChanged(
-                value.target.latitude, value.target.longitude);
-            print("Camere Move: ${value.zoom} , ${value.target}");
-            // setState(() {
-            //   zoomCamera = value.zoom;
-            //   latLngCamera = value.target;
-            // });
+            _currenCordenat = value;
+
           },
+
         ),
         Center(
           child: Icon(
@@ -139,11 +140,12 @@ class _SelectLocation extends State<SelectLocation> {
                       ElevatedButton(
                           child: const Text("Set Location"),
                           onPressed: () async {
-                            userController.newUser(User(
-                                fName: "Mostafa",
+                            userController.editUser(User(
+                              // location: await googleMapController.mapController.getLatLng(ScreenCoordinate(
+                              //     x: MediaQuery.of(context).size.width/2 as int,
+                              //     y: MediaQuery.of(context).size.height/2 as int)),
                                 locationString:
-                                    googleMapController.searshController.text,
-                                token: "akshjdgaiuwgiuagwd"));
+                                    googleMapController.searshController.text));
 
                             Get.offAll(() => NavigationBarApp());
                           }),

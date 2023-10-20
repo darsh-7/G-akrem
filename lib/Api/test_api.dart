@@ -37,7 +37,7 @@ class APIHandler {
       }
       return Products.productsFromSnapshot(tempList);
     } catch (error) {
-      log("An error occured $error");
+      log("An error occurred $error");
       throw error.toString();
     }
    }

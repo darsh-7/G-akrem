@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class Products with ChangeNotifier{
+class Products //with ChangeNotifier
+{
   int? id;
   String? title;
   int? price;

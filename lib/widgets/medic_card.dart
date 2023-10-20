@@ -146,10 +146,6 @@ class MedicCard extends StatelessWidget {
           contentPadding: const EdgeInsets.all(0),
           //const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           tileColor: Colors.transparent,
-          // leading: Icon(
-          //   todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,
-          //   color: tdBlue,
-          // ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -235,7 +231,7 @@ class MedicCard extends StatelessWidget {
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: "( Why do you care :) )" ?? "_",
+                                        text: "( Bars )" ?? "_",
                                         style:
                                             TextStyle(color: Colors.red)),
                                   ],
@@ -304,7 +300,7 @@ class MedicCard extends StatelessWidget {
                                   /*defining default style is optional */
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text: "($date)" ?? "_",
+                                        text: "${date!.year}-${date!.month}-${date!.day}" ?? "_",
                                         style:
                                             const TextStyle(color: Colors.red)),
                                   ],

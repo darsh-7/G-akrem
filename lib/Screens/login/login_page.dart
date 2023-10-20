@@ -1,6 +1,6 @@
 import 'package:akrem/Api/user_api.dart';
 import 'package:akrem/Screens/login/register_page.dart';
-import 'package:akrem/Screens/map/map_screen.dart';
+import 'package:akrem/Screens/map/Select_location.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
@@ -225,13 +225,26 @@ class _LoginPage extends State<LoginPage> {
                   _passwordController.text);
 
 
-              if (respond["statusCode"]==200) {
+              if (respond.isSuccess??false) {
 
+                userController.newUser(User(fName: "Mostafa",lName: "Ahmed", token: respond.content?.token));
 
+                // showDialog(
+                //     context: context,
+                //     builder: (context) => AlertDialog(
+                //       actions: [
+                //         TextButton(
+                //             onPressed: () {
+                //               Get.back();
+                //             },
+                //             child: const Text("Close"))
+                //       ],
+                //       title: const Text("login scce"),
+                //       content: Text(
+                //           "${userController.user.fName}"),
+                //     ));
 
-
-
-                Get.offAll(NavigationBarApp());
+                Get.offAll(SelectLocation());
               } else{
                 showDialog(
                     context: context,
@@ -239,7 +252,7 @@ class _LoginPage extends State<LoginPage> {
                       actions: [
                         TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Get.back();
                             },
                             child: const Text("Close"))
                       ],
