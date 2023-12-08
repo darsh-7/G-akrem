@@ -21,28 +21,6 @@ class UserController extends GetxController {
     _user = UserPreference();
     //getUser();
   }
-
-  // [
-  // Medic(
-  //     img: Image.asset(AppImages.pharmacy),
-  //     name: 'item1',
-  //     bar: 1,
-  //     pill: 2,
-  //     date: DateTime.now()),
-  // Medic(
-  //     img: Image.asset(AppImages.pharmacy),
-  //     name: 'item1',
-  //     bar: 1,
-  //     pill: 2,
-  //     date: DateTime.now()),
-  // Medic(
-  //     img: Image.asset(AppImages.pharmacy),
-  //     name: 'item1',
-  //     bar: 1,
-  //     pill: 2,
-  //     date: DateTime.now()),
-  // ];
-
   Future<void> newUser(User newUser) async {
 
     _user.newUser(newUser);
@@ -69,9 +47,9 @@ class UserController extends GetxController {
      // medics = basket.getMedics() ?? [];
      // MedicManager.medics.clear();
      await _user.editUser(eUser);
-     getUser();
+     user = await _user.getUser() ?? User();
      update();
-     print("edit user ");
+     print("edit email ${user.email} ");
 
    }
 

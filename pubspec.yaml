@@ -95,10 +95,12 @@ flutter:
     - assets/socialIcons/
 
 
-  fonts:
-    - family: front
-      fonts:
-        - asset: assets/fonts/ADLaMDisplay-Regular.ttf
+#  fonts:
+#    - family: front
+#      fonts:
+#        - asset: assets/fonts/ADLaMDisplay-Regular.ttf
+
+    
           #style: italic
 
   # The following line ensures that the Material Icons font is

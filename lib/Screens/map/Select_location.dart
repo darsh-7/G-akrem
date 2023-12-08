@@ -3,19 +3,13 @@
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/location_controller.dart';
-import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
-import 'package:akrem/db/user_preference.dart';
 import 'package:akrem/model/user.dart';
 import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
-
-import '../../Api/api_key.dart';
 
 class SelectLocation extends StatefulWidget {
   const SelectLocation({super.key});
@@ -32,9 +26,11 @@ class _SelectLocation extends State<SelectLocation> {
   LocationController googleMapController = Get.put(LocationController());
   UserController userController = Get.find();
 
-  late CameraPosition _currenCordenat ;
-
   LatLng initialPoint = LatLng(29.992895885508347, 31.31135928995078);
+  CameraPosition _currenCordenat = CameraPosition(
+    target: LatLng(29.992895885508347, 31.31135928995078),
+    zoom: 14,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +51,13 @@ class _SelectLocation extends State<SelectLocation> {
       body: Stack(children: <Widget>[
         GoogleMap(
           onCameraIdle: () {
-            googleMapController.cameraChanged(_currenCordenat.target.latitude,_currenCordenat.target.longitude);
+            googleMapController.cameraChanged(_currenCordenat.target.latitude,
+                _currenCordenat.target.longitude);
           },
           markers: _markers.values.toSet(),
           zoomControlsEnabled: false,
           //myLocationButtonEnabled: true,
-          //myLocationEnabled: true,
+          myLocationEnabled: true,
           compassEnabled: true,
           mapType: MapType.normal,
           initialCameraPosition: CameraPosition(
@@ -75,9 +72,7 @@ class _SelectLocation extends State<SelectLocation> {
           },
           onCameraMove: (value) {
             _currenCordenat = value;
-
           },
-
         ),
         Center(
           child: Icon(
@@ -86,6 +81,26 @@ class _SelectLocation extends State<SelectLocation> {
             size: 40,
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Container(
+              alignment: Alignment.bottomLeft,
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(4),
+
+              ),
+
+              height: 50,
+              width: 50,
+              child: SvgPicture.asset(AppImages.akremLogoSVG,colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),),
+            )
+          ],
+        ),
+
         // const Center(
         //   heightFactor: 30,
         //   child: CircularProgressIndicator(),
@@ -96,7 +111,7 @@ class _SelectLocation extends State<SelectLocation> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              color: Get.theme.scaffoldBackgroundColor.withAlpha(1000),
+              color: Get.theme.scaffoldBackgroundColor,
               padding: EdgeInsets.all(8),
               child: Center(
                 child: Container(
@@ -132,7 +147,7 @@ class _SelectLocation extends State<SelectLocation> {
                             ),
                             child: CustomInputField(
                               controller: googleMapController.searshController,
-                             // onChanged: (value) {},
+                              // onChanged: (value) {},
                             ),
                           ),
                         ),
@@ -140,10 +155,11 @@ class _SelectLocation extends State<SelectLocation> {
                       ElevatedButton(
                           child: const Text("Set Location"),
                           onPressed: () async {
-                            userController.editUser(User(
-                              // location: await googleMapController.mapController.getLatLng(ScreenCoordinate(
-                              //     x: MediaQuery.of(context).size.width/2 as int,
-                              //     y: MediaQuery.of(context).size.height/2 as int)),
+                            await userController.editUser(User(
+                                locationLatitude:
+                                    _currenCordenat.target.latitude,
+                                locationLongitude:
+                                    _currenCordenat.target.longitude,
                                 locationString:
                                     googleMapController.searshController.text));
 

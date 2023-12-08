@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:akrem/Api/api_key.dart';
 import 'package:akrem/Api/user_api_model.dart';
+import 'package:akrem/model/user.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class UserAPI {
@@ -43,7 +45,38 @@ class UserAPI {
     }
   }
 
-  static Future<UserApiModel> getUser(
+  // static Future<UserApiModel> getUser(
+  //     String email, String password) async {
+  //   //var response = await http.get(Uri.parse(BASE_URL));
+  //
+  //   try {
+  //     var response = await http.post(
+  //         Uri.parse(
+  //           "http://akrem.somee.com/api/Authentication/Login",
+  //         ),
+  //         headers: {
+  //           "content-type": "application/json",
+  //           "accept": "application/json",
+  //         },
+  //         body: jsonEncode({
+  //           "Email": email.toString(),
+  //           "Password": password.toString(),
+  //         }));
+  //
+  //     print(
+  //         "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
+  //     print("${response.body}");
+  //
+  //     var data = jsonDecode(response.body);
+  //
+  //     return UserApiModel.fromJson(data);
+  //   } catch (error) {
+  //     log("An error occurred $error");
+  //     throw error.toString();
+  //   }
+  // }
+
+  static Future<Map<String, dynamic>> getUser(
       String email, String password) async {
     //var response = await http.get(Uri.parse(BASE_URL));
 
@@ -60,22 +93,86 @@ class UserAPI {
             "Email": email.toString(),
             "Password": password.toString(),
           }));
+      if (response.statusCode == 403) {
+        return {'statusCode': response.statusCode};
+      }
 
       print(
           "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
       print("${response.body}");
 
-      var data = jsonDecode(response.body);
-
-
-      return UserApiModel.fromJson(data);
+      final data = jsonDecode(response.body);
+      final details = {
+        'user': UserApiModel.fromJson(data),
+        'statusCode': response.statusCode
+      };
+      return details;
     } catch (error) {
       log("An error occurred $error");
       throw error.toString();
     }
   }
 
+  static Future<Map<String, dynamic>> getUserInfo(String? token) async {
+    //var response = await http.get(Uri.parse(BASE_URL));
 
+    try {
+      if (token == null) {
+        return {'statusCode': 123};
+      }
+      var response = await http.get(
+        Uri.parse(
+          "$akrem_url" + "api/Account/GetProfile",
+        ),
+        headers: {
+          "content-type": "application/json",
+          "accept": "application/json",
+          "Authorization": "bearer ${token}"
+        },
+      );
+
+      if (response.statusCode == 401) {
+        return {'statusCode': response.statusCode};
+      }
+
+      print(
+          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
+      print("${response.body}");
+
+      var data = jsonDecode(response.body);
+      var details = {
+        'fName': data["firstName"],
+        'LName': data["lastName"],
+        'email': data["email"],
+        'phone': data["phone"],
+        'whatsApp': data["hasWhatsApp"],
+        'img': data["imageUrl"],
+        'role': data["role"],
+        'statusCode': response.statusCode
+      };
+      print("scss data ${details.toString()}");
+      return details;
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }
+  }
+
+  static Future<void> resetPassword(String? email) async {
+    //var response = await http.get(Uri.parse(BASE_URL));
+
+    try {
+       await http.get(
+        Uri.parse(
+          "$akrem_url" + "api/Authentication/ForgotPassword/${email}",
+        ),
+      );
+
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }
+  }
 
 // static Future<List<Products>> getAllProducts({required String limit}) async {
 //   List temp = await getData(

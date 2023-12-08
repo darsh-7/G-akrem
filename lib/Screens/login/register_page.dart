@@ -118,7 +118,7 @@ class _RegisterPage extends State<RegisterPage> {
             child: Text(
               "Welcome to Akrem",
               style: TextStyle(
-                color: myColor,
+                //color: myColor,
                 fontSize: 32,
                 fontWeight: FontWeight.w500,
               ),

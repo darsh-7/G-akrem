@@ -1,6 +1,7 @@
 //AIzaSyC79noCguhAfYieDJejvlj9gfXBwm1sFhY
 //import 'package:geolocator/geolocator.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
+import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/location_controller.dart';
 import 'package:akrem/controller/controller_mang.dart';
@@ -8,6 +9,7 @@ import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/db/user_preference.dart';
 import 'package:akrem/model/user.dart';
 import 'package:akrem/widgets/input.dart';
+import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -24,7 +26,6 @@ class BranchMap extends StatefulWidget {
   State<BranchMap> createState() => _BranchMap();
 }
 
-Map<String, Marker> _markers = {};
 LatLng initialPoint = LatLng(29.9908511828, 31.2343635312);
 LatLng mti = LatLng(29.992895885508347, 31.31135928995078);
 
@@ -32,7 +33,16 @@ class _BranchMap extends State<BranchMap> {
   LocationController googleMapController = Get.put(LocationController());
   UserController userController = Get.find();
 
-  LatLng initialPoint = LatLng(29.992895885508347, 31.31135928995078);
+  CustomInfoWindowController _customInfoWindowController =
+      CustomInfoWindowController();
+  @override
+  void dispose() {
+    _customInfoWindowController.dispose();
+    super.dispose();
+  }
+
+  //Set<Marker> _markers = {};
+  Map<String, Marker> _markers = {};
 
   @override
   void initState() {
@@ -43,10 +53,10 @@ class _BranchMap extends State<BranchMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Akrem Map"),
+        title: Text("Akrem Map", style: TextStyle(color: Colors.white),),
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 70),
+        padding: EdgeInsets.only(bottom: 110),
         child: FloatingActionButton(
           onPressed: () => googleMapController.determinePosition(),
           child: Icon(
@@ -55,74 +65,141 @@ class _BranchMap extends State<BranchMap> {
           ),
         ),
       ),
-      body: Stack(children: <Widget>[
-        GoogleMap(
+      body: Padding(
+        padding: EdgeInsets.only(bottom: 60),
+        child: Stack(children: <Widget>[
+          GoogleMap(
+            markers: _markers.values.toSet(),
+            zoomControlsEnabled: false,
+            //myLocationButtonEnabled: true,
+            myLocationEnabled: true,
+            compassEnabled: true,
+            mapType: MapType.normal,
+            initialCameraPosition: CameraPosition(
+              target: userController.user.getLocation() ?? initialPoint,
+              zoom: 14,
+            ),
+            onTap: (position) {
+              _customInfoWindowController.hideInfoWindow!();
+            },
 
-          markers: _markers.values.toSet(),
-          zoomControlsEnabled: false,
-          //myLocationButtonEnabled: true,
-          //myLocationEnabled: true,
-          compassEnabled: true,
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: initialPoint,
-            zoom: 14,
+            onMapCreated: (controller) {
+              googleMapController.mapController = controller;
+              addMarker("mti", mti, "mti");
+              addMarker("initialPoint", initialPoint, "place");
+              //googleMapController.cameraChanged(value);
+              googleMapController.cameraChanged(
+                  initialPoint.latitude, initialPoint.longitude);
+              _customInfoWindowController.googleMapController = controller;
+            },
+            onCameraMove: (value) {
+              print("Camera Move: ${value.zoom} , ${value.target}");
+              _customInfoWindowController.onCameraMove!();
+            },
           ),
-          onMapCreated: (controller) {
-            googleMapController.mapController = controller;
-            addMarker("mti", mti);
-            addMarker("mti", initialPoint);
-            //googleMapController.cameraChanged(value);
-            googleMapController.cameraChanged(
-                initialPoint.latitude, initialPoint.longitude);
-          },
-          onCameraMove: (value) {
-            print("Camere Move: ${value.zoom} , ${value.target}");
-          },
-        ),
-        // const Center(
-        //   heightFactor: 30,
-        //   child: CircularProgressIndicator(),
-        // ),
-
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              color: Get.theme.scaffoldBackgroundColor.withAlpha(1000),
-              padding: EdgeInsets.all(8),
-              child: Center(
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Column(
-                    children: [
-                    ],
-                  ),
+          CustomInfoWindow(
+            controller: _customInfoWindowController,
+            height: 75,
+            width: 150,
+            offset: 50,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                alignment: Alignment.bottomLeft,
+                margin: EdgeInsets.all(10),
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(4),
+                  
                 ),
-              ),
-            )
-          ],
-        ),
-      ]),
+
+                height: 50,
+                width: 50,
+                child: SvgPicture.asset(AppImages.akremLogoSVG,colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),),
+              )
+            ],
+          )
+          // const Center(
+          //   heightFactor: 30,
+          //   child: CircularProgressIndicator(),
+          // ),
+        ]),
+      ),
     );
   }
 
-  addMarker(String id, LatLng location) async {
+  addMarker(String id, LatLng location, String name) async {
     var markerIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(), AppImages.mvrk);
+        ImageConfiguration(size: Size(10, 10)), "assets/black_ios.png");
     var marker = Marker(
       markerId: MarkerId(id),
       position: location,
-      infoWindow: InfoWindow(title: "MTI", snippet: "MTI"),
+      //icon: markerIcon,
+      //infoWindow: InfoWindow(title: "MTI", snippet: "MTI"),
+      onTap: () {
+        _customInfoWindowController.addInfoWindow!(
+          Column(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.school,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        Text(
+                          name,
+                          style: TextStyle(fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              ),
+              // Container(
+              //   width: 40,
+              //   height: 40,
+              //   color: Colors.blue,
+              //   child: IconButton(
+              //     onPressed: (){},
+              //     icon: Icon(Icons.import_contacts_sharp),
+              //   ),
+              // )
+
+              // Triangle.isosceles(
+              //   edge: Edge.BOTTOM,
+              //   child: Container(
+              //     color: Colors.blue,
+              //     width: 20.0,
+              //     height: 10.0,
+              //   ),
+              // ),
+            ],
+          ),
+          location,
+        );
+      },
       //icon: markerIcon,
     );
 
     _markers[id] = marker;
     setState(() {});
   }
-
 }

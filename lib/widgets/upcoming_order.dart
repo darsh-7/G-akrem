@@ -1,3 +1,5 @@
+import 'package:akrem/Screens/basket/edit_donation.dart';
+import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,7 +70,9 @@ class UpcomingCard extends StatelessWidget {
                         "Edit",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(EditDonation());
+                      },
                     ),
                   )
                 ],

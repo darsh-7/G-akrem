@@ -4,7 +4,6 @@ class AppImages {
 
   //images
   static const String pharmacy = "assets/Pharmacy.png";
-  static const String panadol = "assets/panadol.png";
   static const String basket = "assets/frame-8.png";
 
   static const String noImage = "assets/no_image.png";

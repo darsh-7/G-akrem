@@ -1,19 +1,32 @@
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:akrem/Api/test_api.dart';
 import 'package:akrem/myApp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 import 'package:akrem/main.dart';
 
-void main() {
+void main() async {
     // Build our app and trigger a frame.
 
 
 
 
+    //
+    // try {
+    //   await http.get(
+    //     Uri.parse(
+    //           "$akrem_url" + "api/Authentication/ForgotPassword/${email}",
+    //     ),
+    //   );
+    //
+    // } catch (error) {
+    //   log("An error occurred $error");
+    //   throw error.toString();
+    // }
 
 
     
@@ -31,3 +44,5 @@ void main() {
     // expect(find.text('0'), findsNothing);
     // expect(find.text('1'), findsOneWidget);
 }
+
+

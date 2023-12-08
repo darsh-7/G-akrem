@@ -14,6 +14,7 @@ import 'package:akrem/constants/app_local.dart';
 import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/model/user.dart';
+import 'package:akrem/widgets/info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,8 @@ class MyApp extends StatelessWidget {
       startScreen = "/welcome";
     } else {
       if ((userController.user).locationString == null) {
-        print("go to main");
+        print("${userController.user.locationString}");
+        print("go to map");
         startScreen = "/map";
       }  else{
         print("go to main");
@@ -183,15 +185,13 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(
               backgroundColor: AppColors.darkBlue,
             )),
-        // navigatorObservers: [
-        //   FirebaseAnalyticsObserver(analytics: analytics!),
-        // ],
 
+        //initialRoute: "/test",
         initialRoute: startScreen,
+
         routes: {
           //  '/': (context) => SplashPage(),
-          '/test': (context) => const TouristDetailsPage(
-              image: "https://via.placeholder.com/600/d32776"),
+          '/test': (context) => CustomInfoWindowExample(),
           '/welcome': (context) => const WelcomePage(),
           '/login': (context) => const LoginPage(),
           '/main': (context) => NavigationBarApp(),

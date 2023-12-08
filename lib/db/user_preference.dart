@@ -47,11 +47,15 @@ class UserPreference {
     final User nUser = User(
         fName: user.fName ?? oldUser?.fName,
         lName: user.lName ?? oldUser?.lName,
-        location: user.location ?? oldUser?.location,
+        email:  user.email ?? oldUser?.email,
+        locationLatitude: user.locationLatitude ?? oldUser?.locationLatitude,
+        locationLongitude: user.locationLongitude ?? oldUser?.locationLongitude,
         locationString: user.locationString ?? oldUser?.locationString,
         darkTheme: user.darkTheme,
         phone: user.lName ?? oldUser?.lName,
         token: user.token ?? oldUser?.token);
+
+    print("email edit objet ${nUser.email}");
 
     _box.put(_boxName, nUser);
   }

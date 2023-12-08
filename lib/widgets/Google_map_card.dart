@@ -46,7 +46,7 @@ class GoogleMapCard extends StatelessWidget {
                     liteModeEnabled: true,
                     mapToolbarEnabled: false,
                     initialCameraPosition: CameraPosition(
-                      target: user.user.location ??
+                      target: user.user.getLocation() ??
                           LatLng(29.992895885508347, 31.31135928995078),
                       zoom: 18,
                     ),

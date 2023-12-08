@@ -84,7 +84,7 @@ class _Fund extends State<Fund> {
       backgroundColor: AppColors.mainColor,
       elevation: 0,
       centerTitle: true,
-      title: const Text("Temp Test api"),
+      title: const Text("Temp Test api", style: TextStyle(color: Colors.white)),
     );
   }
 }

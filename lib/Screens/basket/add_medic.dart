@@ -443,7 +443,7 @@ class AddMedic extends StatelessWidget {
                         color: Colors.white,
                       ),
                       onPressed: () {
-                        Get.close(3);
+                        Get.close(1);
                       },
                     )),
               ),

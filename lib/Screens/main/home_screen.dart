@@ -17,6 +17,7 @@ import '../../constants/app_colors.dart';
 import 'dart:math' as math;
 
 import '../../widgets/upcoming_order.dart';
+import 'NavigationBar.dart';
 
 class Home extends StatefulWidget {
   Home({
@@ -28,7 +29,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  UserController userController = Get.find();
+  // UserController userController = Get.find();
 
   final pharmacyList = Pharmacy.pharmacyList;
   List<Pharmacy> _foundPharmacy = [];
@@ -73,6 +74,8 @@ class _HomeState extends State<Home> {
     });
     print(" token val :${(userController.user).token}");
     print("locationString val :${(userController.user).locationString}");
+    print(" name val :${(userController.user).fName}");
+    print(" email val :${(userController.user).email}");
 
     super.initState();
   }
@@ -397,11 +400,10 @@ class _HomeState extends State<Home> {
         GetBuilder<UserController>(builder: (_) {
           print("location string ${userController.user.locationString}");
           return GestureDetector(
-
             child: Row(
               children: [
                 SizedBox(
-                  width:Get.mediaQuery.size.width-200,
+                  width: Get.mediaQuery.size.width - 200,
                   child: Text(
                     userController.user.locationString ?? "No Location",
                     style: TextStyle(color: Colors.white),
@@ -429,24 +431,6 @@ class _HomeState extends State<Home> {
           );
         }),
       ]),
-      // SizedBox(
-      //   height: 40,
-      //   width: 40,
-      //   child: ClipRRect(
-      //     borderRadius: BorderRadius.circular(20),
-      //     child: IconButton(
-      //         icon: const Icon(
-      //           Icons.notifications,
-      //           color: Colors.black54,
-      //           size: 30,
-      //         ),
-      //         onPressed: () => {
-      //               // setState(() {
-      //               //   _isLoading = !_isLoading;
-      //               // })
-      //             }),
-      //   ),
-      // ),
     );
   }
 }

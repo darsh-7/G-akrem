@@ -28,7 +28,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       appBar: AppBar(
         // leading: IconButton(onPressed:( )/* () => Get.back()*/, icon: const Icon(Icons.arrow_back)),
         centerTitle: true,
-        title: const Text("Profile"),
+        title: const Text("Profile", style: TextStyle(color: Colors.white)),
         actions: [
           // TextButton(
           //   child: Text("Set locale to English"),
@@ -62,10 +62,12 @@ class _ProfileScreen extends State<ProfileScreen> {
                 // const fiveSec = const Duration(seconds: 2);
                 // new Timer.periodic(fiveSec, (Timer T) {
                 // });
-                Get.changeThemeMode(
-                    Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
 
-                setState(() {});
+                setState(() {
+                  Get.changeThemeMode(
+                      Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                });
+
                  print("change theme");
               },
               icon: Icon(Get.isDarkMode ? Icons.nightlight : Icons.sunny))
@@ -84,8 +86,16 @@ class _ProfileScreen extends State<ProfileScreen> {
                   height: 120,
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      child: const Image(
-                          image: AssetImage(AppImages.profileIcon))),
+                      child: FadeInImage(
+                        image: profileImg,
+                        placeholder: const AssetImage(AppImages.noImage),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(AppImages.noImage,
+                              fit: BoxFit.fitWidth);
+                        },
+                        fit: BoxFit.fitWidth,
+                      ),
+                  ),
                 ),
                 Positioned(
                   bottom: 0,
@@ -97,7 +107,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                         borderRadius: BorderRadius.circular(100),
                         color: AppColors.mainColor),
                     child: const Icon(
-                      Icons.ac_unit,
+                      Icons.edit,
                       color: Colors.black,
                       size: 20,
                     ),
@@ -106,8 +116,8 @@ class _ProfileScreen extends State<ProfileScreen> {
               ],
             ),
             const SizedBox(height: 10),
-            Text("Zendaya", style: Theme.of(context).textTheme.headline4),
-            Text("Zendaya@gmail.com",
+            Text(userController.user.fName??"No Name", style: Theme.of(context).textTheme.headline4),
+            Text(userController.user.email??"No Email",
                 style: Theme.of(context).textTheme.bodyText2),
             const SizedBox(height: 20),
 

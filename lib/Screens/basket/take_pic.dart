@@ -3,12 +3,14 @@ import 'dart:math';
 import 'dart:developer' as dev;
 
 import 'package:akrem/Screens/basket/ImagePreview.dart';
+import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_cropper/image_cropper.dart';
+
 class TakePic extends StatefulWidget {
   const TakePic({
     super.key,
@@ -48,10 +50,9 @@ class _TakePic extends State<TakePic> {
     _cameraController =
         CameraController(cameras[0], ResolutionPreset.max, enableAudio: false);
     _cameraController.initialize().then((_) {
-
-       if (!mounted) {}
-       setState(() {});
-       _cameraController.setFlashMode(FlashMode.auto);
+      if (!mounted) {}
+      setState(() {});
+      _cameraController.setFlashMode(FlashMode.auto);
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
@@ -65,7 +66,6 @@ class _TakePic extends State<TakePic> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +93,8 @@ class _TakePic extends State<TakePic> {
                 width: double.infinity,
                 color: Colors.red,
                 child: const Text(
-                  "please enter the medic in the lite box",
-                  style: TextStyle(fontSize: 40),
+                  "Please take a vertical photo of the medicine",
+                  style: TextStyle(fontSize: 30),
                 ),
               )),
           ColorFiltered(
@@ -112,9 +112,9 @@ class _TakePic extends State<TakePic> {
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 1.5,
+                  height: MediaQuery.of(context).size.height / 2.3,
                   width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.only(left: 18, right: 18),
+                  margin: const EdgeInsets.only(left: 8, right: 8),
                   decoration: const BoxDecoration(
                     color: Colors.red,
                     borderRadius: BorderRadius.horizontal(
@@ -126,6 +126,23 @@ class _TakePic extends State<TakePic> {
               ),
             ]),
           ),
+          Container(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                margin: EdgeInsets.all(20),
+                height: 50,
+               width: 50,
+                decoration: BoxDecoration(
+                  color: Get.theme.primaryColor,
+                  borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(30), right: Radius.circular(30)
+                    // MediaQuery.of(context).size.width / 2,
+                  ),
+                ),
+                child: Icon(
+                  Icons.help,
+                ),
+              )),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,27 +174,28 @@ class _TakePic extends State<TakePic> {
                           setState(() {
                             lodding = false;
                           });
-                          // final path = xPic.path;
-                          // final bytes = await File(path).readAsBytes();
-                          // img.Image? image = img.decodeImage(bytes);
-                          // if (image == null) {
-                          //   return;
-                          // }
                           // image = img.copyCrop(image, x:5, y:5, width: 100, height:100);
 
                           //var pic =image.buffer.asUint8List();
 
+                          File pic = File(xPic.path);
+
                           final croppedFile = await ImageCropper().cropImage(
-                            sourcePath: xPic.path,
-                            //compressFormat: ImageCompressFormat.jpg,
+                            sourcePath: pic.path,
+                            compressFormat: ImageCompressFormat.jpg,
                             compressQuality: 100,
                             uiSettings: [
                               AndroidUiSettings(
-                                  toolbarTitle: 'Cropper',
-                                  toolbarColor: Colors.deepOrange,
+                                  toolbarTitle: 'Crop Medic',
+                                  toolbarColor: Get.theme.primaryColor,
                                   toolbarWidgetColor: Colors.white,
-                                  initAspectRatio: CropAspectRatioPreset.original,
-                                  lockAspectRatio: false),
+                                  initAspectRatio:
+                                      CropAspectRatioPreset.ratio3x2,
+                                  cropGridColumnCount: 30,
+                                  cropGridRowCount: 50,
+                                  lockAspectRatio: true,
+                                  hideBottomControls: true,
+                              ),
                               IOSUiSettings(
                                 title: 'Cropper',
                               ),
@@ -188,8 +206,8 @@ class _TakePic extends State<TakePic> {
                                   width: 520,
                                   height: 520,
                                 ),
-                                viewPort:
-                                const CroppieViewPort(width: 480, height: 480, type: 'circle'),
+                                viewPort: const CroppieViewPort(
+                                    width: 480, height: 480, type: 'circle'),
                                 enableExif: true,
                                 enableZoom: true,
                                 showZoomer: true,
@@ -197,15 +215,15 @@ class _TakePic extends State<TakePic> {
                             ],
                           );
 
-                          if (croppedFile==null) {
+                          if (croppedFile == null) {
                             return;
                           }
 
-                          File pic = File(croppedFile.path);
+                          var imgBytes = await croppedFile.readAsBytes();
+                          //pic.delete();
 
-
-                           Get.to(()=> ImagePreview(), arguments: {
-                            "image": pic,
+                          Get.to(() => AddMedic(), arguments: {
+                            "picFile": imgBytes,
                           });
                         } on CameraException catch (e) {
                           debugPrint("takePicture error");

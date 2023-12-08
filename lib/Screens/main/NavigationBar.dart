@@ -7,6 +7,7 @@ import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/Screens/map/branchs_map.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/user_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,10 @@ class NavigationBarApp extends StatefulWidget {
   @override
   State<NavigationBarApp> createState() => _NavigationBarApp();
 }
+UserController userController = Get.find();
+
+var profileImg = NetworkImage(userController.user.img ??
+    "https://res.cloudinary.com/drmmayia1/image/upload/v1697917708/SmartMedicinePlatform/yyvplvxqd2vciyzppcsg.png");
 
 class _NavigationBarApp extends State<NavigationBarApp> {
   int currentPageIndex = 0;
@@ -70,9 +75,9 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         child: const Text("Leave",
                             style: TextStyle(color: AppColors.negative)))
                   ],
-                  title: const Text("want to leave? "),
+                  title: const Text("Want to leave? "),
                   content: const Text(
-                      "Are you sure you want to leave the app? \n if yse click leave other with click no"),
+                      "Are you sure you want to leave the app? \n if yse click leave other with click NO"),
                 ));
         return false;
       },
@@ -189,7 +194,17 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                         backgroundColor: Get.theme.primaryColor,
                         child: Padding(
                           padding: const EdgeInsets.all(4), // Border radius
-                          child: ClipOval(child: image),
+                          child: ClipOval(
+                            child: FadeInImage(
+                              image: profileImg,
+                              placeholder: const AssetImage(AppImages.noImage),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(AppImages.noImage,
+                                    fit: BoxFit.fitWidth);
+                              },
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -197,10 +212,23 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     icon: Container(
                       height: 40,
                       width: 40,
-                      child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20.0)),
-                        child: image,
+                      child: CircleAvatar(
+                        radius: 22,
+                        backgroundColor: Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4), // Border radius
+                          child: ClipOval(
+                            child: FadeInImage(
+                              image: profileImg,
+                              placeholder: const AssetImage(AppImages.noImage),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(AppImages.noImage,
+                                    fit: BoxFit.fitWidth);
+                              },
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     label: 'Profile',

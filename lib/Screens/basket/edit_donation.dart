@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:akrem/Screens/basket/checkout.dart';
 import 'package:akrem/Screens/basket/take_pic.dart';
@@ -8,6 +9,7 @@ import 'package:akrem/controller/basket_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../model/medic.dart';
@@ -16,30 +18,40 @@ import '../../constants/app_colors.dart';
 import 'add_medic.dart';
 import 'empty_items.dart';
 
-class MedicList extends StatefulWidget {
-  MedicList({
+class EditDonation extends StatefulWidget {
+  EditDonation({
     super.key,
   });
 
   @override
-  State<MedicList> createState() => _MedicList();
+  State<EditDonation> createState() => _EditDonation();
 }
 
-class _MedicList extends State<MedicList> {
+class _EditDonation extends State<EditDonation> {
   final basketController = Get.put(BasketController());
   final UserController userController = Get.find();
 
-  List<Medic> get _foundMedic {
-    return basketController.medics;
-  }
-
-
+  late List<Medic> _foundMedic;
 
   @override
   void initState() {
     //_foundMedic = foundMedic;
-    basketController.getMedics();
+    //basketController.getMedics();
+    getMed();
     super.initState();
+  }
+
+  Future<void> getMed() async {
+    print("med called 1");
+
+    final ByteData bytes = await rootBundle.load(AppImages.noImage);
+    final Uint8List list = bytes.buffer.asUint8List();
+    setState(() {
+      _foundMedic = [
+        Medic(img: list, name: 'med 1',date: DateTime.now(),pill: 2,bar: 3),
+        Medic(img: list, name: 'med 1',date: DateTime.now(),pill: 2,bar: 3),      ];
+    });
+
   }
 
   // void refreshList() {
@@ -124,35 +136,37 @@ class _MedicList extends State<MedicList> {
               return FloatingActionButton(
                 backgroundColor: Get.theme.primaryColor,
                 heroTag: "btn2",
-                child:
-                    const Icon(IconData(0xe156, fontFamily: 'MaterialIcons'),color: Colors.white,),
+                child: const Icon(
+                  IconData(0xe156, fontFamily: 'MaterialIcons'),
+                  color: Colors.white,
+                ),
                 onPressed: () async {
                   if (userController.user.token == null) {
                     showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                child: const Text("Close")),
-                            TextButton(
-                                onPressed: () {
-                                  Get.offAll(LoginPage());
-                                },
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(color: Get.theme.primaryColor),
-                                ))
-                          ],
-                          title: const Text("have not login yet"),
-                          content: const Text(
-                              "To proceed you have to login\nLOGIN NOW!"),
-                        ));
-
-                  }  else{
-                    Get.to(Checkout());
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text("Close")),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.offAll(LoginPage());
+                                    },
+                                    child: Text(
+                                      "Login",
+                                      style: TextStyle(
+                                          color: Get.theme.primaryColor),
+                                    ))
+                              ],
+                              title: const Text("have not login yet"),
+                              content: const Text(
+                                  "To proceed you have to login\nLOGIN NOW!"),
+                            ));
+                  } else {
+                    Get.back();
                   }
                 },
               );
@@ -197,21 +211,6 @@ class _MedicList extends State<MedicList> {
                     ],
                   ),
                 ),
-                // if (_foundMedic.isNotEmpty)
-                //   Padding(
-                //     padding: const EdgeInsets.only(bottom: 8.0),
-                //     child: SizedBox(
-                //       width: double.maxFinite,
-                //       height: 45,
-                //       child: ElevatedButton(
-                //         onPressed: () {},
-                //         child: const Text("Checkout"),
-                //         style: ElevatedButton.styleFrom(
-                //           shape: StadiumBorder(),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
               ],
             ));
           }),
@@ -227,18 +226,7 @@ class _MedicList extends State<MedicList> {
         const Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Text("Donation basket"),
         ]),
-        // Container(
-        //   height: 40,
-        //   width: 120,
-        //   child: ClipRRect(
-        //       borderRadius: BorderRadius.circular(20),
-        //       child: IconButton(
-        //         icon: const Icon(Icons.fiber_smart_record),
-        //         onPressed: () => {
-        //           //TODO : add voice recognition for adding items
-        //         },
-        //       )),
-        // ),
+
         Container(
           height: 40,
           width: 60,

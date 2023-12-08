@@ -1,6 +1,6 @@
 class UserApiModel {
   Content? content;
-  Null? error;
+  String? error;
   bool? isSuccess;
   String? responseTime;
 
@@ -9,7 +9,7 @@ class UserApiModel {
   UserApiModel.fromJson(Map<String, dynamic> json) {
     content =
     json['content'] != null ? new Content.fromJson(json['content']) : null;
-    error = json['error'];
+    error = json['error']!= null ? json['error']["message"] : null;
     isSuccess = json['isSuccess'];
     responseTime = json['responseTime'];
   }
