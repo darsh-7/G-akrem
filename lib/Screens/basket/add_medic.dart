@@ -31,7 +31,11 @@ class AddMedic extends StatelessWidget {
         img: Image.asset(AppImages.mvrk),
         title: "Box",
         action: 1,
-        trigger: true),
+        trigger: true,
+        onPreess: () {
+        //  onSelectCard(1);
+        }
+    ),
     Card(
         img: SvgPicture.asset(AppImages.pillIcon),
         title: "Bar",
@@ -48,6 +52,14 @@ class AddMedic extends StatelessWidget {
         action: 4,
         trigger: false),
   ];
+
+  Future<void>? onSelectCard(int i){
+    return null;
+
+    // cards.forEach((element) {
+    //   element.trigger = false;
+    // });
+  }
 
   String plusOne(String num) {
     if (num.isEmpty) return "1";
@@ -90,11 +102,7 @@ class AddMedic extends StatelessWidget {
               child: AspectRatio(
                 aspectRatio: 2 / 1,
                 child: ClipRRect(
-                    // borderRadius: const BorderRadius.all(Radius.elliptical(30, 50)),
-                    // borderRadius: const BorderRadius.only(
-                    //     topLeft: Radius.circular(30.0),
-                    //     topRight: Radius.circular(20.0)),
-                    //const BorderRadius.all(Radius.circular(20.0)),
+
                     child: Image.memory(
                       pic,
                       width: 400,
@@ -103,16 +111,7 @@ class AddMedic extends StatelessWidget {
                     )),
               ),
 
-              // ClipRRect(
-              //   borderRadius:
-              //   const BorderRadius.all(Radius.elliptical(30, 50)),
-              //   child: Image.asset(
-              //     AppImages.pharmacy,
-              //     width: 400,
-              //     height: 300,
-              //     fit: BoxFit.fill,
-              //   ),
-              // ),
+
             ),
           ),
           SizedBox(
@@ -466,52 +465,7 @@ Widget buildCard({required Card card}) {
     ),
     child: ListTile(
       onTap: () {
-        switch (card.action) {
-          case 1:
-            {}
-            break;
-
-          case 2:
-            {}
-            break;
-
-          // case 3: {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => ShowBranch()),
-          //TODO:donat to the box
-          //   );
-          // }
-          // break;
-
-          // case 4: {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => ShowBranch()),
-          //TODO:Fast donation
-          //   );
-          // }
-          // break;
-
-          // default:
-          //   {
-          //     showDialog(
-          //         context: context,
-          //         builder: (context) => AlertDialog(
-          //           actions: [
-          //             TextButton(
-          //                 onPressed: () {
-          //                   Navigator.of(context).pop();
-          //                 },
-          //                 child: const Text("Close"))
-          //           ],
-          //           title: const Text("Error"),
-          //           content: const Text(
-          //               "Sorry this button not working \n try again later"),
-          //         ));
-          //   }
-          //   break;
-        }
+        card.onPreess();
       },
       title: Column(
         children: [
@@ -546,12 +500,15 @@ class Card {
   final Widget img;
   final String title;
   final int? action;
-  final bool trigger;
+  bool trigger;
+  final onPreess;
 
-  const Card({
+   Card({
     required this.img,
     required this.title,
     this.action,
-    required this.trigger,
+    this.trigger = false,
+    this.onPreess,
+
   });
 }

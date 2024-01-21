@@ -1,4 +1,6 @@
+import 'package:akrem/Screens/basket/totorial_video.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -21,12 +23,15 @@ class EmptyItemsScreen extends StatelessWidget {
           ),
           Text(
             'No Items',
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme
+                .of(context)
+                .textTheme
+                .titleLarge,
           ),
           const SizedBox(height: 16),
           const Text(
             'add items to donate by taping the + button\n\n'
-            'If there is any trouble you can click "How it works"',
+                'If there is any trouble you can click "How it works"',
             textAlign: TextAlign.center,
           ),
           Padding(
@@ -34,13 +39,22 @@ class EmptyItemsScreen extends StatelessWidget {
             child: FilledButton(
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStatePropertyAll<Color>(Get.theme.primaryColor),
+                MaterialStatePropertyAll<Color>(Get.theme.primaryColor),
                 //TODO: add video
               ),
               onPressed: () {
-                //Provider.of<TabManager>(context, listen: false).goToRecipes();
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (BuildContext builder) {
+                    return CupertinoPopupSurface(
+                        child: VideoApp()
+
+                    );
+                  },
+                );
               },
-              child: Text('How it works',style: TextStyle(color: Get.theme.colorScheme.secondary),),
+              child: Text('How it works',
+                style: TextStyle(color: Get.theme.colorScheme.secondary),),
             ),
           )
         ],

@@ -4,8 +4,10 @@ import 'dart:developer' as dev;
 
 import 'package:akrem/Screens/basket/ImagePreview.dart';
 import 'package:akrem/Screens/basket/add_medic.dart';
+import 'package:akrem/Screens/basket/totorial_video.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
@@ -139,9 +141,22 @@ class _TakePic extends State<TakePic> {
                     // MediaQuery.of(context).size.width / 2,
                   ),
                 ),
-                child: Icon(
+                child:
+                InkWell(
+                  onTap: (){
+                    showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext builder) {
+                        return CupertinoPopupSurface(
+                            child: VideoApp()
+                        );
+                      },
+                    );
+                  },
+                  child:
+                  Icon(
                   Icons.help,
-                ),
+                ),)
               )),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -191,8 +206,8 @@ class _TakePic extends State<TakePic> {
                                   toolbarWidgetColor: Colors.white,
                                   initAspectRatio:
                                       CropAspectRatioPreset.ratio3x2,
-                                  cropGridColumnCount: 30,
-                                  cropGridRowCount: 50,
+                                  // cropGridColumnCount: 30,
+                                  // cropGridRowCount: 50,
                                   lockAspectRatio: true,
                                   hideBottomControls: true,
                               ),

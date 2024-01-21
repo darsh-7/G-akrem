@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
+import 'package:akrem/Screens/main/Profile/setting_screen.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/controller_mang.dart';
@@ -68,7 +69,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                       Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
                 });
 
-                 print("change theme");
+                print("change theme");
               },
               icon: Icon(Get.isDarkMode ? Icons.nightlight : Icons.sunny))
         ],
@@ -79,70 +80,75 @@ class _ProfileScreen extends State<ProfileScreen> {
           padding: const EdgeInsets.all(20),
           child: Column(children: [
             /// -- IMAGE
-            Stack(
-              children: [
-                SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: FadeInImage(
-                        image: profileImg,
-                        placeholder: const AssetImage(AppImages.noImage),
-                        imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset(AppImages.noImage,
-                              fit: BoxFit.fitWidth);
-                        },
-                        fit: BoxFit.fitWidth,
-                      ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: 35,
-                    height: 35,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: AppColors.mainColor),
-                    child: const Icon(
-                      Icons.edit,
-                      color: Colors.black,
-                      size: 20,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Stack(
+            //   children: [
+            //     SizedBox(
+            //       width: 120,
+            //       height: 120,
+            //       child: ClipRRect(
+            //           borderRadius: BorderRadius.circular(100),
+            //           child: FadeInImage(
+            //             image: profileImg,
+            //             placeholder: const AssetImage(AppImages.noImage),
+            //             imageErrorBuilder: (context, error, stackTrace) {
+            //               return Image.asset(AppImages.noImage,
+            //                   fit: BoxFit.fitWidth);
+            //             },
+            //             fit: BoxFit.fitWidth,
+            //           ),
+            //       ),
+            //     ),
+            //     Positioned(
+            //       bottom: 0,
+            //       right: 0,
+            //       child: Container(
+            //         width: 35,
+            //         height: 35,
+            //         decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(100),
+            //             color: AppColors.mainColor),
+            //         child: const Icon(
+            //           Icons.edit,
+            //           color: Colors.black,
+            //           size: 20,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             const SizedBox(height: 10),
-            Text(userController.user.fName??"No Name", style: Theme.of(context).textTheme.headline4),
-            Text(userController.user.email??"No Email",
-                style: Theme.of(context).textTheme.bodyText2),
+            Text(userController.user.fName ?? "No Name",
+                style: Theme.of(context).textTheme.headline4),
+            // Text(userController.user.email??"No Email",
+            //     style: Theme.of(context).textTheme.bodyText2),
             const SizedBox(height: 20),
 
             /// -- BUTTON
-            SizedBox(
-              height: 48,
-              width: 200,
-              child: ElevatedButton(
-                //onPressed: () => Get.to(() => const UpdateProfileScreen()),
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.mainColor,
-                    side: BorderSide.none,
-                    shape: const StadiumBorder()),
-                child: const Text("EditProfile",
-                    style: TextStyle(color: Colors.black)),
-              ),
-            ),
+            // SizedBox(
+            //   height: 48,
+            //   width: 200,
+            //   child: ElevatedButton(
+            //     //onPressed: () => Get.to(() => const UpdateProfileScreen()),
+            //     onPressed: () {},
+            //     style: ElevatedButton.styleFrom(
+            //         backgroundColor: AppColors.mainColor,
+            //         side: BorderSide.none,
+            //         shape: const StadiumBorder()),
+            //     child: const Text("EditProfile",
+            //         style: TextStyle(color: Colors.black)),
+            //   ),
+            // ),
             const SizedBox(height: 30),
             const Divider(),
             const SizedBox(height: 10),
 
             /// -- MENU
             ProfileMenuWidget(
-                title: "Settings", icon: Icons.settings, onPress: () {}),
+                title: "Settings",
+                icon: Icons.settings,
+                onPress: () {
+                  Get.to(SettingsView());
+                }),
             ProfileMenuWidget(
                 title: "Donation History", icon: Icons.history, onPress: () {}),
             ProfileMenuWidget(

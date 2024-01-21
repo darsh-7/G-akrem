@@ -63,19 +63,22 @@ dependencies:
   ##image
   image_cropper: ^5.0.0
   flutter_svg: ^2.0.7
-
+  video_player: ^2.8.2
 
 
   flutter_localizations:
     sdk: flutter
   intl: any
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   hive_generator: any
-  build_runner: any
+  build_runner: ^2.4.7
   flutter_launcher_icons: "^0.13.1"
   flutter_test:
     sdk: flutter
+  freezed: ^2.4.6
 
 flutter_launcher_icons:
   android: "launcher_icon"

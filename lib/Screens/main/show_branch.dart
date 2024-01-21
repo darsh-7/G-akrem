@@ -40,7 +40,8 @@ class ShowPharm extends StatelessWidget {
           // Status bar brightness (optional)
           statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
           statusBarBrightness: Brightness.light, // For iOS (dark icons)
-        ),        elevation: 0,
+        ),
+        elevation: 0,
         leading: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -109,33 +110,33 @@ class ShowPharm extends StatelessWidget {
                       topLeft: Radius.circular(40)),
                 ),
                 child: Column(
-                      children: [
-                        Container(
-                          height: 48,
-                          width: double.infinity,
-                          padding: EdgeInsets.only(top: 4),
-                          decoration: BoxDecoration(
-                            color: Get.theme.scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(100),
-                                topLeft: Radius.circular(100)),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8, left: 16.0, right: 12.0),
-                            child: Text(
-                              ("${pharm.name}"),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                //color: tdBlack,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
+                  children: [
+                    Container(
+                      height: 48,
+                      width: double.infinity,
+                      padding: EdgeInsets.only(top: 4),
+                      decoration: BoxDecoration(
+                        color: Get.theme.scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(100),
+                            topLeft: Radius.circular(100)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, left: 16.0, right: 12.0),
+                        child: Text(
+                          ("${pharm.name}"),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            //color: tdBlack,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ],
+                      ),
                     ),
+                  ],
+                ),
               ),
             ]),
             Padding(
@@ -237,41 +238,59 @@ class ShowPharm extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.all(30),
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: RawMaterialButton(
-                          child: const Text("Call",
-                              style: TextStyle(fontSize: 20)),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          }),
-                    ),
+                        margin: const EdgeInsets.all(30),
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ElevatedButton(
+                            onPressed: () => {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF8bd5ff),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              elevation: 20,
+                              shadowColor: Colors.transparent,
+                              minimumSize: const Size.fromHeight(48),
+                            ),
+                            child: Text(
+                              "Help",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ))),
                     Container(
-                      margin: const EdgeInsets.all(30),
-                      width: 100,
-                      decoration: BoxDecoration(
-                        color: AppColors.mainColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: RawMaterialButton(
-                          child: const Text(
-                            "Location",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () async {
-                            final Uri _url = Uri.parse('https://flutter.dev');
+                        margin: const EdgeInsets.all(30),
+                        width: 128,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              final Uri _url = Uri.parse('https://flutter.dev');
 
-                            if (await canLaunch(_url.toString())) {
-                              await launchUrl(_url);
-                            } else {
-                              throw 'Could not launch ';
-                            }
-                          }),
-                    ),
+                              if (await canLaunch(_url.toString())) {
+                                await launchUrl(_url);
+                              } else {
+                                throw 'Could not launch ';
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Get.theme.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              elevation: 20,
+                              shadowColor: Colors.transparent,
+                              minimumSize: const Size.fromHeight(48),
+                            ),
+                            child: Text(
+                              "Location",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ))),
                   ],
                 ),
               ),

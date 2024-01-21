@@ -7,7 +7,7 @@ class AppImages {
   static const String basket = "assets/frame-8.png";
 
   static const String noImage = "assets/no_image.png";
-
+  static const String thanks = "assets/thanks.jpg";
   static const String profileIcon = "assets/profileimage.png";
   static const String mvrk = "assets/mvrk.png";
   static const String emptyList = "assets/empty_list.jpg";

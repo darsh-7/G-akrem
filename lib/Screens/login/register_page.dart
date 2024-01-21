@@ -88,7 +88,6 @@ class _RegisterPage extends State<RegisterPage> {
 
   Widget _buildBottom() {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-
     return Padding(
         padding: EdgeInsets.only(top: statusBarHeight),
         child: SizedBox(

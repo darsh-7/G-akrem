@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:akrem/Screens/basket/thanks.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/basket_controller.dart';
 import 'package:akrem/widgets/Google_map_card.dart';
@@ -130,20 +131,18 @@ class Checkout extends StatelessWidget {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(11),
                             ],
-                            width: 280,
+                            width: 240,
                           ),
                           Container(
-                            width: 60,
+                            width: 110,
                            // height: 50,
                            // margin: EdgeInsets.only(right: 8),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
+                            child: Row(
                               children: [
                                 Text(
                                   "WhatsApp",
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.green[300],
                                   ),
                                 ),
                                 Checkbox(
@@ -157,7 +156,7 @@ class Checkout extends StatelessWidget {
                           )
                         ]),
                     ElevatedButton(onPressed: ()=>{
-
+                     Get.to( ThanksScreen()),
                     },
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
