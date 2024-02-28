@@ -3,11 +3,14 @@ import 'dart:developer';
 
 import 'package:akrem/Api/api_key.dart';
 import 'package:akrem/Api/user_api_model.dart';
+import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/model/user.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class UserAPI {
+  static final UserController userController = Get.find();
+
   static Future<int> registerUser(String fName, String lName, String email,
       String password, String confPassword) async {
     //var response = await http.get(Uri.parse(BASE_URL));
@@ -144,7 +147,7 @@ class UserAPI {
         'fName': data["firstName"],
         'LName': data["lastName"],
         'email': data["email"],
-        'phone': data["phone"],
+        'phoneNumber': data["phoneNumber"],
         'whatsApp': data["hasWhatsApp"],
         'img': data["imageUrl"],
         'role': data["role"],
@@ -158,15 +161,157 @@ class UserAPI {
     }
   }
 
-  static Future<void> resetPassword(String? email) async {
+  static Future<void> resetPassword(String email) async {
     //var response = await http.get(Uri.parse(BASE_URL));
 
     try {
-       await http.get(
+      await http.get(
         Uri.parse(
           "$akrem_url" + "api/Authentication/ForgotPassword/${email}",
         ),
       );
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+      // return error.toString();
+    }
+  }
+
+  static Future<void> changePhone(
+      {required String phone, String? token}) async {
+
+    try {
+      await http.post(
+          Uri.parse(
+            "$akrem_url" + "api/Account/AddNewPhoneNumber",
+          ),
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "Authorization": "bearer ${userController.user.token}",
+          },
+          body: jsonEncode({
+            "phoneNumber": phone,
+          }));
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }
+  }
+  static Future<void> confirmChangePhone(
+      {required String phone,required String otp, String? token}) async {
+
+    try {
+      await http.post(
+          Uri.parse(
+            "$akrem_url" + "api/Account/ConfirmationPhoneNumber",
+          ),
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "Authorization": "bearer ${userController.user.token}",
+          },
+          body: jsonEncode({
+            "phoneNumber": phone,
+            "otp": otp
+          }));
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }
+  }
+  static Future<void> deleteAccount() async {
+    try {
+      var res = await http.get(
+        Uri.parse(
+          "$akrem_url" +"api/Account/DeleteAccount",
+        ),
+        headers: {
+          // "content-type": "application/json",
+          // "accept": "application/json",
+          "Authorization": "bearer ${userController.user.token}"
+        },
+      );
+      print( "$akrem_url" +"api/Account/DeleteAccount",);
+      print(res.reasonPhrase);
+      userController.clearUser();
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }  }
+
+  static Future<void> changeEmail(
+      {required String email, String? token}) async {
+    //var response = await http.get(Uri.parse(BASE_URL));
+
+    try {
+      var res = await http.get(
+        Uri.parse(
+          "$akrem_url" +"api/Account/ChangeEmail?Email=${email}",
+        ),
+        headers: {
+          // "content-type": "application/json",
+          // "accept": "application/json",
+          "Authorization": "bearer ${userController.user.token}"
+        },
+      );
+      print("$akrem_url" + "api/Account/ChangeEmail?Email=${email}");
+      print(res.reasonPhrase);
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }
+  }
+
+  static Future<void> changePassword(
+      {required String oldPass, required String newPass, String? token}) async {
+    //var response = await http.get(Uri.parse(BASE_URL));
+
+    try {
+      await http.post(
+          Uri.parse(
+            "$akrem_url" + "/api/Account/ChangePassword",
+          ),
+          headers: {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "Authorization": "bearer ${userController.user.token}",
+          },
+          body: jsonEncode({
+            "currentPassword": oldPass,
+            "newPassword": newPass,
+            "confirmNewPassword": newPass
+          }));
+    } catch (error) {
+      log("An error occurred $error");
+      throw error.toString();
+    }
+  }
+
+  static Future<void> changeName(
+      {required String fName, required String lName, String? token}) async {
+    //var response = await http.get(Uri.parse(BASE_URL));
+    final map = <String, dynamic>{};
+    map['FirstName'] = fName;
+    map['LastName'] = lName;
+    try {
+      var res = await http.post(
+          Uri.parse(
+            "$akrem_url" + "api/Account/EditProfile",
+          ),
+          headers: {
+            //"content-type": "application/json",
+           // "accept": "application/json",
+            "Authorization": "bearer ${userController.user.token}",
+          },
+          body:{
+            "FirstName" : fName,
+            "LastName" : lName
+          });
+      print("$akrem_url" + "api/Account/EditProfile");
+      print(res.reasonPhrase);
+      if(res.reasonPhrase != "ok")
+        throw "bad request";
 
     } catch (error) {
       log("An error occurred $error");

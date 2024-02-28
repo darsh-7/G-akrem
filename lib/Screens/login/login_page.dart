@@ -286,7 +286,7 @@ class _LoginPage extends State<LoginPage> {
 
                   final user =
                       await UserAPI.getUserInfo(userRespond.content?.token);
-                  print("herererere");
+
                   //List<String> role = user["role"];
 
                   // if (role.first != "Client") {
@@ -310,7 +310,7 @@ class _LoginPage extends State<LoginPage> {
                       lName: user["LName"],
                       email: user["email"],
                       whatsapp: user["whatsApp"],
-                      phone: user["phone"],
+                      phone: user["phoneNumber"],
                       token: userRespond.content?.token));
 
                   Get.offAll(SelectLocation());

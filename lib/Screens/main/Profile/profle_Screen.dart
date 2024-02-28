@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
-import 'package:akrem/Screens/main/Profile/setting_screen.dart';
+import 'package:akrem/Screens/main/Profile/account/account_screen.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/controller_mang.dart';
@@ -22,6 +22,12 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreen extends State<ProfileScreen> {
   UserController userController = Get.find();
+
+  @override
+  void initState() {
+    userController.fetchNewUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,10 +150,16 @@ class _ProfileScreen extends State<ProfileScreen> {
 
             /// -- MENU
             ProfileMenuWidget(
+                title: "Account",
+                icon: Icons.account_circle_sharp,
+                onPress: () {
+                  Get.to(AccountView());
+                }),
+            ProfileMenuWidget(
                 title: "Settings",
                 icon: Icons.settings,
                 onPress: () {
-                  Get.to(SettingsView());
+                //  Get.to(AccountView());
                 }),
             ProfileMenuWidget(
                 title: "Donation History", icon: Icons.history, onPress: () {}),

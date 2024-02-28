@@ -13,7 +13,7 @@
         android:label="Akrem">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAqHUKRhNlHQReARu0oKXUleQY5kW0DLaY" />
+            android:value="AIzaSyDyJH27f_XMNsYS0rZz5_nUZpkeswrHcKY" />
         <!-- AIzaSyC79noCguhAfYieDJejvlj9gfXBwm1sFhY
             AIzaSyAqHUKRhNlHQReARu0oKXUleQY5kW0DLaY -->
 

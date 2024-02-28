@@ -126,6 +126,8 @@ class _CustomInputFieldState extends State<CustomInputField> {
               const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           label: Text(widget.label ?? ""),
           hintText: widget.hintText,
+          hintMaxLines: 1,
+          labelStyle: TextStyle(overflow: TextOverflow.ellipsis),
           suffixIcon: widget.obscureText
               ? Padding(
                   padding: const EdgeInsets.symmetric(

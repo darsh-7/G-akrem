@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:akrem/Screens/customer_screen/Home/NavigationBar.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket/home_view.dart';
 import 'package:akrem/Screens/main/Fund.dart';
+import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
@@ -18,13 +18,13 @@ import 'package:get/get.dart';
 
 // void main() => runApp(const NavigationBarApp());
 
-class NavigationBarApp extends StatefulWidget {
-  NavigationBarApp({
+class CustomerNavigationBar extends StatefulWidget {
+  CustomerNavigationBar({
     super.key,
   });
 
   @override
-  State<NavigationBarApp> createState() => _NavigationBarApp();
+  State<CustomerNavigationBar> createState() => _NavigationBarApp();
 }
 
 UserController userController = Get.find();
@@ -32,12 +32,21 @@ UserController userController = Get.find();
 var profileImg = NetworkImage(userController.user.img ??
     "https://res.cloudinary.com/drmmayia1/image/upload/v1697917708/SmartMedicinePlatform/yyvplvxqd2vciyzppcsg.png");
 
-class _NavigationBarApp extends State<NavigationBarApp> {
+class _NavigationBarApp extends State<CustomerNavigationBar> {
   int currentPageIndex = 0;
   Image image = Image.asset(
     AppImages.profileIcon,
   );
   var radius = const Radius.circular(10);
+
+  @override
+  void initState() {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.blue, // navigation bar color
+      statusBarColor: Colors.blue, // status bar color
+    ));
+    super.initState();
+  }
 
 // @override
   // void initState() {
@@ -56,15 +65,6 @@ class _NavigationBarApp extends State<NavigationBarApp> {
   //     ));
   //   super.initState();
   // }
-  @override
-  void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.blue, // navigation bar color
-      statusBarColor: Colors.blue, // status bar color
-    ));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -126,7 +126,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                           // color: AppColors.mainColor,
                         ),
                         child: const Icon(Icons
-                            .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+                            .shopping_basket) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
                     icon: Container(
                         width: 40,
@@ -136,34 +136,36 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                           // color: AppColors.mainColor,
                         ),
                         child: const Icon(Icons
-                            .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
+                            .shopping_basket) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
-                    label: 'Home',
+                    label: 'basket',
                   ),
                   NavigationDestination(
-                    icon: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        //color: AppColors.mainColor,
-                      ),
-                      child: const Icon(Icons.location_on_rounded),
-                    ),
                     selectedIcon: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        //color: AppColors.mainColor,
-                      ),
-                      child: const Icon(Icons.location_on_rounded),
-                    ),
-                    label: "Boxes",
+                        width: 40,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          // color: AppColors.mainColor,
+                        ),
+                        child: const Icon(Icons
+                            .location_on_rounded) //Image.asset(AppImages.boxIcon,scale: 6),
+                        ),
+                    icon: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          // color: AppColors.mainColor,
+                        ),
+                        child: const Icon(Icons
+                            .location_on_rounded) //Image.asset(AppImages.boxIcon,scale: 6),
+                        ),
+                    label: 'Hub',
                   ),
                   InkWell(
                       onTap: () {
-                        Get.offAll(CustomerNavigationBar());
+                        Get.offAll(NavigationBarApp());
                       },
                       child: Container(
                           // width: 40,
@@ -184,22 +186,31 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                                       Get.theme.shadowColor, BlendMode.srcIn),
                                 ),
                               ),
-                              Text("Downer")
+                              Text("Consumer")
                             ],
                           ))),
                   NavigationDestination(
-                    icon: const SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: Icon(Icons.attach_money),
-                    ),
-                    selectedIcon: SizedBox(
+                    selectedIcon: Container(
                         width: 40,
                         height: 40,
-                        child: const Icon(Icons
-                            .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          // color: AppColors.mainColor,
                         ),
-                    label: "Fund",
+                        child: const Icon(Icons
+                            .crisis_alert) //Image.asset(AppImages.boxIcon,scale: 6),
+                        ),
+                    icon: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          // color: AppColors.mainColor,
+                        ),
+                        child: const Icon(Icons
+                            .crisis_alert) //Image.asset(AppImages.boxIcon,scale: 6),
+                        ),
+                    label: 'Process',
                   ),
                   NavigationDestination(
                     //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
@@ -256,12 +267,14 @@ class _NavigationBarApp extends State<NavigationBarApp> {
           ),
         ),
         body: <Widget>[
-          Home(),
+          HomeView(),
           BranchMap(),
           Center(
             child: Text("Akrem"),
           ),
-          Fund(),
+          Center(
+            child: Text("Akrem"),
+          ),
           ProfileScreen(),
         ][currentPageIndex],
       ),
