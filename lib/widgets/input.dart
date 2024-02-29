@@ -94,6 +94,8 @@ class _CustomInputFieldState extends State<CustomInputField> {
         obscuringCharacter: '*',
         validator: widget.validator,
         onTap: widget.onTap,
+        minLines: 1,
+        maxLines: 1,
         decoration: InputDecoration(
           icon: widget.icon,
           enabled: widget.enabled,

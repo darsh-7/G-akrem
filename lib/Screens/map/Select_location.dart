@@ -146,7 +146,10 @@ class _SelectLocation extends State<SelectLocation> {
                               //color: Get.theme.primaryColor
                             ),
                             child: CustomInputField(
-                              controller: googleMapController.searshController,
+                              hintText: "Loading...",
+                              enabled: false,
+                              readOnly: true,
+                              controller: googleMapController.searchController,
                               // onChanged: (value) {},
                             ),
                           ),
@@ -161,7 +164,7 @@ class _SelectLocation extends State<SelectLocation> {
                                 locationLongitude:
                                     _currenCordenat.target.longitude,
                                 locationString:
-                                    googleMapController.searshController.text));
+                                    googleMapController.searchController.text));
 
                             Get.offAll(() => NavigationBarApp());
                           }),

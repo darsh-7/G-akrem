@@ -14,27 +14,16 @@ class GoogleMapCard extends StatelessWidget {
     return Container(
       height: 250,
       width: double.infinity,
-      padding: EdgeInsets.all(2),
+      // padding: EdgeInsets.all(2),
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: Get.theme.scaffoldBackgroundColor,
         borderRadius: const BorderRadius.all(Radius.circular(30.0)),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.withOpacity(0.3),
-        //     blurRadius: 5,
-        //     offset: const Offset(0, -9), // Shadow position
-        //   ),
-        //   BoxShadow(
-        //     color: Colors.grey.withOpacity(0.3),
-        //     blurRadius: 1,
-        //     offset: const Offset(0, -9), // Shadow position
-        //   ),
-        // ],
       ),
       child: GestureDetector(
           onTap: () => Get.to(SelectLocation()),
           child: Stack(children: <Widget>[
             Card(
+              margin: EdgeInsets.all(0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
@@ -64,12 +53,13 @@ class GoogleMapCard extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Divider( color: Colors.black,height: 2,),
                 Container(
                   alignment: Alignment.center,
-                  height: 40,
+                  height: 32,
                   width: double.infinity,
                   color: Get.theme.canvasColor,
-                  child: Text("Location: ${user.user.locationString}"),
+                  child: Text("Location: ${user.user.locationString}",maxLines: 1,),
                 )
               ],
             )
