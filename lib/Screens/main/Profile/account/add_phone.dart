@@ -18,7 +18,7 @@ class _PhoneViewState extends State<PhoneView> {
   late TextEditingController countryNameController;
   late TextEditingController countryCodeController;
   late TextEditingController phoneNumberController;
-
+  var hasWhatsApp = false.obs;
   var phoneKey = GlobalKey<FormState>();
 
   sendCodeToPhone() async {
@@ -46,35 +46,62 @@ class _PhoneViewState extends State<PhoneView> {
     //   return;
     // }
 
-    print("Button Pressed " + countryCode + phoneNumber);
-
-    await UserAPI.changePhone(phone: phoneNumber);
-
-    await Get.to(() => PhoneVerification(
-          phoneNumber: phoneNumber,
-        ));
-
     // Navigator.push(
     //     context, SlideRoute(page: PhoneVerification(), slideFrom: 'bottom'));
 
-    // if (phoneNumber.isEmpty) {
-    //   return showAlertDialog(
-    //     context: context,
-    //     message: "Please enter your phone number",
-    //   );
-    // } else if (phoneNumber.length < 9) {
-    //   return showAlertDialog(
-    //     context: context,
-    //     message:
-    //     'The phone number you entered is too short for the country: $countryName\n\nInclude your area code if you haven\'t',
-    //   );
-    // } else if (phoneNumber.length > 10) {
-    //   return showAlertDialog(
-    //     context: context,
-    //     message:
-    //     "The phone number you entered is too long for the country: $countryName",
-    //   );
-    // }
+    if (phoneNumber.isEmpty) {
+      return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text("Close")),
+                ],
+                // title: const Text("have not login yet"),
+                content: const Text("Please enter your phone number"),
+              ));
+    } else if (phoneNumber.length < 9) {
+      return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text("Close")),
+                ],
+                // title: const Text("have not login yet"),
+                content: Text(
+                    'The phone number you entered is too short for the country: $countryName\n\nInclude your area code if you haven\'t'),
+              ));
+    } else if (phoneNumber.length > 11) {
+      return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: const Text("Close")),
+                ],
+                // title: const Text("have not login yet"),
+                content: Text(
+                    "The phone number you entered is too long for the country: $countryName"),
+              ));
+    } else {
+      print("Button Pressed " + countryCode + phoneNumber);
+
+      await UserAPI.changePhone(phone: phoneNumber,whatsApp: hasWhatsApp.value);
+
+      await Get.to(() => PhoneVerification(
+            phoneNumber: phoneNumber,
+          ));
+    }
 
     // ref.read(authControllerProvider).sendSmsCode(
     //   context: context,
@@ -291,6 +318,31 @@ class _PhoneViewState extends State<PhoneView> {
                       ),
                     ),
                   )),
+                ],
+              ),
+            ),
+            Container(
+              // height: 50,
+              // margin: EdgeInsets.only(right: 8),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+
+                children: [
+                  Text("this number has WhatsApp",
+                      style: TextStyle(
+                        fontSize: 13,
+                      )),
+                  Checkbox(
+                      value: hasWhatsApp.value,
+                      activeColor: Colors.green,
+                      onChanged: (checked)
+                          {
+                            print("check wats");
+                            setState(() {
+                              hasWhatsApp.value = checked ?? false;
+                            });
+                          }),
                 ],
               ),
             ),

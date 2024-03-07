@@ -8,6 +8,8 @@ import 'package:google_places_flutter/google_places_flutter.dart';
 import 'package:google_places_flutter/model/prediction.dart';
 import 'package:fl_geocoder/fl_geocoder.dart' as fl;
 
+import '../Screens/map/asses/asssis1.dart';
+
 class LocationController extends GetxController {
   // Placemark _placemark ;
   late GoogleMapController mapController;
@@ -17,6 +19,14 @@ class LocationController extends GetxController {
 
 
   Future<void> cameraChanged(double latitude, double longitude) async {
+
+    
+    // LatLng latLngPosition = LatLng(latitude, longitude);
+    //
+    //
+    // searchController.text = await AssistantMethods.searchCoordinateAddress(latLngPosition);
+    //
+
     final placemarks = await placemarkFromCoordinates(latitude, longitude);
 
 
@@ -24,8 +34,14 @@ class LocationController extends GetxController {
     //   location: fl.Location(latitude,longitude),
     // );
     if (placemarks.isNotEmpty) {
-     final location = "${(placemarks[0].thoroughfare ?? placemarks[0].street) ?? placemarks[0].name}, ${placemarks[0].locality}";
-    //   final location = "${placemarks[0].formattedAddress }, ${placemarks[0].locality}";
+      print(" thoroughfare :${(placemarks[0].thoroughfare) ?? placemarks[0].name}, "
+          "\n locality: ${placemarks[0].locality}}"
+          "\n street: ${placemarks[0].street}"
+          "\n subThoroughfare: ${placemarks[0].subThoroughfare}"
+          "\n administrativeArea: ${placemarks[0].administrativeArea}"
+      );
+     final location = "${placemarks[0].locality}, ${placemarks[0].subThoroughfare} ${placemarks[0].thoroughfare}";
+      // final location = "${placemarks[0].formattedAddress }, ${placemarks[0].locality}";
 
       searchController.text = location;
       update();

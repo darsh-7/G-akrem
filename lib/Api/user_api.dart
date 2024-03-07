@@ -178,7 +178,7 @@ class UserAPI {
   }
 
   static Future<void> changePhone(
-      {required String phone, String? token}) async {
+      {required String phone,bool whatsApp = false ,String? token}) async {
 
     try {
       await http.post(
@@ -192,6 +192,7 @@ class UserAPI {
           },
           body: jsonEncode({
             "phoneNumber": phone,
+            "hasWhatsApp": whatsApp
           }));
     } catch (error) {
       log("An error occurred $error");

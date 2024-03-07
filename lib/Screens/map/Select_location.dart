@@ -26,9 +26,9 @@ class _SelectLocation extends State<SelectLocation> {
   LocationController googleMapController = Get.put(LocationController());
   UserController userController = Get.find();
 
-  LatLng initialPoint = LatLng(29.992895885508347, 31.31135928995078);
+  LatLng initialPoint = LatLng(30.0225, 31.4381);
   CameraPosition _currenCordenat = CameraPosition(
-    target: LatLng(29.992895885508347, 31.31135928995078),
+    target: LatLng(30.0225, 31.4381),
     zoom: 14,
   );
 
@@ -50,8 +50,8 @@ class _SelectLocation extends State<SelectLocation> {
       ),
       body: Stack(children: <Widget>[
         GoogleMap(
-          onCameraIdle: () {
-            googleMapController.cameraChanged(_currenCordenat.target.latitude,
+          onCameraIdle: ()  {
+             googleMapController.cameraChanged(_currenCordenat.target.latitude,
                 _currenCordenat.target.longitude);
           },
           markers: _markers.values.toSet(),
@@ -63,11 +63,13 @@ class _SelectLocation extends State<SelectLocation> {
           initialCameraPosition: CameraPosition(
             target: initialPoint,
             zoom: 14,
+            bearing: 30,
+           // tilt: 45,
           ),
-          onMapCreated: (controller) {
+          onMapCreated: (controller)  {
             googleMapController.mapController = controller;
             //googleMapController.cameraChanged(value);
-            googleMapController.cameraChanged(
+             googleMapController.cameraChanged(
                 initialPoint.latitude, initialPoint.longitude);
           },
           onCameraMove: (value) {

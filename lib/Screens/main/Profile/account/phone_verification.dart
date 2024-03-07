@@ -131,7 +131,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                   child: InkWell(
                     onTap: () async {
                       await UserAPI.confirmChangePhone(phone: widget.phoneNumber, otp: _verificationCode);
-                      await  userController.fetchNewUser() ;
+                      await userController.fetchNewUser() ;
                       Get.close(2);
                     },
                     child: Padding(

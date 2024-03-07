@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class TakePic extends StatefulWidget {
   const TakePic({
@@ -27,6 +28,7 @@ class _TakePic extends State<TakePic> {
   bool camOn = true;
   late CameraController _cameraController;
   late List<CameraDescription> cameras;
+  final textRecognizer = TextRecognizer();
 
   @override
   void initState() {
@@ -45,6 +47,7 @@ class _TakePic extends State<TakePic> {
   @override
   void dispose() {
     _cameraController.dispose();
+    textRecognizer.close();
     super.dispose();
   }
 
@@ -54,7 +57,7 @@ class _TakePic extends State<TakePic> {
     _cameraController.initialize().then((_) {
       if (!mounted) {}
       setState(() {});
-      _cameraController.setFlashMode(FlashMode.auto);
+      _cameraController.setFlashMode(FlashMode.off);
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
@@ -131,33 +134,29 @@ class _TakePic extends State<TakePic> {
           Container(
               alignment: Alignment.bottomRight,
               child: Container(
-                margin: EdgeInsets.all(20),
-                height: 50,
-               width: 50,
-                decoration: BoxDecoration(
-                  color: Get.theme.primaryColor,
-                  borderRadius: BorderRadius.horizontal(
-                      left: Radius.circular(30), right: Radius.circular(30)
-                    // MediaQuery.of(context).size.width / 2,
+                  margin: EdgeInsets.all(20),
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Get.theme.primaryColor,
+                    borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(30), right: Radius.circular(30)
+                        // MediaQuery.of(context).size.width / 2,
+                        ),
                   ),
-                ),
-                child:
-                InkWell(
-                  onTap: (){
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (BuildContext builder) {
-                        return CupertinoPopupSurface(
-                            child: VideoApp()
-                        );
-                      },
-                    );
-                  },
-                  child:
-                  Icon(
-                  Icons.help,
-                ),)
-              )),
+                  child: InkWell(
+                    onTap: () {
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (BuildContext builder) {
+                          return CupertinoPopupSurface(child: VideoApp());
+                        },
+                      );
+                    },
+                    child: Icon(
+                      Icons.help,
+                    ),
+                  ))),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -201,15 +200,14 @@ class _TakePic extends State<TakePic> {
                             compressQuality: 100,
                             uiSettings: [
                               AndroidUiSettings(
-                                  toolbarTitle: 'Crop Medic',
-                                  toolbarColor: Get.theme.primaryColor,
-                                  toolbarWidgetColor: Colors.white,
-                                  initAspectRatio:
-                                      CropAspectRatioPreset.ratio3x2,
-                                  // cropGridColumnCount: 30,
-                                  // cropGridRowCount: 50,
-                                  lockAspectRatio: true,
-                                  hideBottomControls: true,
+                                toolbarTitle: 'Crop Medic',
+                                toolbarColor: Get.theme.primaryColor,
+                                toolbarWidgetColor: Colors.white,
+                                initAspectRatio: CropAspectRatioPreset.ratio3x2,
+                                // cropGridColumnCount: 30,
+                                // cropGridRowCount: 50,
+                                lockAspectRatio: true,
+                                hideBottomControls: true,
                               ),
                               IOSUiSettings(
                                 title: 'Cropper',
@@ -234,11 +232,130 @@ class _TakePic extends State<TakePic> {
                             return;
                           }
 
+                          final inputImage =
+                              InputImage.fromFile(File(croppedFile.path));
+                          final recognizedText =
+                              await textRecognizer.processImage(inputImage);
+
+                          String medicName = "";
+                          String medicConcentration = "";
+                          String medicTablets = "";
+
+                          double biggestVertical = 0;
+                          double biggestHorizontal = 0;
+
+                          for (TextBlock block in recognizedText.blocks) {
+                            for (TextLine line in block.lines) {
+                              Rect frame = line.elements.first.boundingBox;
+                              print(
+                                  "vaal ${line.elements.first.text} : ${line.elements.first.text.contains("mg") || line.elements.first.text.contains("MG")}");
+                              if (_isNumeric(line.elements.first.text)) {
+                                line.elements.toList().forEach((element) {
+                                  if (element.text.contains("mg") ||
+                                      element.text.contains("MG")) {
+                                    print(
+                                        "found Concentration : ${line.elements.toString()}");
+                                    //medicNum = line.elements.toString();
+                                    medicConcentration = medicConcentration +
+                                        " " +
+                                        line.elements.first.text +
+                                        element.text +
+                                        " ";
+                                  } else if (element.text.contains("tablets") ||
+                                      element.text.contains("Tablets")) {
+                                    print(
+                                        "found Concentration : ${line.elements.toString()}");
+                                    //medicNum = line.elements.first.text;
+                                    medicTablets = line.elements.first.text;
+                                  } else {
+                                    if (medicTablets.isEmpty) {
+                                      medicTablets = line.elements.first.text;
+                                    } else if (medicConcentration.isEmpty) {
+                                      medicConcentration =
+                                          line.elements.first.text;
+                                    }
+                                  }
+                                });
+                                continue;
+                              }
+
+                              if (biggestVertical <
+                                      (frame.bottom - frame.top) &&
+                                  biggestHorizontal <
+                                      (frame.right - frame.left)) {
+                                print(
+                                    "medicName : ${line.elements.first.text} bigger than ${medicName}");
+                                biggestVertical = frame.bottom - frame.top;
+                                biggestHorizontal = frame.right - frame.left;
+                                medicName = line.elements.first.text;
+                              }
+
+                              // for (TextElement element in line.elements) {
+                              //
+                              //   if (biggestVertical < (element.boundingBox.bottom - element.boundingBox.top)/* && biggestHorizontal < (element.boundingBox.right - element.boundingBox.left)*/) {
+                              //     print ("medicName : ${element.text} bigger than ${medicName}");
+                              //     biggestVertical = element.boundingBox.bottom - element.boundingBox.top;
+                              //     biggestHorizontal =element.boundingBox.right - element.boundingBox.left;
+                              //     medicName = element.text;
+                              //   }
+                              //
+                              //   // Do something with fontSize, e.g. add to a list
+                              // }
+
+                              // Do something with fontSize, e.g. add to a list
+                            }
+                          }
+
+                          // for (TextBlock block in recognizedText.blocks) {
+                          //   double topPoint = 0;
+                          //   double rightPoint = 0;
+                          //
+                          //   String topText = "";
+                          //   final Rect rect = block.boundingBox;
+                          //   final List<Point<int>> cornerPoints =
+                          //       block.cornerPoints;
+                          //   final String text = block.text;
+                          //   //final List<String> languages = block.recognizedLanguages;
+                          //   print("element : ${rect}");
+                          //   print("cornerPoints : ${cornerPoints}");
+                          //   print("text : ${text}");
+                          //   // print("languages : ${languages}");\
+                          //
+                          //   for (TextLine line in block.lines) {
+                          //     // Same getters as TextBlock
+                          //     for (TextElement element in line.elements) {
+                          //       // Same getters as TextBlock
+                          //       // if (element.text.contains("mg") ||
+                          //       //     element.text.contains("g")) {
+                          //       //   if (text.contains("gsk") ||
+                          //       //       text.contains("LE") ||
+                          //       //       text.length > 13) {
+                          //       //     continue;
+                          //       //   }
+                          //       //   medicNum = element.text;
+                          //       // }
+                          //       if (element.boundingBox.right > rightPoint &&element.boundingBox.top > topPoint && isUppercase(element.text[0])) {
+                          //         if (text.contains("gsk")) {
+                          //           continue;
+                          //         }
+                          //         topPoint = element.boundingBox.top;
+                          //         rightPoint = element.boundingBox.right;
+                          //         medicName = element.text;
+                          //       }
+                          //       print("element : ${element.text}");
+                          //     }
+                          //   }
+                          // }
+
                           var imgBytes = await croppedFile.readAsBytes();
                           //pic.delete();
 
                           Get.to(() => AddMedic(), arguments: {
                             "picFile": imgBytes,
+                            "text": recognizedText.text,
+                            "medicName": medicName,
+                            "medicConcentration": medicConcentration,
+                            "medicTablets": medicTablets
                           });
                         } on CameraException catch (e) {
                           debugPrint("takePicture error");
@@ -257,4 +374,15 @@ class _TakePic extends State<TakePic> {
       ),
     );
   }
+}
+
+bool isUppercase(String str) {
+  return str == str.toUpperCase();
+}
+
+bool _isNumeric(String str) {
+  if (str == null) {
+    return false;
+  }
+  return double.tryParse(str) != null;
 }

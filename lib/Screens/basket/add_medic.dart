@@ -21,8 +21,15 @@ class AddMedic extends StatefulWidget {
 class _AddMedicState extends State<AddMedic> {
   BasketController controller = Get.find();
   Uint8List pic = Get.arguments["picFile"];
+  String text = Get.arguments["text"];
+  String medicName = Get.arguments["medicName"];
+  String medicConcentration = Get.arguments["medicConcentration"];
+  String medicTablets = Get.arguments["medicTablets"];
+
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  final _ConcentrationController = TextEditingController();
+
   final _barController = TextEditingController();
   final _pillController = TextEditingController();
   final _dateController = TextEditingController();
@@ -111,11 +118,20 @@ class _AddMedicState extends State<AddMedic> {
   }
 
   @override
+  void initState() {
+    print("text: $text");
+    super.initState();
+    print("///// text : $text , medicName : $medicName , medicNum : $medicConcentration");
+    String val = "$medicName";
+    print("heall ($medicName)");
+    _nameController.text = val.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
+    _ConcentrationController.text = medicConcentration.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
+    _pillController.text = medicTablets.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: _buildAppBar(),
       extendBodyBehindAppBar: true,
@@ -139,11 +155,11 @@ class _AddMedicState extends State<AddMedic> {
                 aspectRatio: 2 / 1,
                 child: ClipRRect(
                     child: Image.memory(
-                      pic,
-                      width: 400,
-                      height: 300,
-                      fit: BoxFit.fill,
-                    )),
+                  pic,
+                  width: 400,
+                  height: 300,
+                  fit: BoxFit.fill,
+                )),
               ),
             ),
           ),
@@ -157,8 +173,9 @@ class _AddMedicState extends State<AddMedic> {
                   child: RawChip(
                       padding: EdgeInsets.all(0),
                       labelPadding: EdgeInsets.all(0),
-                      labelStyle: _selectedIndex == cards[index].id ? TextStyle(
-                          color: Colors.white) : TextStyle(),
+                      labelStyle: _selectedIndex == cards[index].id
+                          ? TextStyle(color: Colors.white)
+                          : TextStyle(),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         side: BorderSide(
@@ -172,7 +189,6 @@ class _AddMedicState extends State<AddMedic> {
                         width: 100,
                         height: 80,
                         margin: const EdgeInsets.only(left: 4, right: 4),
-
                         child: Column(
                           children: [
                             Expanded(
@@ -198,7 +214,6 @@ class _AddMedicState extends State<AddMedic> {
                                 style: const TextStyle(fontSize: 13),
                               ),
                             ),
-
                           ],
                         ),
                       ),
@@ -243,7 +258,6 @@ class _AddMedicState extends State<AddMedic> {
                 children: [
                   const SizedBox(height: 16),
                   CustomInputField(
-                    keyboardType: TextInputType.emailAddress,
                     hintText: "Name",
                     controller: _nameController,
                     validator: Validator.validateEmpty,
@@ -252,189 +266,204 @@ class _AddMedicState extends State<AddMedic> {
                       LengthLimitingTextInputFormatter(20),
                     ],
                   ),
-                  (_selectedIndex == 1 || _selectedIndex == 2) ?
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 4,
-                      bottom: 4,
-                    ),
-                    padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                RichText(
-                                  text: const TextSpan(
-                                    text: 'No.bars',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey),
-                                    /*defining default style is optional */
-                                    children: <TextSpan>[
-                                      // TextSpan(
-                                      //     text: "*",
-                                      //     style: TextStyle(color: Colors.red)),
-                                    ],
-                                  ),
-                                ),
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: 40,
-                                  height: 60,
-                                  child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundColor: AppColors.negative,
-                                    child: TextButton(
-                                      child: Icon(
-                                        Icons.exposure_minus_1,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () =>
-                                      _barController.text =
-                                          plusOne(_barController.text),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 80,
-                                  height: 60,
-                                  margin: const EdgeInsets.only(
-                                      top: 20, right: 20, left: 20, bottom: 10),
-                                  //padding: EdgeInsets.all(0),
-                                  child: CustomInputField(
-                                    keyboardType: TextInputType.number,
-                                    hintText: "bars",
-                                    controller: _barController,
-                                    validator: Validator.validateEmpty,
-                                    label: "bars",
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(2),
-                                    ],
-                                  ),
-                                ),
-
-                                SizedBox(
-                                  width: 40,
-                                  height: 40,
-                                  child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundColor: AppColors.positives,
-                                    child: TextButton(
-                                      child: Icon(
-                                        Icons.exposure_plus_1,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () =>
-                                      _barController.text =
-                                          plusOne(_barController.text),
-                                    ),
-                                  ),
-                                )
-                              ]),
-                        ]),
-                  ) :
-                  Container(
-                    margin: const EdgeInsets.only(
-                      top: 4,
-                      bottom: 4,
-                    ),
-                    padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                RichText(
-                                  text: const TextSpan(
-                                    text: 'Quantity',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.grey),
-                                    /*defining default style is optional */
-                                    children: <TextSpan>[
-                                      // TextSpan(
-                                      //     text: "*",
-                                      //     style: TextStyle(color: Colors.red)),
-                                    ],
-                                  ),
-                                ),
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                SizedBox(
-                                  width: 40,
-                                  height: 60,
-                                  child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundColor: AppColors.negative,
-                                    child: TextButton(
-                                      child: Icon(
-                                        Icons.exposure_minus_1,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () =>
-                                      _barController.text =
-                                          plusOne(_barController.text),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 80,
-                                  height: 60,
-                                  margin: const EdgeInsets.only(
-                                      top: 20, right: 20, left: 20, bottom: 10),
-                                  //padding: EdgeInsets.all(0),
-                                  child: CustomInputField(
-                                    keyboardType: TextInputType.number,
-                                    //hintText: "bars",
-                                    controller: _barController,
-                                    validator: Validator.validateEmpty,
-                                    // label: "bars",
-                                    inputFormatters: [
-                                      LengthLimitingTextInputFormatter(2),
-                                    ],
-                                  ),
-                                ),
-
-                                SizedBox(
-                                  width: 40,
-                                  height: 40,
-                                  child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundColor: AppColors.positives,
-                                    child: TextButton(
-                                      child: Icon(
-                                        Icons.exposure_plus_1,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () =>
-                                      _barController.text =
-                                          plusOne(_barController.text),
-                                    ),
-                                  ),
-                                )
-                              ]),
-                        ]),
+                  const SizedBox(height: 16),
+                  CustomInputField(
+                    keyboardType: TextInputType.number,
+                    hintText: "Concentration Concentration ",
+                    controller: _ConcentrationController,
+                    validator: Validator.validateEmpty,
+                    label: "Concentration ",
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(20),
+                    ],
                   ),
-                  if(_selectedIndex == 1 || _selectedIndex == 2)
+                  (_selectedIndex == 1 || _selectedIndex == 2)
+                      ? Container(
+                          margin: const EdgeInsets.only(
+                            top: 4,
+                            bottom: 4,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 20),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: const TextSpan(
+                                          text: 'No.bars',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey),
+                                          /*defining default style is optional */
+                                          children: <TextSpan>[
+                                            // TextSpan(
+                                            //     text: "*",
+                                            //     style: TextStyle(color: Colors.red)),
+                                          ],
+                                        ),
+                                      ),
+                                    ]),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        width: 40,
+                                        height: 60,
+                                        child: CircleAvatar(
+                                          radius: 100,
+                                          backgroundColor: AppColors.negative,
+                                          child: TextButton(
+                                            child: Icon(
+                                              Icons.exposure_minus_1,
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () => _barController
+                                                    .text =
+                                                plusOne(_barController.text),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 80,
+                                        height: 60,
+                                        margin: const EdgeInsets.only(
+                                            top: 20,
+                                            right: 20,
+                                            left: 20,
+                                            bottom: 10),
+                                        //padding: EdgeInsets.all(0),
+                                        child: CustomInputField(
+                                          keyboardType: TextInputType.number,
+                                          hintText: "bars",
+                                          controller: _barController,
+                                          validator: Validator.validateEmpty,
+                                          label: "bars",
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 40,
+                                        height: 40,
+                                        child: CircleAvatar(
+                                          radius: 100,
+                                          backgroundColor: AppColors.positives,
+                                          child: TextButton(
+                                            child: Icon(
+                                              Icons.exposure_plus_1,
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () => _barController
+                                                    .text =
+                                                plusOne(_barController.text),
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                              ]),
+                        )
+                      : Container(
+                          margin: const EdgeInsets.only(
+                            top: 4,
+                            bottom: 4,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 20),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: const TextSpan(
+                                          text: 'Quantity',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.grey),
+                                          /*defining default style is optional */
+                                          children: <TextSpan>[
+                                            // TextSpan(
+                                            //     text: "*",
+                                            //     style: TextStyle(color: Colors.red)),
+                                          ],
+                                        ),
+                                      ),
+                                    ]),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        width: 40,
+                                        height: 60,
+                                        child: CircleAvatar(
+                                          radius: 100,
+                                          backgroundColor: AppColors.negative,
+                                          child: TextButton(
+                                            child: Icon(
+                                              Icons.exposure_minus_1,
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () => _barController
+                                                    .text =
+                                                plusOne(_barController.text),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 80,
+                                        height: 60,
+                                        margin: const EdgeInsets.only(
+                                            top: 20,
+                                            right: 20,
+                                            left: 20,
+                                            bottom: 10),
+                                        //padding: EdgeInsets.all(0),
+                                        child: CustomInputField(
+                                          keyboardType: TextInputType.number,
+                                          //hintText: "bars",
+                                          controller: _barController,
+                                          validator: Validator.validateEmpty,
+                                          // label: "bars",
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(2),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 40,
+                                        height: 40,
+                                        child: CircleAvatar(
+                                          radius: 100,
+                                          backgroundColor: AppColors.positives,
+                                          child: TextButton(
+                                            child: Icon(
+                                              Icons.exposure_plus_1,
+                                              color: Colors.white,
+                                            ),
+                                            onPressed: () => _barController
+                                                    .text =
+                                                plusOne(_barController.text),
+                                          ),
+                                        ),
+                                      )
+                                    ]),
+                              ]),
+                        ),
+                  if (_selectedIndex == 1 || _selectedIndex == 2)
                     Container(
                       margin: const EdgeInsets.only(
                         top: 4,
                         bottom: 4,
                       ),
-                      padding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 20),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -475,8 +504,7 @@ class _AddMedicState extends State<AddMedic> {
                                           Icons.exposure_minus_1,
                                           color: Colors.white,
                                         ),
-                                        onPressed: () =>
-                                        _pillController.text =
+                                        onPressed: () => _pillController.text =
                                             minusOne(_pillController.text),
                                       ),
                                     ),
@@ -512,8 +540,7 @@ class _AddMedicState extends State<AddMedic> {
                                           Icons.exposure_plus_1,
                                           color: Colors.white,
                                         ),
-                                        onPressed: () =>
-                                        _pillController.text =
+                                        onPressed: () => _pillController.text =
                                             plusOne(_pillController.text),
                                       ),
                                     ),
@@ -522,7 +549,7 @@ class _AddMedicState extends State<AddMedic> {
                           ]),
                     ),
                   const SizedBox(height: 12),
-                  if(_selectedIndex != 4)
+                  if (_selectedIndex != 4)
                     Row(
                       children: [
                         CustomInputField(
@@ -533,10 +560,7 @@ class _AddMedicState extends State<AddMedic> {
                           readOnly: true,
                           validator: Validator.validateEmpty,
                           icon: const Icon(Icons.calendar_today),
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width - 40,
+                          width: MediaQuery.of(context).size.width - 40,
                           onTap: () async {
                             DateTime? newDate = await showDatePicker(
                                 context: context,
@@ -548,8 +572,7 @@ class _AddMedicState extends State<AddMedic> {
                             selectedDate = newDate;
 
                             _dateController.text =
-                            "${selectedDate.day}/${selectedDate
-                                .month}/${selectedDate.year}";
+                                "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
                           },
                         ),
                       ],
@@ -574,14 +597,14 @@ class _AddMedicState extends State<AddMedic> {
                             blurRadius: 5,
                             offset: const Offset(8, 8), // Shadow position
                           ),
-                        ]
-                    ),
+                        ]),
                     child: Row(
                       children: [
                         Expanded(
                           child: RichText(
                             text: TextSpan(
-                              text: 'Please check our terms for accepting donations',
+                              text:
+                                  'Please check our terms for accepting donations',
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
@@ -600,7 +623,10 @@ class _AddMedicState extends State<AddMedic> {
                             ),
                           ),
                         ),
-                        Icon(Icons.info_outline, color: AppColors.mainColor,)
+                        Icon(
+                          Icons.info_outline,
+                          color: AppColors.mainColor,
+                        )
                       ],
                     ),
                   ),
@@ -613,8 +639,7 @@ class _AddMedicState extends State<AddMedic> {
                             .isAfter(DateTime.now().add(minExDate))) {
                           showDialog(
                               context: context,
-                              builder: (context) =>
-                                  AlertDialog(
+                              builder: (context) => AlertDialog(
                                     actions: [
                                       TextButton(
                                           onPressed: () {
@@ -623,7 +648,7 @@ class _AddMedicState extends State<AddMedic> {
                                           child: const Text("Close"))
                                     ],
                                     title:
-                                    const Text("Medicine about to expire"),
+                                        const Text("Medicine about to expire"),
                                     content: const Text(
                                         "Sorry we cant take Medicine about to expire"),
                                   ));
@@ -657,7 +682,7 @@ class _AddMedicState extends State<AddMedic> {
 
   AppBar _buildAppBar() {
     return AppBar(
-       backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
+      backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Get.theme.primaryColor,
       ),
@@ -694,9 +719,6 @@ class _AddMedicState extends State<AddMedic> {
     );
   }
 }
-
-
-
 
 Widget buildCard({required Card card}) {
   return Container(
