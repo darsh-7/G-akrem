@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:akrem/Screens/customer_screen/Home/NavigationBar.dart';
-import 'package:akrem/Screens/customer_screen/Home/basket/home_view.dart';
+import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/Screens/main/Fund.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
@@ -9,6 +9,8 @@ import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/Screens/map/branchs_map.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/constants/app_local.dart';
+import 'package:akrem/controller/shopping_card_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +65,8 @@ class _NavigationBarApp extends State<NavigationBarApp> {
       statusBarColor: Colors.blue, // status bar color
     ));
     super.initState();
+    final ShoppingCardController shoppingCardController = Get.put(ShoppingCardController());
+
   }
 
   @override
@@ -107,7 +111,7 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                     currentPageIndex = index;
                   });
                 },
-                height: 4 * 15,
+                height: 4 * 14,
                 //surfaceTintColor: Colors.red,
                 //shadowColor: Colors.red,
                 //backgroundColor: Get.theme.navigationBarTheme.backgroundColor,
@@ -118,137 +122,90 @@ class _NavigationBarApp extends State<NavigationBarApp> {
                 selectedIndex: currentPageIndex,
                 destinations: <Widget>[
                   NavigationDestination(
-                    selectedIcon: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          // color: AppColors.mainColor,
+                    selectedIcon: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: const Icon(Icons
+                            .home) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
+                    icon: SizedBox(
+                        width: 24,
+                        height: 24,
                         child: const Icon(Icons
                             .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
-                    icon: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                          // color: AppColors.mainColor,
-                        ),
-                        child: const Icon(Icons
-                            .home_outlined) //Image.asset(AppImages.boxIcon,scale: 6),
-                        ),
-                    label: 'Home',
+                    label: getLang(context, "Home"),
                   ),
                   NavigationDestination(
-                    icon: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        //color: AppColors.mainColor,
-                      ),
-                      child: const Icon(Icons.location_on_rounded),
-                    ),
-                    selectedIcon: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        //color: AppColors.mainColor,
-                      ),
-                      child: const Icon(Icons.location_on_rounded),
-                    ),
-                    label: "Boxes",
-                  ),
-                  InkWell(
-                      onTap: () {
-                        Get.offAll(CustomerNavigationBar());
-                      },
-                      child: Container(
-                          // width: 40,
-                          // height: MediaQuery.of(context).padding.bottom + 200,
-                          decoration: BoxDecoration(
-                              // color: Get.theme.primaryColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100))),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 40,
-                                width: 40,
-                                //padding: EdgeInsets.all(4),
-                                child: SvgPicture.asset(
-                                  AppImages.akremLogoSVG,
-                                  colorFilter: ColorFilter.mode(
-                                      Get.theme.shadowColor, BlendMode.srcIn),
-                                ),
-                              ),
-                              Text("Downer")
-                            ],
-                          ))),
-                  NavigationDestination(
-                    icon: const SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: Icon(Icons.attach_money),
+                    icon: SizedBox(
+                      width: 24,
+                      height: 24,
+
+                      child: const Icon(Icons.location_on_outlined),
                     ),
                     selectedIcon: SizedBox(
-                        width: 40,
-                        height: 40,
+                      width: 24,
+                      height: 24,
+
+                      child: const Icon(Icons.location_on_rounded),
+                    ),
+                    label: getLang(context, "Locations"),
+                  ),
+                  // InkWell(
+                  //     onTap: () {
+                  //       Get.offAll(CustomerNavigationBar());
+                  //     },
+                  //     child: Container(
+                  //         // width: 40,
+                  //         // height: MediaQuery.of(context).padding.bottom + 200,
+                  //         decoration: BoxDecoration(
+                  //             // color: Get.theme.primaryColor,
+                  //             borderRadius:
+                  //                 BorderRadius.all(Radius.circular(100))),
+                  //         child: Column(
+                  //           children: [
+                  //             Container(
+                  //               height: 40,
+                  //               width: 40,
+                  //               //padding: EdgeInsets.all(4),
+                  //               child: SvgPicture.asset(
+                  //                 AppImages.akremLogoSVG,
+                  //                 colorFilter: ColorFilter.mode(
+                  //                     Get.theme.shadowColor, BlendMode.srcIn),
+                  //               ),
+                  //             ),
+                  //             Text(getLang(context, "Donor"))
+                  //           ],
+                  //         ))),
+                  NavigationDestination(
+                    icon: const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: Icon(Icons.monetization_on_outlined),
+                    ),
+                    selectedIcon: SizedBox(
+                        width: 24,
+                        height: 24,
                         child: const Icon(Icons
-                            .attach_money) //Image.asset(AppImages.boxIcon,scale: 6),
+                            .monetization_on) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
-                    label: "Fund",
+                    label: getLang(context, "Reword"),
                   ),
                   NavigationDestination(
                     //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
-                    selectedIcon: Container(
-                      height: 40,
-                      width: 40,
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: Get.theme.primaryColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4), // Border radius
-                          child: ClipOval(
-                            child: FadeInImage(
-                              image: profileImg,
-                              placeholder: const AssetImage(AppImages.noImage),
-                              imageErrorBuilder: (context, error, stackTrace) {
-                                return Image.asset(AppImages.noImage,
-                                    fit: BoxFit.fitWidth);
-                              },
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                        ),
-                      ),
+                    icon: const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: Icon(Icons.person_outline),
                     ),
+                    selectedIcon: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: const Icon(Icons
+                            .person) //Image.asset(AppImages.boxIcon,scale: 6),
+                    ),
+                    label: getLang(context, "Profile"),
 
-                    icon: Container(
-                      height: 40,
-                      width: 40,
-                      child: CircleAvatar(
-                        radius: 22,
-                        backgroundColor: Colors.transparent,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4), // Border radius
-                          child: ClipOval(
-                            child: FadeInImage(
-                              image: profileImg,
-                              placeholder: const AssetImage(AppImages.noImage),
-                              imageErrorBuilder: (context, error, stackTrace) {
-                                return Image.asset(AppImages.noImage,
-                                    fit: BoxFit.fitWidth);
-                              },
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    label: 'Profile',
                   ),
                 ],
               ),
@@ -258,9 +215,9 @@ class _NavigationBarApp extends State<NavigationBarApp> {
         body: <Widget>[
           Home(),
           BranchMap(),
-          Center(
-            child: Text("Akrem"),
-          ),
+          // Center(
+          //   child: Text("Akrem"),
+          // ),
           Fund(),
           ProfileScreen(),
         ][currentPageIndex],

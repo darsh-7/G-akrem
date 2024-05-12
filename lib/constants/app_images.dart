@@ -27,8 +27,20 @@ class AppImages {
 
   static const String akrem = "assets/icons/akrem.png";
   static const String akremSVG = "assets/icons/akremSVG.svg";
-  static const String pillIcon = "assets/icons/pill.svg";
   static const String homeIcon = "assets/icons/icon-box.png";
   static const String backIcon = "assets/icons/vector.png";
+
+
+  //medic type
+  static const String pillIcon = "assets/icons/medic_type/pill.svg";
+  static const String liquidIcon = "assets/icons/medic_type/liquid.svg";
+  static const String dropsIcon = "assets/icons/medic_type/drops.svg";
+  static const String patchIcon = "assets/icons/medic_type/patch.svg";
+  static const String ointmentIcon = "assets/icons/medic_type/ointment.svg";
+  static const String nasalSprayIcon = "assets/icons/medic_type/nasal-spray.svg";
+  static const String injectionsIcon = "assets/icons/medic_type/Injections.svg";
+  static const String creamIcon = "assets/icons/medic_type/cream.svg";
+  static const String bottleIcon = "assets/icons/medic_type/bottle.svg";
+  static const String deviceIcon = "assets/icons/medic_type/device.svg";
 
 }

@@ -65,10 +65,14 @@ dependencies:
   image_cropper: ^5.0.0
   flutter_svg: ^2.0.7
   video_player: ^2.8.2
+  cached_network_image: ^3.3.1
+
+
+  fluttertoast: ^8.2.5
 
   #recognation
   #tflite: ^1.1.2
-  tflite_flutter: ^0.10.4
+  #tflite_flutter: ^0.10.4
   google_mlkit_text_recognition: ^0.10.0
 
 
@@ -104,6 +108,7 @@ flutter:
     - assets/lang/
     - assets/icons/
     - assets/socialIcons/
+    - assets/icons/medic_type/
 
 
 #  fonts:

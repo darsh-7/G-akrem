@@ -200,6 +200,6 @@ class _BranchMap extends State<BranchMap> {
     );
 
     _markers[id] = marker;
-    setState(() {});
+    //setState(() {});
   }
 }

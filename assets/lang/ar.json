@@ -1,5 +1,24 @@
 {
   "welcome": "مرحبا",
   "Akrem": "أكرم",
-  "Get Started": "البدء"
+  "Get Started": "البدء",
+
+  "Home": "الرئيسية",
+  "Locations": "مواقعنا",
+  "Donor": "المتبرع",
+  "Reword": "مكافئة",
+  "Profile": "الملف الشخصي",
+  "Settings": "الإعدادات",
+  "Logout": "تسجيل الخروج",
+  "Donate from home": "تبرع من المنزل",
+  "Donate to box": "تبرع للصندوق",
+  "Upcoming Order": "الطلبات القادمة",
+  "Donation Options": "خدمات",
+  "Support US" : "تبرع",
+  "Nearest branch": "الفروع القريبة",
+  "Order History": "سجل الطلبات",
+  "Donation History": "سجل التبرعات",
+  "Consume" : "طلب علاج",
+  "Search": "بحث",
+  "See all": "عرض الكل"
 }

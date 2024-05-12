@@ -1,5 +1,26 @@
 {
   "welcome" : "Welcome",
   "Akrem": "Akrem",
-  "Get Started": "Get Started"
+  "Get Started": "Get Started",
+
+  "Home": "Home",
+  "Locations": "Locations",
+  "Donor": "Donor",
+  "Reword": "Reword",
+  "Profile": "Profile",
+  "Settings": "Settings",
+  "Logout": "Logout",
+  "Donate from home": "Donate from home",
+  "Donate to box": "Donate to box",
+  "Upcoming Order" : "Upcoming Order",
+  "Donation Options" : "Donation Options",
+  "Support US" : "Support US",
+  "Nearest branch" : "Nearest branch",
+  "Order History" : "Order History",
+  "Donation History" : "Donation History",
+  "Consume" : "Consume",
+  "Search" : "Search",
+  "See all" : "See all"
+
+
 }

@@ -27,8 +27,6 @@ class UserApiModel {
 }
 
 
-
-
 class Content {
   String? token;
   String? expireOn;

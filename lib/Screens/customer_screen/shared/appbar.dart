@@ -1,5 +1,6 @@
-import 'package:akrem/Screens/customer_screen/Home/basket/check_out.dart';
+import 'package:akrem/Screens/customer_screen/Home/basket/cart_page.dart';
 import 'package:akrem/Screens/customer_screen/provider/cart.dart';
+import 'package:akrem/Screens/customer_screen/shared/cart_buttom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,14 +31,7 @@ class _ProductsAndPriceState extends State<ProductsAndPrice> {
                 style: const TextStyle(color: Colors.black),
               )),
             ),
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const CheckView()));
-                },
-                icon: const Icon(Icons.add_shopping_cart)),
+
           ],
         ),
         Padding(

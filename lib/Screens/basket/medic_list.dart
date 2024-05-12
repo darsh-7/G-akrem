@@ -26,7 +26,7 @@ class MedicList extends StatefulWidget {
 }
 
 class _MedicList extends State<MedicList> {
-  final basketController = Get.put(BasketController());
+  final BasketController basketController = Get.find();
   final UserController userController = Get.find();
 
   List<Medic> get _foundMedic {

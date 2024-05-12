@@ -89,6 +89,9 @@ class MyApp extends StatelessWidget {
             }
             return supportLang.first;
           },
+          locale: Locale('en', 'US'),
+          // Arabic
+
           debugShowCheckedModeBanner: false,
           title: 'Akrem',
 
@@ -141,11 +144,10 @@ class MyApp extends StatelessWidget {
               datePickerTheme: DatePickerThemeData(
                 backgroundColor: Get.theme.cardColor,
               ),
-              appBarTheme:
-                  const AppBarTheme(backgroundColor: AppColors.mainColor,
+              appBarTheme: const AppBarTheme(
+                  backgroundColor: AppColors.mainColor,
                   iconTheme: IconThemeData(color: Colors.white),
-                    foregroundColor: Colors.white
-                  )),
+                  foregroundColor: Colors.white)),
 
           //dark
 

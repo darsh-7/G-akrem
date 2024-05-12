@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:akrem/Screens/customer_screen/Home/basket/home_view.dart';
+import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/Screens/main/Fund.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
@@ -9,6 +9,7 @@ import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/Screens/map/branchs_map.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
+import 'package:akrem/controller/shopping_card_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,8 @@ class _NavigationBarApp extends State<CustomerNavigationBar> {
       systemNavigationBarColor: Colors.blue, // navigation bar color
       statusBarColor: Colors.blue, // status bar color
     ));
+    final ShoppingCardController shoppingCardController = Get.put(ShoppingCardController());
+
     super.initState();
   }
 
@@ -210,7 +213,7 @@ class _NavigationBarApp extends State<CustomerNavigationBar> {
                         child: const Icon(Icons
                             .crisis_alert) //Image.asset(AppImages.boxIcon,scale: 6),
                         ),
-                    label: 'Process',
+                    label: 'Delivery',
                   ),
                   NavigationDestination(
                     //selectedIcon: Image.asset("icons/icon-profile-circle.png"),
@@ -267,7 +270,7 @@ class _NavigationBarApp extends State<CustomerNavigationBar> {
           ),
         ),
         body: <Widget>[
-          HomeView(),
+          BasketPage(),
           BranchMap(),
           Center(
             child: Text("Akrem"),

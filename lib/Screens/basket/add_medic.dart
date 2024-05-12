@@ -28,74 +28,92 @@ class _AddMedicState extends State<AddMedic> {
 
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _ConcentrationController = TextEditingController();
+
+  //final _ConcentrationController = TextEditingController();
 
   final _barController = TextEditingController();
   final _pillController = TextEditingController();
   final _dateController = TextEditingController();
 
-  Duration minExDate = const Duration(days: 3 * 7);
   late DateTime selectedDate;
 
   var _selectedIndex = 1;
 
-  final List<Card> cards = [
+  bool CheckboxValue = false;
+
+  List<Card> cards = [
     Card(
         id: 1,
-        img: Image.asset(AppImages.mvrk),
-        title: "Box",
+        img: SvgPicture.asset(AppImages.pillIcon),
+        title: "Tablets",
         action: 1,
         trigger: true,
         onPreess: () {
           //  onSelectCard(1);
         }),
-    Card(
-        id: 2,
-        img: SvgPicture.asset(AppImages.pillIcon),
-        title: "Bar",
-        action: 2,
-        trigger: false),
+    // Card(
+    //     id: 2,
+    //     img: SvgPicture.asset(AppImages.bottleIcon),
+    //     title: "Syrup",
+    //     action: 2,
+    //     trigger: false),
     Card(
         id: 3,
-        img: Image.asset(AppImages.mvrk),
+        img: SvgPicture.asset(AppImages.liquidIcon),
         title: "Liquid",
         action: 3,
         trigger: false),
-    Card(
-        id: 4,
-        img: Image.asset(AppImages.mvrk),
-        title: "device",
-        action: 4,
-        trigger: false),
-    Card(
-        id: 5,
-        img: Image.asset(AppImages.mvrk),
-        title: "Injections",
-        action: 5,
-        trigger: false),
-    Card(
-        id: 6,
-        img: Image.asset(AppImages.mvrk),
-        title: "Drops",
-        action: 6,
-        trigger: false),
+    // Card(
+    //     id: 4,
+    //     img: SvgPicture.asset(AppImages.creamIcon),
+    //     title: "Cream",
+    //     action: 4,
+    //     trigger: false),
+    // Card(
+    //     id: 5,
+    //     img: SvgPicture.asset(AppImages.ointmentIcon),
+    //     title: "Ointment",
+    //     action: 5,
+    //     trigger: false),
+    // Card(
+    //     id: 6,
+    //     img: SvgPicture.asset(AppImages.dropsIcon),
+    //     title: "Drops",
+    //     action: 6,
+    //     trigger: false),
     Card(
         id: 7,
-        img: Image.asset(AppImages.mvrk),
-        title: "Inhalers",
+        img: SvgPicture.asset(AppImages.deviceIcon),
+        title: "Device",
         action: 7,
         trigger: false),
     Card(
         id: 8,
-        img: Image.asset(AppImages.mvrk),
-        title: "patches",
+        img: SvgPicture.asset(AppImages.patchIcon),
+        title: "Patches",
         action: 8,
         trigger: false),
     Card(
         id: 9,
-        img: Image.asset(AppImages.mvrk),
-        title: "Suppositories",
+        img: SvgPicture.asset(AppImages.injectionsIcon),
+        title: "Injections",
         action: 9,
+        trigger: false),
+    // Card(
+    //     id: 10,
+    //     img: SvgPicture.asset(AppImages.nasalSprayIcon),
+    //     title: "Nasal spray",
+    //     action: 10,
+    //     trigger: false),
+    Card(
+        id: 11,
+        img: Icon(
+          Icons.question_mark,
+          color: Colors.black,
+          size: 32,
+        ),
+        title: "Other",
+        action: 11,
         trigger: false),
   ];
 
@@ -109,11 +127,15 @@ class _AddMedicState extends State<AddMedic> {
 
   String plusOne(String num) {
     if (num.isEmpty) return "1";
-    return (int.parse(num) + 1).toString();
+    try {
+      return (int.parse(num) + 1).toString();
+    } catch (e) {
+      return "1";
+    }
   }
 
   String minusOne(String num) {
-    if (num.isEmpty) return "0";
+    if (num.isEmpty || int.parse(num) == 0) return "0";
     return (int.parse(num) - 1).toString();
   }
 
@@ -121,17 +143,19 @@ class _AddMedicState extends State<AddMedic> {
   void initState() {
     print("text: $text");
     super.initState();
-    print("///// text : $text , medicName : $medicName , medicNum : $medicConcentration");
+    print(
+        "///// text : $text , medicName : $medicName , medicNum : $medicConcentration");
     String val = "$medicName";
     print("heall ($medicName)");
     _nameController.text = val.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
-    _ConcentrationController.text = medicConcentration.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
-    _pillController.text = medicTablets.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
+    // _ConcentrationController.text =
+    //     medicConcentration.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
+    _pillController.text =
+        medicTablets.trim().replaceAll(RegExp(r'(\n){3,}'), "\n\n");
   }
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: _buildAppBar(),
       extendBodyBehindAppBar: true,
@@ -165,17 +189,20 @@ class _AddMedicState extends State<AddMedic> {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+            alignment: Alignment.center,
             // this is the start of example
             child: Wrap(
               children: List.generate(cards.length, (index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 4, top: 4),
                   child: RawChip(
+                      color: MaterialStateProperty.all<Color>(
+                          _selectedIndex == cards[index].id
+                              ? Colors.blue
+                              : Colors.white),
                       padding: EdgeInsets.all(0),
                       labelPadding: EdgeInsets.all(0),
-                      labelStyle: _selectedIndex == cards[index].id
-                          ? TextStyle(color: Colors.white)
-                          : TextStyle(),
+                      labelStyle: TextStyle(color: Colors.black),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         side: BorderSide(
@@ -189,6 +216,7 @@ class _AddMedicState extends State<AddMedic> {
                         width: 100,
                         height: 80,
                         margin: const EdgeInsets.only(left: 4, right: 4),
+                        padding: EdgeInsets.all(4),
                         child: Column(
                           children: [
                             Expanded(
@@ -222,7 +250,7 @@ class _AddMedicState extends State<AddMedic> {
                       selectedColor: Colors.blue,
                       backgroundColor: Colors.white60,
                       selected: (_selectedIndex == 0)
-                          ? (cards[index].id == 1 ? true : false)
+                          ? (cards[index].id == 1)
                           : _selectedIndex == cards[index].id,
                       onSelected: (bool selected) {
                         setState(() {
@@ -266,18 +294,18 @@ class _AddMedicState extends State<AddMedic> {
                       LengthLimitingTextInputFormatter(20),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  CustomInputField(
-                    keyboardType: TextInputType.number,
-                    hintText: "Concentration Concentration ",
-                    controller: _ConcentrationController,
-                    validator: Validator.validateEmpty,
-                    label: "Concentration ",
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(20),
-                    ],
-                  ),
-                  (_selectedIndex == 1 || _selectedIndex == 2)
+                  // const SizedBox(height: 16),
+                  // CustomInputField(
+                  //   keyboardType: TextInputType.number,
+                  //   hintText: "Concentration Concentration ",
+                  //   controller: _ConcentrationController,
+                  //   validator: Validator.validateEmpty,
+                  //   label: "Concentration ",
+                  //   inputFormatters: [
+                  //     LengthLimitingTextInputFormatter(20),
+                  //   ],
+                  // ),
+                  (_selectedIndex == 1)
                       ? Container(
                           margin: const EdgeInsets.only(
                             top: 4,
@@ -308,63 +336,63 @@ class _AddMedicState extends State<AddMedic> {
                                       ),
                                     ]),
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        width: 40,
-                                        height: 60,
-                                        child: CircleAvatar(
-                                          radius: 100,
-                                          backgroundColor: AppColors.negative,
-                                          child: TextButton(
-                                            child: Icon(
-                                              Icons.exposure_minus_1,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () => _barController
-                                                    .text =
-                                                plusOne(_barController.text),
-                                          ),
-                                        ),
+                                  children: [
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () => _barController.text =
+                                          minusOne(_barController.text),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        height: 28,
+                                        decoration: BoxDecoration(
+                                            color: Get.theme.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Icon(Icons.remove,
+                                            color: Colors.white, size: 20),
                                       ),
-                                      Container(
-                                        width: 80,
-                                        height: 60,
-                                        margin: const EdgeInsets.only(
-                                            top: 20,
-                                            right: 20,
-                                            left: 20,
-                                            bottom: 10),
-                                        //padding: EdgeInsets.all(0),
-                                        child: CustomInputField(
-                                          keyboardType: TextInputType.number,
-                                          hintText: "bars",
-                                          controller: _barController,
-                                          validator: Validator.validateEmpty,
-                                          label: "bars",
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(2),
-                                          ],
-                                        ),
+                                    ),
+                                    SizedBox(width: 4),
+                                    Container(
+                                      width: 80,
+                                      height: 60,
+                                      margin: const EdgeInsets.only(
+                                          top: 20,
+                                          right: 4,
+                                          left: 4,
+                                          bottom: 10),
+                                      //padding: EdgeInsets.all(0),
+                                      child: CustomInputField(
+                                        keyboardType: TextInputType.number,
+                                        hintText: "bars",
+                                        controller: _barController,
+                                        validator: Validator.validateEmpty,
+                                        label: "bars",
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(2),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 40,
-                                        height: 40,
-                                        child: CircleAvatar(
-                                          radius: 100,
-                                          backgroundColor: AppColors.positives,
-                                          child: TextButton(
-                                            child: Icon(
-                                              Icons.exposure_plus_1,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () => _barController
-                                                    .text =
-                                                plusOne(_barController.text),
-                                          ),
-                                        ),
-                                      )
-                                    ]),
+                                    ),
+                                    SizedBox(width: 4),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () => _barController.text =
+                                          plusOne(_barController.text),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        height: 28,
+                                        decoration: BoxDecoration(
+                                            color: Get.theme.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Icon(Icons.add,
+                                            color: Colors.white, size: 20),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ]),
                         )
                       : Container(
@@ -397,66 +425,66 @@ class _AddMedicState extends State<AddMedic> {
                                       ),
                                     ]),
                                 Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      SizedBox(
-                                        width: 40,
-                                        height: 60,
-                                        child: CircleAvatar(
-                                          radius: 100,
-                                          backgroundColor: AppColors.negative,
-                                          child: TextButton(
-                                            child: Icon(
-                                              Icons.exposure_minus_1,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () => _barController
-                                                    .text =
-                                                plusOne(_barController.text),
-                                          ),
-                                        ),
+                                  children: [
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () => _barController.text =
+                                          minusOne(_barController.text),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        height: 28,
+                                        decoration: BoxDecoration(
+                                            color: Get.theme.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Icon(Icons.remove,
+                                            color: Colors.white, size: 20),
                                       ),
-                                      Container(
-                                        width: 80,
-                                        height: 60,
-                                        margin: const EdgeInsets.only(
-                                            top: 20,
-                                            right: 20,
-                                            left: 20,
-                                            bottom: 10),
-                                        //padding: EdgeInsets.all(0),
-                                        child: CustomInputField(
-                                          keyboardType: TextInputType.number,
-                                          //hintText: "bars",
-                                          controller: _barController,
-                                          validator: Validator.validateEmpty,
-                                          // label: "bars",
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(2),
-                                          ],
-                                        ),
+                                    ),
+                                    SizedBox(width: 4),
+                                    Container(
+                                      width: 80,
+                                      height: 60,
+                                      margin: const EdgeInsets.only(
+                                          top: 20,
+                                          right: 4,
+                                          left: 4,
+                                          bottom: 10),
+                                      //padding: EdgeInsets.all(0),
+                                      child: CustomInputField(
+                                        keyboardType: TextInputType.number,
+                                        hintText: "",
+                                        controller: _barController,
+                                        validator: Validator.validateEmpty,
+                                        label: "",
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(2),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 40,
-                                        height: 40,
-                                        child: CircleAvatar(
-                                          radius: 100,
-                                          backgroundColor: AppColors.positives,
-                                          child: TextButton(
-                                            child: Icon(
-                                              Icons.exposure_plus_1,
-                                              color: Colors.white,
-                                            ),
-                                            onPressed: () => _barController
-                                                    .text =
-                                                plusOne(_barController.text),
-                                          ),
-                                        ),
-                                      )
-                                    ]),
+                                    ),
+                                    SizedBox(width: 4),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () => _barController.text =
+                                          plusOne(_barController.text),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        height: 28,
+                                        decoration: BoxDecoration(
+                                            color: Get.theme.primaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        child: Icon(Icons.add,
+                                            color: Colors.white, size: 20),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ]),
                         ),
-                  if (_selectedIndex == 1 || _selectedIndex == 2)
+                  if (_selectedIndex == 1)
                     Container(
                       margin: const EdgeInsets.only(
                         top: 4,
@@ -491,63 +519,95 @@ class _AddMedicState extends State<AddMedic> {
                                   ),
                                 ]),
                             Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    width: 40,
-                                    height: 60,
-                                    child: CircleAvatar(
-                                      radius: 100,
-                                      backgroundColor: AppColors.negative,
-                                      child: TextButton(
-                                        child: Icon(
-                                          Icons.exposure_minus_1,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () => _pillController.text =
-                                            minusOne(_pillController.text),
-                                      ),
-                                    ),
+                              children: [
+                                GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () => _pillController.text =
+                                      minusOne(_pillController.text),
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                    height: 28,
+                                    decoration: BoxDecoration(
+                                        color: Get.theme.primaryColor,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Icon(Icons.remove,
+                                        color: Colors.white, size: 20),
                                   ),
-                                  Container(
-                                    width: 80,
-                                    height: 60,
-                                    margin: const EdgeInsets.only(
-                                        top: 20,
-                                        right: 20,
-                                        left: 20,
-                                        bottom: 10),
-                                    //padding: EdgeInsets.all(0),
-                                    child: CustomInputField(
-                                      keyboardType: TextInputType.number,
-                                      hintText: "pills",
-                                      controller: _pillController,
-                                      //  validator: Validator.validateEmpty,
-                                      label: "pills",
-                                      inputFormatters: [
-                                        LengthLimitingTextInputFormatter(2),
-                                      ],
-                                    ),
+                                ),
+                                SizedBox(width: 4),
+                                Container(
+                                  width: 80,
+                                  height: 60,
+                                  margin: const EdgeInsets.only(
+                                      top: 20, right: 4, left: 4, bottom: 10),
+                                  //padding: EdgeInsets.all(0),
+                                  child: CustomInputField(
+                                    keyboardType: TextInputType.number,
+                                    hintText: "pills",
+                                    controller: _pillController,
+                                    validator: Validator.validateEmpty,
+                                    label: "pills",
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(2),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 40,
-                                    height: 40,
-                                    child: CircleAvatar(
-                                      radius: 100,
-                                      backgroundColor: AppColors.positives,
-                                      child: TextButton(
-                                        child: Icon(
-                                          Icons.exposure_plus_1,
-                                          color: Colors.white,
-                                        ),
-                                        onPressed: () => _pillController.text =
-                                            plusOne(_pillController.text),
-                                      ),
-                                    ),
-                                  )
-                                ]),
+                                ),
+                                SizedBox(width: 4),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () => _pillController.text =
+                                      plusOne(_pillController.text),
+                                  child: Container(
+                                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                    height: 28,
+                                    decoration: BoxDecoration(
+                                        color: Get.theme.primaryColor,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Icon(Icons.add,
+                                        color: Colors.white, size: 20),
+                                  ),
+                                )
+                              ],
+                            ),
                           ]),
                     ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    margin: const EdgeInsets.only(
+                        top: 8, right: 4, left: 4, bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichText(
+                          text: const TextSpan(
+                            text: 'Seal is opened',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                            /*defining default style is optional */
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "\n(Check if the seal is opened)",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        CustomCheckbox(
+                          value: CheckboxValue,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              CheckboxValue = value!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   if (_selectedIndex != 4)
                     Row(
@@ -565,7 +625,7 @@ class _AddMedicState extends State<AddMedic> {
                             DateTime? newDate = await showDatePicker(
                                 context: context,
                                 initialDate: DateTime.now(),
-                                firstDate: DateTime(2020),
+                                firstDate: DateTime.now(),
                                 lastDate: DateTime(2100));
 
                             if (newDate == null) return;
@@ -585,7 +645,7 @@ class _AddMedicState extends State<AddMedic> {
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         border: Border.all(
                             width: 1.0, color: Get.theme.shadowColor),
-                        color: Colors.red.withOpacity(0.9),
+                        color: Colors.red.withOpacity(0.7),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.red.withOpacity(0.1),
@@ -608,7 +668,7 @@ class _AddMedicState extends State<AddMedic> {
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
-                                  color: Get.theme.shadowColor),
+                                  color: Colors.white),
                               /*defining default style is optional */
                               children: <TextSpan>[
                                 // TextSpan(
@@ -635,8 +695,30 @@ class _AddMedicState extends State<AddMedic> {
                       onPressed: () {
                         if (_formKey.currentState?.validate() == false) return;
 
+                        final selectedIndexes = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+                        if (selectedIndexes.contains(_selectedIndex) && CheckboxValue) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text("Close"))
+                                    ],
+                                    title:
+                                        const Text("Medicine type not allowed"),
+                                    content: const Text(
+                                        "Sorry we cant take this type of Medicine because it is unsealed or not allowed"),
+                                  ));
+                          return;
+                        }
+
+                        final Duration minExDate = const Duration(days: 3 * 7);
+
                         if (selectedDate
-                            .isAfter(DateTime.now().add(minExDate))) {
+                            .isBefore(DateTime.now().add(minExDate))) {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
@@ -654,6 +736,10 @@ class _AddMedicState extends State<AddMedic> {
                                   ));
                           return;
                         }
+
+                        _pillController.text = _pillController.text.isEmpty
+                            ? "0"
+                            : _pillController.text;
                         controller.addMedic(
                           img: pic,
                           name: _nameController.text,
@@ -670,7 +756,10 @@ class _AddMedicState extends State<AddMedic> {
                         ));
                         //Navigator.popUntil(context, ModalRoute.withName('/basket'));
                       },
-                      child: const Text("Save")),
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: MediaQuery.sizeOf(context).width,
+                          child: const Text("Save"))),
                 ],
               ),
             ),
