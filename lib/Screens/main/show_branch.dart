@@ -170,37 +170,37 @@ class ShowPharm extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                const Icon(
-                  Icons.timer,
-                  color: AppColors.mainColor,
-                  size: 20,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: '${pharm.time} ',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Get.theme.colorScheme.onSurface,
-                    ),
-                    /*defining default style is optional */
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: "• no EX km",
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Get.theme.colorScheme.onSurface,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 5.0, right: 1.0),
+            //   child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            //     const Icon(
+            //       Icons.timer,
+            //       color: AppColors.mainColor,
+            //       size: 20,
+            //     ),
+            //     RichText(
+            //       text: TextSpan(
+            //         text: '${pharm.time} ',
+            //         style: TextStyle(
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //           color: Get.theme.colorScheme.onSurface,
+            //         ),
+            //         /*defining default style is optional */
+            //         children: <TextSpan>[
+            //           TextSpan(
+            //             text: "• no EX km",
+            //             style: TextStyle(
+            //               fontSize: 15,
+            //               fontWeight: FontWeight.bold,
+            //               color: Get.theme.colorScheme.onSurface,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ]),
+            // ),
             const Divider(
               indent: 15,
               endIndent: 15,
@@ -239,9 +239,8 @@ class ShowPharm extends StatelessWidget {
                   children: [
                     Container(
                         margin: const EdgeInsets.all(30),
-                        width: 100,
+                        width: MediaQuery.of(context).size.width * 0.3,
                         decoration: BoxDecoration(
-                          color: Colors.green,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: ElevatedButton(
@@ -262,23 +261,15 @@ class ShowPharm extends StatelessWidget {
                             ))),
                     Container(
                         margin: const EdgeInsets.all(30),
-                        width: 128,
+                        width: MediaQuery.of(context).size.width * 0.38,
                         decoration: BoxDecoration(
-                          color: Colors.green,
+                          color: Colors.blue,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: ElevatedButton(
-                            onPressed: () async {
-                              final Uri _url = Uri.parse('https://flutter.dev');
-
-                              if (await canLaunch(_url.toString())) {
-                                await launchUrl(_url);
-                              } else {
-                                throw 'Could not launch ';
-                              }
-                            },
+                            onPressed: () => {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Get.theme.primaryColor,
+                              backgroundColor: Color(0xFF8bd5ff),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
@@ -289,7 +280,7 @@ class ShowPharm extends StatelessWidget {
                             child: Text(
                               "Location",
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              TextStyle(fontSize: 20, color: Colors.black),
                             ))),
                   ],
                 ),

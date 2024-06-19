@@ -54,6 +54,6 @@ List<CategoryModel> categoryData =[
   CategoryModel(
     id: 8,
     name: 'Local \nproducts',
-    image: "https://cdn-icons-png.flaticon.com/256/439/439461.png",
+    image: "https://cdn4.iconfinder.com/data/icons/application-22/512/02_Localization_Ui_Seo_And_Web_Earth_Grid_Worldwide_Interface-512.png",
   ),
 ];

@@ -645,15 +645,15 @@ class _AddMedicState extends State<AddMedic> {
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         border: Border.all(
                             width: 1.0, color: Get.theme.shadowColor),
-                        color: Colors.red.withOpacity(0.7),
+                        color: Colors.blueAccent.withOpacity(0.7),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.red.withOpacity(0.1),
+                            color: Colors.blueAccent.withOpacity(0.1),
                             blurRadius: 5,
                             offset: const Offset(-8, 8), // Shadow position
                           ),
                           BoxShadow(
-                            color: Colors.red.withOpacity(0.1),
+                            color: Colors.blueAccent.withOpacity(0.1),
                             blurRadius: 5,
                             offset: const Offset(8, 8), // Shadow position
                           ),
@@ -685,7 +685,7 @@ class _AddMedicState extends State<AddMedic> {
                         ),
                         Icon(
                           Icons.info_outline,
-                          color: AppColors.mainColor,
+                          color: Colors.white,
                         )
                       ],
                     ),

@@ -20,6 +20,7 @@ class Fund extends StatefulWidget {
 
 class _Fund extends State<Fund> {
   final testController = Get.put(TestController());
+  final scrollController = ScrollController();
 
   List<Products> get _productsList {
     return testController.productsList;
@@ -31,6 +32,15 @@ class _Fund extends State<Fund> {
     // var temp =  APIHandler.getData();
     // print("test : \n \n ${temp.toString()}");
     testController.getProducts();
+
+
+    scrollController.addListener(() {
+
+      if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
+        testController.getProducts(end: _productsList.length+10);
+      }
+    });
+
     super.initState();
   }
 
@@ -39,39 +49,47 @@ class _Fund extends State<Fund> {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: _buildAppBar(),
-      body: Stack(
-        children: [
-          //Text(_productsList[0].title.toString()),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 50.0),
+        child: Stack(
+          children: [
+            //Text(_productsList[0].title.toString()),
 
-          GetBuilder<TestController>(builder: (_) {
-            return
-            Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    padding: const EdgeInsets.only(
-                        bottom: 20, right: 20, left: 20, top: 10),
-                    children: [
-                      for (Products product in _productsList.reversed)
-                        // PharmacyItem(
-                        //   pharm: Pharm,
-                        // ),
-                        PharmacyItem(
+            GetBuilder<TestController>(builder: (_) {
+              return
+              Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(
+                          bottom: 20, right: 20, left: 20, top: 10),
+                      controller: scrollController,
+                      itemCount: _productsList.length +1,
+                      itemBuilder: (BuildContext context, int index) {
+
+                        if(index == _productsList.length){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+
+
+                        return PharmacyItem(
                           pharm: Pharmacy(
-                              img: product.images?[0] ??
+                              img: _productsList[index].images?[0] ??
                                   "https://i.pinimg.com/originals/e4/37/30/e437307f4baf5f8c6a9236c82886bbd4.jpg",
-                              name: product.title,
+                              name: _productsList[index].title,
                               location: " ",
                               locName: "",
                               boxStorage: 0.0),
-                        ),
-                    ],
-                  ),
-                )
-              ],
-            );
-          }),
-        ],
+                        );
+                      },
+
+                    ),
+                  )
+                ],
+              );
+            }),
+          ],
+        ),
       ),
     );
   }

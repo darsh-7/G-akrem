@@ -6,8 +6,8 @@ class TestController extends GetxController {
 
   List<Products> productsList = [];
 
-  void getProducts()async{
-    productsList = await APIHandler.getData();
+  void getProducts({int? start,int? end})async{
+    productsList = await APIHandler.getData(end: end,start: start);
     print("test : \n \n ${productsList.toString()}");
     update();
   }

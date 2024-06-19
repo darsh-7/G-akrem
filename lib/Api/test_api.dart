@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 class APIHandler {
 
-  static Future<List<Products>> getData() async {
+  static Future<List<Products>> getData({int? start,int? end}) async {
 
     //var response = await http.get(Uri.parse(BASE_URL));
 
@@ -23,7 +23,11 @@ class APIHandler {
       //     BASE_URL,
       //     "api/v1/products",);
       // var response = await http.get(uri);
-      var response = await http.get(Uri.parse("$TEST_URL"+"api/v1/products?offset=0&limit=10"));
+      var response;
+      if(end == null)
+       response = await http.get(Uri.parse("$TEST_URL"+"api/v1/products?offset=0&limit=10"));
+      else
+        response = await http.get(Uri.parse("$TEST_URL"+"api/v1/products?offset=0&limit=$end"));
       // print("response : ${jsonDecode(response.body)}");
       var data = jsonDecode(response.body);
 

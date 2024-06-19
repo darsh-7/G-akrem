@@ -41,7 +41,7 @@ class ProfileMenuWidget extends StatelessWidget {
       title: Text(title, style: Theme
           .of(context)
           .textTheme
-          .bodyText1
+          .titleMedium
           ?.apply(color: textColor)),
       trailing: endIcon ? Transform.rotate(
         angle: 180 * math.pi / 180,

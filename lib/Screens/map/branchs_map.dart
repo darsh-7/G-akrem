@@ -47,6 +47,8 @@ class _BranchMap extends State<BranchMap> {
   @override
   void initState() {
     super.initState();
+    addMarker("mti", mti, "mti");
+    addMarker("initialPoint", initialPoint, "place");
   }
 
   @override
@@ -76,8 +78,9 @@ class _BranchMap extends State<BranchMap> {
             compassEnabled: true,
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: userController.user.getLocation() ?? initialPoint,
-              zoom: 14,
+              target: LatLng(userController.user.locationLatitude?? initialPoint.latitude,
+                  userController.user.locationLongitude??initialPoint.longitude),
+              zoom: 10,
             ),
             onTap: (position) {
               _customInfoWindowController.hideInfoWindow!();
@@ -85,8 +88,7 @@ class _BranchMap extends State<BranchMap> {
 
             onMapCreated: (controller) {
               googleMapController.mapController = controller;
-              addMarker("mti", mti, "mti");
-              addMarker("initialPoint", initialPoint, "place");
+
               //googleMapController.cameraChanged(value);
               googleMapController.cameraChanged(
                   initialPoint.latitude, initialPoint.longitude);

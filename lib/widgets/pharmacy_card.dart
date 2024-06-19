@@ -153,33 +153,33 @@ class PharmacyItem extends StatelessWidget {
                             vertical: 0, horizontal: 20),
                         child: const Row(children: []),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5.0, right: 1.0),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(
-                                Icons.timer,
-                                color: AppColors.mainColor,
-                                size: 20,
-                              ),
-                              Text(
-                                '${pharm.time} min ',
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const Text(
-                                '"• no EX km"',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ]),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 5.0, right: 1.0),
+                      //   child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         const Icon(
+                      //           Icons.timer,
+                      //           color: AppColors.mainColor,
+                      //           size: 20,
+                      //         ),
+                      //         Text(
+                      //           '${pharm.time} min ',
+                      //           style: const TextStyle(
+                      //             fontSize: 15,
+                      //             fontWeight: FontWeight.w400,
+                      //           ),
+                      //         ),
+                      //         const Text(
+                      //           '"• no EX km"',
+                      //           style: TextStyle(
+                      //             fontSize: 15,
+                      //             fontWeight: FontWeight.w300,
+                      //             color: Colors.grey,
+                      //           ),
+                      //         ),
+                      //       ]),
+                      // ),
                     ],
                   )),
             ]),

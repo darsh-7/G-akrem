@@ -47,15 +47,15 @@ class _BasketPageState extends State<BasketPage> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     border:
                         Border.all(width: 1.0, color: Get.theme.shadowColor),
-                    color: Colors.red.withOpacity(0.9),
+                    color: Colors.blueAccent.withOpacity(0.9),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.blueAccent.withOpacity(0.1),
                         blurRadius: 5,
                         offset: const Offset(-8, 8), // Shadow position
                       ),
                       BoxShadow(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.blueAccent.withOpacity(0.1),
                         blurRadius: 5,
                         offset: const Offset(8, 8), // Shadow position
                       ),
@@ -72,7 +72,7 @@ class _BasketPageState extends State<BasketPage> {
                     children: <TextSpan>[
                       TextSpan(
                           text: "Hub",
-                          style: TextStyle(color: AppColors.mainColor)),
+                          style: TextStyle(color: Colors.cyanAccent)),
                       TextSpan(
                         text: " click for more",
                         //style: TextStyle(color: Colors.red)
@@ -81,10 +81,10 @@ class _BasketPageState extends State<BasketPage> {
                   ),
                 ),
               ),
-              _createGridCategory(context),
+              _createGridCategory(),
               Container(
                 margin: EdgeInsets.only(top: 30, left: 16, right: 16),
-                child: Text('Recomended Product',
+                child: Text('Recommended Product',
                     style:
                     TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
@@ -335,11 +335,11 @@ CachedNetworkImage buildCacheNetworkImage(
     );
   }
 }
-Widget _createGridCategory(BuildContext context){
+Widget _createGridCategory(){
   return SizedBox(
     height: 200,
     child: GridView.count(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: EdgeInsets.fromLTRB(8, 16, 8, 0),
       primary: false,
       childAspectRatio: 1.1,
       shrinkWrap: true,
@@ -356,7 +356,7 @@ Widget _createGridCategory(BuildContext context){
                   buildCacheNetworkImage(width: 40, height: 40, url: categoryData[index].image, plColor: Colors.transparent),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
                       child: Text(
                         categoryData[index].name,
                         style: TextStyle(
