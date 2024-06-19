@@ -643,10 +643,11 @@ class _DeliveryPageState extends State<DeliveryPage> {
                             Navigator.pop(context);
                             if (!widget.fromList) {
                               Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CustomerNavigationBar()));
+                              Navigator.pop(context);
+                              // Navigator.pushReplacement(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => BasketPage()));
                             }
                           },
                           child: Padding(
