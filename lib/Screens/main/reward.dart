@@ -3,6 +3,7 @@ import 'package:akrem/Api/test_api.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/test_controller.dart';
+import 'package:akrem/model/redeem.dart';
 import 'package:akrem/model/test_model.dart';
 import 'package:akrem/widgets/reword_card.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,8 @@ class _Reword extends State<Reword> {
   final testController = Get.put(TestController());
   final scrollController = ScrollController();
 
-  List<Products> get _productsList {
-    return testController.productsList;
+  List<Redeem> get _redeemList {
+    return redeems;
   }
 
   @override
@@ -38,7 +39,7 @@ class _Reword extends State<Reword> {
     scrollController.addListener(() {
 
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
-        testController.getProducts(end: _productsList.length+10);
+        testController.getProducts(end: _redeemList.length+10);
       }
     });
 
@@ -65,18 +66,19 @@ class _Reword extends State<Reword> {
                       padding: const EdgeInsets.only(
                           bottom: 20, right: 20, left: 20, top: 10),
                       controller: scrollController,
-                      itemCount: _productsList.length +1,
+                      itemCount: _redeemList.length ,
                       separatorBuilder: (BuildContext context, int index) {
 
                         return const Divider();
                       },
                       itemBuilder: (BuildContext context, int index) {
 
-                        if(index == _productsList.length){
-                          return const Center(child: CircularProgressIndicator(),);
-                        }
+                        // if(index == _redeemList.length){
+                        //
+                        //   return const Center(child: CircularProgressIndicator(),);
+                        // }
 
-                        return VerticalCouponExample();
+                        return VerticalCouponExample(redeem: _redeemList[index]);
                         //   PharmacyItem(
                         //   pharm: Pharmacy(
                         //       img: _productsList[index].images?[0] ??
@@ -110,10 +112,30 @@ class _Reword extends State<Reword> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Text("Rewards"),
+          const Text("Reward"),
           const SizedBox(width: 8),
 
-          const Text("123"),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text("Close"))
+                        ],
+                        title: const Text("Info"),
+                        content: const Text(
+                            "this is your score from giving up donation to the community, you can use it to get discounts on the products in the app."),
+                      ));
+            },
+            child: const Text("0"+" 🪙") ,
+          )
+
 
         ],
       ),
