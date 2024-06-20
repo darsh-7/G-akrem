@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:akrem/Screens/customer_screen/Home/NavigationBar.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/Screens/main/Fund.dart';
+import 'package:akrem/Screens/main/Profile/reward.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
@@ -218,7 +219,8 @@ class _NavigationBarApp extends State<NavigationBarApp> {
           // Center(
           //   child: Text("Akrem"),
           // ),
-          Fund(),
+          Reword(),
+          //Fund(),
           ProfileScreen(),
         ][currentPageIndex],
       ),

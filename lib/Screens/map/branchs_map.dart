@@ -35,6 +35,7 @@ class _BranchMap extends State<BranchMap> {
 
   CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
+
   @override
   void dispose() {
     _customInfoWindowController.dispose();
@@ -46,16 +47,29 @@ class _BranchMap extends State<BranchMap> {
 
   @override
   void initState() {
+
     super.initState();
-    addMarker("mti", mti, "mti");
-    addMarker("initialPoint", initialPoint, "place");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //googleMapController.determinePosition();
+      // googleMapController.cameraChanged(
+      //     initialPoint.latitude, initialPoint.longitude);
+      //
+      addMarker("mti", mti, "mti");
+      addMarker("initialPoint", initialPoint, "place");
+    });
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Akrem Map", style: TextStyle(color: Colors.white),),
+        title: Text(
+          "Akrem Map",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: 110),
@@ -78,8 +92,10 @@ class _BranchMap extends State<BranchMap> {
             compassEnabled: true,
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: LatLng(userController.user.locationLatitude?? initialPoint.latitude,
-                  userController.user.locationLongitude??initialPoint.longitude),
+              target: LatLng(
+                  userController.user.locationLatitude ?? initialPoint.latitude,
+                  userController.user.locationLongitude ??
+                      initialPoint.longitude),
               zoom: 10,
             ),
             onTap: (position) {
@@ -92,6 +108,7 @@ class _BranchMap extends State<BranchMap> {
               //googleMapController.cameraChanged(value);
               googleMapController.cameraChanged(
                   initialPoint.latitude, initialPoint.longitude);
+
               _customInfoWindowController.googleMapController = controller;
             },
             onCameraMove: (value) {
@@ -115,12 +132,14 @@ class _BranchMap extends State<BranchMap> {
                 decoration: BoxDecoration(
                   color: Colors.blue,
                   borderRadius: BorderRadius.circular(4),
-                  
                 ),
-
                 height: 50,
                 width: 50,
-                child: SvgPicture.asset(AppImages.akremLogoSVG,colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcATop),),
+                child: SvgPicture.asset(
+                  AppImages.akremLogoSVG,
+                  colorFilter:
+                      ColorFilter.mode(Colors.white, BlendMode.srcATop),
+                ),
               )
             ],
           )
@@ -202,6 +221,6 @@ class _BranchMap extends State<BranchMap> {
     );
 
     _markers[id] = marker;
-    //setState(() {});
+    setState(() {});
   }
 }
