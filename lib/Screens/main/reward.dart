@@ -28,6 +28,24 @@ class _Reword extends State<Reword> {
     return redeems;
   }
 
+  void alert(){
+    showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text("Close"))
+              ],
+              title: const Text("Info"),
+              content: const Text(
+                  "this is your score from giving up donation to the community, you can use it to get discounts on the products in the app."),
+            ));
+  }
+
   @override
   void initState() {
     //_foundPharmacy = pharmacyList;
@@ -41,6 +59,15 @@ class _Reword extends State<Reword> {
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
         testController.getProducts(end: _redeemList.length+10);
       }
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //googleMapController.determinePosition();
+      // googleMapController.cameraChanged(
+      //     initialPoint.latitude, initialPoint.longitude);
+      //
+      alert();
+
     });
 
     super.initState();
@@ -117,21 +144,7 @@ class _Reword extends State<Reword> {
 
           GestureDetector(
             onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) =>
-                      AlertDialog(
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: const Text("Close"))
-                        ],
-                        title: const Text("Info"),
-                        content: const Text(
-                            "this is your score from giving up donation to the community, you can use it to get discounts on the products in the app."),
-                      ));
+              alert();
             },
             child: const Text("0"+" 🪙") ,
           )

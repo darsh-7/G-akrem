@@ -7,6 +7,7 @@ import 'package:akrem/Screens/main/reward.dart';
 import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
+import 'package:akrem/Screens/main/test_scroll.dart';
 import 'package:akrem/Screens/map/branchs_map.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
@@ -219,8 +220,9 @@ class _NavigationBarApp extends State<NavigationBarApp> {
           // Center(
           //   child: Text("Akrem"),
           // ),
-          Reword(),
           //Fund(),
+          Reword(),
+          //TestS(),
           ProfileScreen(),
         ][currentPageIndex],
       ),

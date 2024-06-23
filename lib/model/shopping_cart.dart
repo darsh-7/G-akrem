@@ -1,7 +1,7 @@
 import 'package:akrem/model/item.dart';
 
 class ShoppingCartModel {
-  late String id;
+  late int id;
   late String name;
   late String image;
   late double price;

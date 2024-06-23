@@ -16,7 +16,7 @@ class ShoppingCardController extends GetxController {
 
 
   void removeItem({
-    required String id,
+    required int id,
     bool forceDelete = false,
   }) {
     if(forceDelete){
@@ -36,7 +36,7 @@ class ShoppingCardController extends GetxController {
 
   void addMedic({
     //required Uint8List img,
-    required String id,
+    required int id,
     required String ImageUrl,
     required String name,
     required double price,

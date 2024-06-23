@@ -6,8 +6,10 @@ import 'package:akrem/Screens/customer_screen/shared/appbar.dart';
 import 'package:akrem/Screens/customer_screen/shared/cart_buttom.dart';
 import 'package:akrem/Screens/map/Select_location.dart';
 import 'package:akrem/constants/app_colors.dart';
+import 'package:akrem/controller/market_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/model/category.dart';
+import 'package:akrem/model/market_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,14 +27,29 @@ class BasketPage extends StatefulWidget {
 
 class _BasketPageState extends State<BasketPage> {
   //final textt = Provider.of<Cart>(context);
-  List<Product> product = items;
+  //List<Product> product = items;
   final userController = Get.put(UserController());
+  final testController = Get.put(MarketController());
+  final scrollController = ScrollController();
+
+  List<MarketContent> get product {
+    return testController.productsList;
+  }
+
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+    testController.getProducts();
+
+
+    scrollController.addListener(() {
+
+      if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
+        testController.getProducts(end: product.length+10);
+      }
+    });
+
+    super.initState();  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -88,28 +105,31 @@ class _BasketPageState extends State<BasketPage> {
                     style:
                     TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
-              CustomScrollView(
-                  shrinkWrap: true,
-                  primary: false,
-                  slivers: <Widget>[
-                    SliverPadding(
-                      padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                      sliver: SliverGrid(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
-                          childAspectRatio: 0.625,
+              GetBuilder<MarketController>(builder: (_) {
+                return CustomScrollView(
+                      shrinkWrap: true,
+                      primary: false,
+                      slivers: <Widget>[
+                        SliverPadding(
+                          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                          sliver: SliverGrid(
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 8,
+                              childAspectRatio: 0.625,
+                            ),
+                            delegate: SliverChildBuilderDelegate(
+                              (BuildContext context, int index) {
+                                return _buildProductCard(index, context);
+                              },
+                              childCount: product.length,
+                            ),
+                          ),
                         ),
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            return _buildProductCard(index, context);
-                          },
-                          childCount: product.length,
-                        ),
-                      ),
-                    ),
-                  ]),
+                      ]);
+                }
+              ),
             ],
           ),
           appBar: _buildAppBar(context)
@@ -134,11 +154,12 @@ class _BasketPageState extends State<BasketPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ProductDetailPage(
-                        id: product[index].id,
-                        name: product[index].name,
-                        image: product[index].image,
-                        price: product[index].price,
-                        sale: product[index].sale)));
+                        id: product[index].id!,
+                        name: product[index].name!,
+                        imagePath: product[index].imagePath!,
+                        price: product[index].price!,
+                        quantity: product[index].totalQuantity!,
+                    )));
           },
           child: Stack(
             children: [
@@ -151,7 +172,7 @@ class _BasketPageState extends State<BasketPage> {
                       child: buildCacheNetworkImage(
                           width: boxImageSize,
                           height: boxImageSize,
-                          url: product[index].image)),
+                          url: product[index].imagePath)),
                   Container(
                     margin: EdgeInsets.fromLTRB(8, 8, 8, 8),
                     child: Column(
@@ -161,7 +182,7 @@ class _BasketPageState extends State<BasketPage> {
                         SizedBox(
                           height: 40,
                           child: Text(
-                            product[index].name,
+                            product[index].name!,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -171,7 +192,7 @@ class _BasketPageState extends State<BasketPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(product[index].sale.toString() + " EG",
+                              Text(product[index].price.toString() + " EG",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12)),
@@ -191,7 +212,7 @@ class _BasketPageState extends State<BasketPage> {
                             children: [
                               Icon(Icons.location_on,
                                   color: Colors.grey, size: 12),
-                              Text(' ' + product[index].location,
+                              Text(' ' ,
                                   style: TextStyle(
                                       fontSize: 11, color: Colors.grey))
                             ],

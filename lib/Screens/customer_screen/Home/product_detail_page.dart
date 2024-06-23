@@ -9,23 +9,20 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final String id;
+  final int id;
   final String name;
-  final String image;
+  final String imagePath;
   final double price;
-  final double rating;
-  final int review;
-  final int sale;
+  final int quantity;
+
 
   const ProductDetailPage(
       {Key? key,
       required this.id,
-      this.name = '',
-      this.image = '',
-      this.price = 24,
-      this.rating = 4,
-      this.review = 45,
-      this.sale = 63})
+        required this.name,
+        required this.price ,
+        required this.imagePath, required this.quantity,
+      })
       : super(key: key);
 
   @override
@@ -121,7 +118,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           setState(() {
                             shoppingCardController.addMedic(
                               id: widget.id,
-                              ImageUrl: widget.image,
+                              ImageUrl: widget.imagePath,
                               name: widget.name,
                               price: widget.price,
                             );
@@ -154,7 +151,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget _createProductSlider() {
-    return buildCacheNetworkImage(url: widget.image);
+    return buildCacheNetworkImage(url: widget.imagePath);
   }
 
   Widget _createProductPriceTitleEtc() {
@@ -179,7 +176,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     SizedBox(width: 5),
-                    Text(widget.sale.toString() + ' EG',
+                    Text(widget.price.toString() + ' EG',
                         style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,

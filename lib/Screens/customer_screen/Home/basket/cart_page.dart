@@ -156,7 +156,7 @@ class _TabShoppingCartPageState extends State<TabShoppingCartPage> {
     );
   }
 
-  Column _buildItem(String id, boxImageSize,String name,String imgUrl,int quantity,double price) {
+  Column _buildItem(int id, boxImageSize,String name,String imgUrl,int quantity,double price) {
     //int quantity = shoppingCartData[index].quantity;
     return Column(
       children: [
