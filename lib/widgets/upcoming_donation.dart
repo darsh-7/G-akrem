@@ -1,4 +1,4 @@
-import 'package:akrem/Api/market.dart';
+import 'package:akrem/Api/donation_api.dart';
 import 'package:akrem/Screens/basket/edit_donation.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class UpcomingOrderCard extends StatelessWidget {
-  const UpcomingOrderCard({
+class UpcomingDonationCard extends StatelessWidget {
+  const UpcomingDonationCard({
     Key? key,
   }) : super(key: key);
 
@@ -48,7 +48,7 @@ class UpcomingOrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "your medications \nis coming soon\n 👌️",
+                    "coming to receive \ndonation from you\n ❤️",
 
                     style: TextStyle(
                       fontSize: 18,
@@ -64,7 +64,7 @@ class UpcomingOrderCard extends StatelessWidget {
                   ),
                   Container(
                     height: 34,
-                    width: 68,
+                    width: 67,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       color: Colors.red,
@@ -76,8 +76,8 @@ class UpcomingOrderCard extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                       // Get.to(EditDonation());
-                        await MarketAPI.cancelOrder();
+                        // Get.to(EditDonation());
+                       await DonationApi.cancelOrder();
                         Get.offAll(() => NavigationBarApp());
                       },
                     ),

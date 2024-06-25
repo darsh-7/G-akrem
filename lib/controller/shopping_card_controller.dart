@@ -58,13 +58,13 @@ class ShoppingCardController extends GetxController {
     print("addMedic $medic");
   }
 
-  void clearList() {
+  bool clearList() {
    // _basket.deleteAll();
     cart.clear();
     // MedicManager.medics.clear();
     update();
     print("clearList ");
-
+    return true;
   }
 
   Future<void> getMedics() async {

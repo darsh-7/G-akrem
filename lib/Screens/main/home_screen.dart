@@ -1,4 +1,6 @@
+import 'package:akrem/Api/donation_api.dart';
 import 'package:akrem/Api/fake_api.dart';
+import 'package:akrem/Api/market.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
@@ -12,6 +14,7 @@ import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/model/boxes.dart';
 import 'package:akrem/widgets/skeleton.dart';
 import 'package:akrem/widgets/statistics_card.dart';
+import 'package:akrem/widgets/upcoming_donation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,6 +46,10 @@ class _HomeState extends State<Home> {
   final ShoppingCardController shoppingCardController = Get.find();
   final BasketController basketController = Get.put(BasketController());
   final BoxesController boxController = Get.put(BoxesController());
+
+  bool upcomingDonation = false;
+  bool upcomingOrder = false;
+
 
   List<BoxContent> get _foundPharmacy {
     return boxController.productsList;
@@ -105,6 +112,20 @@ class _HomeState extends State<Home> {
 
   Future _getThingsOnStartup() async {
     await Future.delayed(const Duration(seconds: 1));
+
+    MarketAPI.checkUpComingOrder().then((value) {
+      upcomingOrder = value;
+      print("upcomingOrder $upcomingOrder");
+      setState(() {});
+    });
+
+    DonationApi.checkUpComingDonation().then((value) {
+      upcomingDonation = value;
+      print("upcomingDonation $upcomingDonation");
+      setState(() {});
+    });
+
+
     _isLoading.value = false;
   }
 
@@ -139,6 +160,7 @@ class _HomeState extends State<Home> {
                       : ListView(
                           padding: const EdgeInsets.only(bottom: 80, top: 10),
                           children: [
+                            if(upcomingDonation || upcomingOrder)
                             Container(
                                 margin: const EdgeInsets.only(
                                   top: 0,
@@ -147,20 +169,33 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 0, horizontal: 20),
                                 child: Text(
-                                  getLang(context, "Upcoming Order"),
+                                  getLang(context, "Upcoming"),
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )),
-                            Container(
+                            if(upcomingDonation )
+
+                              Container(
                               margin: const EdgeInsets.only(
                                 top: 0,
                                 bottom: 10,
                               ),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 0, horizontal: 20),
-                              child: const UpcomingCard(),
+                              child: const UpcomingDonationCard(),
+                            ),
+                            if(upcomingOrder)
+
+                              Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: const UpcomingOrderCard(),
                             ),
                             Container(
                               margin: const EdgeInsets.only(
@@ -373,13 +408,13 @@ class _HomeState extends State<Home> {
                                             ),
                                           ]),
                                         ]),
-                                    TextButton(
-                                        child: Text(
-                                          getLang(context, "See all"),
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                        onPressed: () =>
-                                            Get.to(() => ShowBranch())),
+                                    // TextButton(
+                                    //     child: Text(
+                                    //       getLang(context, "See all"),
+                                    //       style: TextStyle(color: Colors.blue),
+                                    //     ),
+                                    //     onPressed: () =>
+                                    //         Get.to(() => ShowBranch())),
                                   ]),
                             ),
                             GetBuilder<BoxesController>(builder: (_) {
@@ -393,10 +428,10 @@ class _HomeState extends State<Home> {
                                             vertical: 4, horizontal: 20),
                                         child: PharmacyItem(
                                           pharm: Pharmacy(
-                                              img:
+                                              img: box.branchImagePath ??
                                                   "https://i.pinimg.com/originals/e4/37/30/e437307f4baf5f8c6a9236c82886bbd4.jpg",
                                               name: box.branch,
-                                              locName: "locName",
+                                              locName: box.branchAddress,
                                               location: "location",
                                               boxStorage: 0.0),
                                         ),

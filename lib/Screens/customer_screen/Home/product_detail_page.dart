@@ -14,6 +14,8 @@ class ProductDetailPage extends StatefulWidget {
   final String imagePath;
   final double price;
   final int quantity;
+  final double priceAfterDiscount;
+
 
 
   const ProductDetailPage(
@@ -22,6 +24,7 @@ class ProductDetailPage extends StatefulWidget {
         required this.name,
         required this.price ,
         required this.imagePath, required this.quantity,
+        required this.priceAfterDiscount
       })
       : super(key: key);
 
@@ -88,9 +91,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   children: [
                     _createProductSlider(),
                     _createProductPriceTitleEtc(),
-                    _createDeliveryEstimated(),
-                    _createProductInformation(),
-                    _createProductDescription(),
+                    // _createDeliveryEstimated(),
+                    // _createProductInformation(),
+                    // _createProductDescription(),
                     SizedBox(height: 16)
                   ],
                 ),
@@ -115,12 +118,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
+
+
+
                           setState(() {
                             shoppingCardController.addMedic(
                               id: widget.id,
                               ImageUrl: widget.imagePath,
                               name: widget.name,
-                              price: widget.price,
+                              price: widget.priceAfterDiscount,
                             );
                           });
                             Fluttertoast.showToast(msg: 'Item has been added to Shopping Cart', toastLength: Toast.LENGTH_LONG);
@@ -172,7 +178,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               children: [
                 Row(
                   children: [
-                    Text(widget.price.toString() + " EG",
+                    Text(widget.priceAfterDiscount.toString() + " EG",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     SizedBox(width: 5),
@@ -199,31 +205,31 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
           ),
           SizedBox(height: 12),
-          IntrinsicHeight(
-            child: Row(
-              children: [
-                Icon(Icons.location_on, color: Colors.blue, size: 16),
-                Text('Brooklyn',
-                    style: TextStyle(fontSize: 13, color: Colors.blue)),
-                VerticalDivider(
-                  width: 30,
-                  thickness: 1,
-                  color: Colors.grey[300],
-                ),
-                Icon(Icons.factory, color: Colors.grey, size: 16),
-                Text(' Company name',
-                    style: TextStyle(fontSize: 13, color: Colors.grey)),
-                VerticalDivider(
-                  width: 30,
-                  thickness: 1,
-                  color: Colors.grey[300],
-                ),
-                Icon(Icons.bloodtype_outlined, color: Colors.grey, size: 16),
-                Text(' Medic type',
-                    style: TextStyle(fontSize: 13, color: Colors.grey)),
-              ],
-            ),
-          ),
+          // IntrinsicHeight(
+          //   child: Row(
+          //     children: [
+          //       Icon(Icons.location_on, color: Colors.blue, size: 16),
+          //       Text('Brooklyn',
+          //           style: TextStyle(fontSize: 13, color: Colors.blue)),
+          //       VerticalDivider(
+          //         width: 30,
+          //         thickness: 1,
+          //         color: Colors.grey[300],
+          //       ),
+          //       Icon(Icons.factory, color: Colors.grey, size: 16),
+          //       Text(' Company name',
+          //           style: TextStyle(fontSize: 13, color: Colors.grey)),
+          //       VerticalDivider(
+          //         width: 30,
+          //         thickness: 1,
+          //         color: Colors.grey[300],
+          //       ),
+          //       Icon(Icons.bloodtype_outlined, color: Colors.grey, size: 16),
+          //       Text(' Medic type',
+          //           style: TextStyle(fontSize: 13, color: Colors.grey)),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

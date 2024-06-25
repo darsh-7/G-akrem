@@ -50,9 +50,10 @@ class BasketController extends GetxController {
     int? bar,
     int? pills,
     DateTime? date,
+    int? medtyp,
   }) async {
     Medic medic =
-        Medic(img: img, name: name, bar: bar, pill: pills, date: date);
+        Medic(img: img, name: name, bar: bar, pill: pills, date: date,medtyp: medtyp);
     await _basket.addMedic(medic);
     medics.add(medic);
    // MedicManager.medics.add(medic);
@@ -61,13 +62,13 @@ class BasketController extends GetxController {
     print("addMedic $medic");
   }
 
-  void clearList() {
+  bool clearList() {
     _basket.deleteAll();
     medics.clear();
    // MedicManager.medics.clear();
     update();
     print("clearList ");
-
+    return true;
   }
   Future<void> getMedics() async {
     // medics = basket.getMedics() ?? [];

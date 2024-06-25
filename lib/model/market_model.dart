@@ -6,8 +6,8 @@ class MarketContent {
   double? price;
   String? imagePath;
   int? totalQuantity;
-
-  MarketContent({this.id, this.name, this.price, this.imagePath, this.totalQuantity});
+  double? priceAfterDiscount;
+  MarketContent({this.id, this.name, this.price, this.imagePath, this.totalQuantity, this.priceAfterDiscount});
 
   MarketContent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -15,6 +15,7 @@ class MarketContent {
     price = json['price'];
     imagePath = json['imagePath'];
     totalQuantity = json['totalQuantity'];
+    priceAfterDiscount = json['priceAfterDiscount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -24,6 +25,7 @@ class MarketContent {
     data['price'] = this.price;
     data['imagePath'] = this.imagePath;
     data['totalQuantity'] = this.totalQuantity;
+    data['priceAfterDiscount'] = this.priceAfterDiscount;
     return data;
   }
 }

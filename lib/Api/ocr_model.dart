@@ -37,14 +37,24 @@ class OcRModelAPI {
   // }
 
   static Future<Map<String,dynamic>> postImageToServer(File imageFile) async {
+
+
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-          "$akrem_url" + "api/MedicineDetectionModel/DetectMedicineInformation?AllowStripsOCR=false",
+          "https://0758-156-215-53-33.ngrok-free.app/GetDetectedMedicineInfo/?allowStripRecognition=false",
         ));
 
+    // var request = http.MultipartRequest(
+    //     'POST',
+    //     Uri.parse(
+    //       "http://localhost:44343/api/RespberryPi/RespberryPiUploadImage",
+    //     ));
+
+
+
     request.files.add(http.MultipartFile(
-      'file',
+      'Image',
       imageFile.readAsBytes().asStream(),
       imageFile.lengthSync(),
       filename: imageFile.path.split('/').last,
@@ -59,6 +69,7 @@ class OcRModelAPI {
         print('Image uploaded successfully!');
       } else {
         print('Failed to upload image. Server responded with status code ${response.statusCode}');
+        return {'responseJson': 0};
       }
       print(respStr);
       final responseJson = jsonDecode(respStr);
@@ -66,7 +77,8 @@ class OcRModelAPI {
       return responseJson; // Return the response string
     } catch (e) {
       print('Error occurred while trying to upload image: $e');
-      throw e;
+      return {'responseJson': 0};
+      // throw e;
     }
   }
 

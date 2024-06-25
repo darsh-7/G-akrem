@@ -90,15 +90,15 @@ class _BasketPageState extends State<BasketPage> {
                       TextSpan(
                           text: "Hub",
                           style: TextStyle(color: Colors.cyanAccent)),
-                      TextSpan(
-                        text: " click for more",
-                        //style: TextStyle(color: Colors.red)
-                      ),
+                      // TextSpan(
+                      //   text: " click for more",
+                      //   //style: TextStyle(color: Colors.red)
+                      // ),
                     ],
                   ),
                 ),
               ),
-              _createGridCategory(),
+            //  _createGridCategory(),
               Container(
                 margin: EdgeInsets.only(top: 30, left: 16, right: 16),
                 child: Text('Recommended Product',
@@ -106,6 +106,12 @@ class _BasketPageState extends State<BasketPage> {
                     TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
               GetBuilder<MarketController>(builder: (_) {
+                if(product.isEmpty){
+                  return Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
                 return CustomScrollView(
                       shrinkWrap: true,
                       primary: false,
@@ -121,6 +127,7 @@ class _BasketPageState extends State<BasketPage> {
                             ),
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
+
                                 return _buildProductCard(index, context);
                               },
                               childCount: product.length,
@@ -159,6 +166,8 @@ class _BasketPageState extends State<BasketPage> {
                         imagePath: product[index].imagePath!,
                         price: product[index].price!,
                         quantity: product[index].totalQuantity!,
+                        priceAfterDiscount: product[index].priceAfterDiscount!
+
                     )));
           },
           child: Stack(
@@ -192,7 +201,7 @@ class _BasketPageState extends State<BasketPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(product[index].price.toString() + " EG",
+                              Text(product[index].priceAfterDiscount.toString() + " EG",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12)),
@@ -206,18 +215,18 @@ class _BasketPageState extends State<BasketPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Row(
-                            children: [
-                              Icon(Icons.location_on,
-                                  color: Colors.grey, size: 12),
-                              Text(' ' ,
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.grey))
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(top: 5),
+                        //   child: Row(
+                        //     children: [
+                        //       Icon(Icons.location_on,
+                        //           color: Colors.grey, size: 12),
+                        //       Text(' ' ,
+                        //           style: TextStyle(
+                        //               fontSize: 11, color: Colors.grey))
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

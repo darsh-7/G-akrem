@@ -23,6 +23,9 @@ class Medic {
   @HiveField(4)
   final DateTime? date;
 
+  @HiveField(5)
+  final int? medtyp;
+
   //String formattedDate = DateFormat('d MMMM yyyy', 'fr_FR').format(now);
   Medic({
     required this.img,
@@ -30,6 +33,7 @@ class Medic {
     this.bar,
     this.pill,
     this.date,
+    this.medtyp,
   });
 }
 

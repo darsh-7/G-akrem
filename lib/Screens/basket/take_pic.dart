@@ -266,21 +266,37 @@ class _TakePic extends State<TakePic> {
                           if (croppedFile == null) {
                             return;
                           }
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.transparent,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            },
+                          );
 
-
-                          int? id = null;
+                          int id = 4712;
                           String medicName = "";
                           String medicConcentration = "";
                           String medicTablets = "";
                           final String ocrText ="";
                           var connectivityResult = await (Connectivity().checkConnectivity());
+
                           if (connectivityResult != ConnectivityResult.none) {
                             // I am connected to a mobile network.
 
                             final bytes = File(croppedFile.path);
                             Map<String,dynamic> res = await OcRModelAPI.postImageToServer(bytes);
 
-                          if(res["responseJson"] == 0){
+                           // medicName = res["responseJson"][];
+
+
+
+                          if(res["responseJson"] == 0||medicName.isEmpty||medicName == ""){
                             final inputImage =
                             InputImage.fromFile(File(croppedFile.path));
 
@@ -479,7 +495,7 @@ class _TakePic extends State<TakePic> {
 
                           var imgBytes = await croppedFile.readAsBytes();
                           //pic.delete();
-
+                          Get.back();
                           Get.to(() => AddMedic(), arguments: {
                             "picFile": imgBytes,
                             "text": ocrText,
@@ -487,6 +503,9 @@ class _TakePic extends State<TakePic> {
                             "medicConcentration": medicConcentration,
                             "medicTablets": medicTablets
                           });
+
+
+
                         } on CameraException catch (e) {
                           debugPrint("takePicture error");
                           return null;

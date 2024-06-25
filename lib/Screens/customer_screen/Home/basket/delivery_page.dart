@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:akrem/Api/market.dart';
 import 'package:akrem/Screens/customer_screen/Home/NavigationBar.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/controller/shopping_card_controller.dart';
@@ -10,7 +11,14 @@ import 'package:get/get.dart';
 class DeliveryPage extends StatefulWidget {
   final bool fromList;
 
-  const DeliveryPage({Key? key, this.fromList = false})
+
+  final double latitude;
+  final double  longitude;
+  final String address;
+  final areaId = 0;
+  final String phoneNumber;
+
+  const DeliveryPage({Key? key, this.fromList = false, required this.latitude, required this.longitude, required this.address, required this.phoneNumber})
       : super(key: key);
 
   @override
@@ -58,7 +66,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
           children: [
             //_createDeliveryInformation(),
             _createOrderListInformation(boxImageSize),
-            _createChooseDeliveryInformation(),
+           // _createChooseDeliveryInformation(),
             _createSubTotalInformation()
           ],
         ));
@@ -196,10 +204,10 @@ class _DeliveryPageState extends State<DeliveryPage> {
                                 margin: EdgeInsets.only(top: 4),
                                 child: Text(
                                     quantity.toString() + ' item (150 gr)')),
-                            Container(
-                              margin: EdgeInsets.only(top: 4),
-                              child: Text("awdawd"),
-                            )
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 4),
+                            //   child: Text("awdawd"),
+                            // )
                           ],
                         ),
                       )
@@ -214,226 +222,226 @@ class _DeliveryPageState extends State<DeliveryPage> {
     );
   }
 
-  Widget _createChooseDeliveryInformation() {
-    return Container(
-        margin: EdgeInsets.only(top: 12),
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Delivery',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(
-              height: 16,
-            ),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return _showDeliveryPopup();
-                  },
-                );
-              },
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                margin: EdgeInsets.only(bottom: 16),
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10) //         <--- border radius here
-                        )),
-                child: _delivery == ''
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.local_shipping,
-                                  color: Get.theme.primaryColor),
-                              SizedBox(width: 12),
-                              Text('Choose Delivery',
-                                  style: TextStyle(
-                                      color: Get.theme.primaryColor,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                          Icon(Icons.chevron_right,
-                              size: 20, color: Colors.grey),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(_delivery,
-                                  style: TextStyle(
-                                      color: Get.theme.primaryColor,
-                                      fontWeight: FontWeight.bold)),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text('\$' + _deliveryPrice.toString()),
-                            ],
-                          ),
-                          Icon(Icons.chevron_right,
-                              size: 20, color: Colors.grey),
-                        ],
-                      ),
-              ),
-            ),
-          ],
-        ));
-  }
-
-  Widget _showDeliveryPopup() {
-    return StatefulBuilder(
-        builder: (BuildContext context, StateSetter mystate) {
-      return Container(
-        decoration: BoxDecoration(
-          color: Get.theme.scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 80,
-                  height: 8,
-                  margin: EdgeInsets.only(top: 12, bottom: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                ),
-              ],
-            ),
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-              child: Text('Choose Delivery method'),
-            ),
-            Flexible(
-              child: ListView(
-                padding: EdgeInsets.all(16),
-                children: <Widget>[
-                  Text('Regular'),
-                  // GestureDetector(
-                  //   behavior: HitTestBehavior.translucent,
-                  //   onTap: () {
-                  //     setState(() {
-                  //       _delivery = 'DHL Regular';
-                  //       _deliveryPrice = 13;
-                  //     });
-                  //     countSubTotal();
-                  //     Navigator.pop(context);
-                  //   },
-                  //   child: Container(
-                  //     margin: EdgeInsets.only(top: 16),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         Text('Regular'),
-                  //         Text('\$13'),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      setState(() {
-                        _delivery = 'Regular';
-                        _deliveryPrice = 22;
-                      });
-                      countSubTotal();
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Cost'),
-                          Text('22'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 32,
-                    color: Colors.grey[400],
-                  ),
-                  Text('Fast Delivery'),
-                  // GestureDetector(
-                  //   behavior: HitTestBehavior.translucent,
-                  //   onTap: () {
-                  //     setState(() {
-                  //       _delivery = 'FedEx Regular';
-                  //       _deliveryPrice = 9;
-                  //     });
-                  //     countSubTotal();
-                  //     Navigator.pop(context);
-                  //   },
-                  //   child: Container(
-                  //     margin: EdgeInsets.only(top: 16),
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         Text('Regular'),
-                  //         Text('\$9'),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      setState(() {
-                        _delivery = 'Fast Delivery';
-                        _deliveryPrice = 35;
-                      });
-                      countSubTotal();
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(top: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Express'),
-                          Text('35'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 32,
-                    color: Colors.grey[400],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    });
-  }
+  // Widget _createChooseDeliveryInformation() {
+  //   return Container(
+  //       margin: EdgeInsets.only(top: 12),
+  //       padding: EdgeInsets.all(16),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text('Delivery',
+  //               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+  //           SizedBox(
+  //             height: 16,
+  //           ),
+  //           GestureDetector(
+  //             behavior: HitTestBehavior.translucent,
+  //             onTap: () {
+  //               showModalBottomSheet<void>(
+  //                 context: context,
+  //                 builder: (BuildContext context) {
+  //                   return _showDeliveryPopup();
+  //                 },
+  //               );
+  //             },
+  //             child: Container(
+  //               alignment: Alignment.center,
+  //               padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+  //               margin: EdgeInsets.only(bottom: 16),
+  //               decoration: BoxDecoration(
+  //                   border: Border.all(width: 1, color: Colors.grey[300]!),
+  //                   borderRadius: BorderRadius.all(
+  //                       Radius.circular(10) //         <--- border radius here
+  //                       )),
+  //               child: _delivery == ''
+  //                   ? Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         Row(
+  //                           children: [
+  //                             Icon(Icons.local_shipping,
+  //                                 color: Get.theme.primaryColor),
+  //                             SizedBox(width: 12),
+  //                             Text('Choose Delivery',
+  //                                 style: TextStyle(
+  //                                     color: Get.theme.primaryColor,
+  //                                     fontWeight: FontWeight.bold)),
+  //                           ],
+  //                         ),
+  //                         Icon(Icons.chevron_right,
+  //                             size: 20, color: Colors.grey),
+  //                       ],
+  //                     )
+  //                   : Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         Column(
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             Text(_delivery,
+  //                                 style: TextStyle(
+  //                                     color: Get.theme.primaryColor,
+  //                                     fontWeight: FontWeight.bold)),
+  //                             SizedBox(
+  //                               height: 5,
+  //                             ),
+  //                             Text('\$' + _deliveryPrice.toString()),
+  //                           ],
+  //                         ),
+  //                         Icon(Icons.chevron_right,
+  //                             size: 20, color: Colors.grey),
+  //                       ],
+  //                     ),
+  //             ),
+  //           ),
+  //         ],
+  //       ));
+  // }
+  //
+  // Widget _showDeliveryPopup() {
+  //   return StatefulBuilder(
+  //       builder: (BuildContext context, StateSetter mystate) {
+  //     return Container(
+  //       decoration: BoxDecoration(
+  //         color: Get.theme.scaffoldBackgroundColor,
+  //         borderRadius: BorderRadius.only(
+  //             topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+  //       ),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Row(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Container(
+  //                 width: 80,
+  //                 height: 8,
+  //                 margin: EdgeInsets.only(top: 12, bottom: 12),
+  //                 decoration: BoxDecoration(
+  //                   color: Colors.grey,
+  //                   borderRadius: BorderRadius.all(Radius.circular(20)),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           Center(
+  //             child: Container(
+  //               width: 40,
+  //               height: 4,
+  //               decoration: BoxDecoration(
+  //                   borderRadius: BorderRadius.circular(10)),
+  //             ),
+  //           ),
+  //           Container(
+  //             margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+  //             child: Text('Choose Delivery method'),
+  //           ),
+  //           Flexible(
+  //             child: ListView(
+  //               padding: EdgeInsets.all(16),
+  //               children: <Widget>[
+  //                 Text('Regular'),
+  //                 // GestureDetector(
+  //                 //   behavior: HitTestBehavior.translucent,
+  //                 //   onTap: () {
+  //                 //     setState(() {
+  //                 //       _delivery = 'DHL Regular';
+  //                 //       _deliveryPrice = 13;
+  //                 //     });
+  //                 //     countSubTotal();
+  //                 //     Navigator.pop(context);
+  //                 //   },
+  //                 //   child: Container(
+  //                 //     margin: EdgeInsets.only(top: 16),
+  //                 //     child: Row(
+  //                 //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 //       children: [
+  //                 //         Text('Regular'),
+  //                 //         Text('\$13'),
+  //                 //       ],
+  //                 //     ),
+  //                 //   ),
+  //                 // ),
+  //                 GestureDetector(
+  //                   behavior: HitTestBehavior.translucent,
+  //                   onTap: () {
+  //                     setState(() {
+  //                       _delivery = 'Regular';
+  //                       _deliveryPrice = 22;
+  //                     });
+  //                     countSubTotal();
+  //                     Navigator.pop(context);
+  //                   },
+  //                   child: Container(
+  //                     margin: EdgeInsets.only(top: 16),
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         Text('Cost'),
+  //                         Text('22'),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 Divider(
+  //                   height: 32,
+  //                   color: Colors.grey[400],
+  //                 ),
+  //                 Text('Fast Delivery'),
+  //                 // GestureDetector(
+  //                 //   behavior: HitTestBehavior.translucent,
+  //                 //   onTap: () {
+  //                 //     setState(() {
+  //                 //       _delivery = 'FedEx Regular';
+  //                 //       _deliveryPrice = 9;
+  //                 //     });
+  //                 //     countSubTotal();
+  //                 //     Navigator.pop(context);
+  //                 //   },
+  //                 //   child: Container(
+  //                 //     margin: EdgeInsets.only(top: 16),
+  //                 //     child: Row(
+  //                 //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 //       children: [
+  //                 //         Text('Regular'),
+  //                 //         Text('\$9'),
+  //                 //       ],
+  //                 //     ),
+  //                 //   ),
+  //                 // ),
+  //                 GestureDetector(
+  //                   behavior: HitTestBehavior.translucent,
+  //                   onTap: () {
+  //                     setState(() {
+  //                       _delivery = 'Fast Delivery';
+  //                       _deliveryPrice = 35;
+  //                     });
+  //                     countSubTotal();
+  //                     Navigator.pop(context);
+  //                   },
+  //                   child: Container(
+  //                     margin: EdgeInsets.only(top: 16),
+  //                     child: Row(
+  //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                       children: [
+  //                         Text('Express'),
+  //                         Text('35'),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 Divider(
+  //                   height: 32,
+  //                   color: Colors.grey[400],
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   });
+  // }
 
   Widget _createSubTotalInformation() {
     return Container(
@@ -445,27 +453,27 @@ class _DeliveryPageState extends State<DeliveryPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Payment Method',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    GestureDetector(
-                      onTap: () {
-                        // showModalBottomSheet<void>(
-                        //   context: context,
-                        //   builder: (BuildContext context) {
-                        //     return _createChoosePayment();
-                        //   },
-                        // );
-                      },
-                      child: Text('Change',
-                          style: TextStyle(
-                              color: Get.theme.primaryColor, fontSize: 14)),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     // Text('Payment Method',
+                //     //     style: TextStyle(
+                //     //         fontSize: 16, fontWeight: FontWeight.bold)),
+                //     GestureDetector(
+                //       onTap: () {
+                //         // showModalBottomSheet<void>(
+                //         //   context: context,
+                //         //   builder: (BuildContext context) {
+                //         //     return _createChoosePayment();
+                //         //   },
+                //         // );
+                //       },
+                //       child: Text('Change',
+                //           style: TextStyle(
+                //               color: Get.theme.primaryColor, fontSize: 14)),
+                //     ),
+                //   ],
+                // ),
                 Container(
                   margin: EdgeInsets.only(top: 16),
                   child: Row(
@@ -554,7 +562,7 @@ class _DeliveryPageState extends State<DeliveryPage> {
                   )),
                 ),
                 onPressed: () {
-                  showLoading('Your payment is success, we will prepare your order as soon as possible');
+                  showLoading('Your order is success, we will prepare your order as soon as possible');
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -573,12 +581,21 @@ class _DeliveryPageState extends State<DeliveryPage> {
     );
   }
 
-  void showLoading(String textMessage) {
+  Future<void> showLoading(String textMessage) async {
     _progressDialog(context);
+
+    await Future.wait(shoppingCardController.cart.map((element) async {
+      await MarketAPI.addMedicineToCart(element.id);
+    }));
+
+
+    await MarketAPI.supOrder(widget.latitude, widget.longitude, widget.address, widget.phoneNumber);
+
     Timer(Duration(seconds: 2), () {
       Navigator.pop(context);
       _buildShowDialog(context, textMessage);
     });
+   await shoppingCardController.clearList();
   }
 
   Future _progressDialog(BuildContext context) {

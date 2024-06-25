@@ -746,6 +746,7 @@ class _AddMedicState extends State<AddMedic> {
                           bar: int.parse(_barController.text),
                           pills: int.parse(_pillController.text),
                           date: selectedDate,
+                          medtyp: _selectedIndex - 1,
                         );
 
                         Get.close(2);

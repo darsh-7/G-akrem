@@ -6,6 +6,9 @@ class BoxContent {
   int? capacity;
   int? branchId;
   String? branch;
+  String? branchAddress;
+  String? branchPhoneNumber;
+  String? branchImagePath;
   bool? isDeleted;
   String? createdOn;
   String? createdById;
@@ -17,20 +20,25 @@ class BoxContent {
         this.capacity,
         this.branchId,
         this.branch,
+        this.branchAddress,
+        this.branchPhoneNumber,
+        this.branchImagePath,
         this.isDeleted,
         this.createdOn,
         this.createdById,});
 
   BoxContent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+    latitude =  double.parse(json['latitude']??"0")  ;
+    longitude =  double.parse(json['longitude']??"0");
     capacity = json['capacity'];
     branchId = json['branchId'];
-    branch = json['branch'];
+    branch = json['branchName'];
+    branchAddress = json['branchAddress'];
+    branchPhoneNumber = json['branchPhoneNumber'];
+    branchImagePath = json['branchImagePath'];
     isDeleted = json['isDeleted'];
     createdOn = json['createdOn'];
-    createdById = json['createdById'];
   }
 
   Map<String, dynamic> toJson() {

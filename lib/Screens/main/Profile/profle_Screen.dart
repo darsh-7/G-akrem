@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/main/Profile/account/account_screen.dart';
+import 'package:akrem/Screens/main/Profile/account/donation_history.dart';
+import 'package:akrem/Screens/main/Profile/account/order_history.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/controller_mang.dart';
@@ -159,10 +161,16 @@ class _ProfileScreen extends State<ProfileScreen> {
                 title: "Settings",
                 icon: Icons.settings,
                 onPress: () {
-                //  Get.to(AccountView());
+                Get.to(AccountView());
                 }),
             ProfileMenuWidget(
-                title: "Donation History", icon: Icons.history, onPress: () {}),
+                title: "Donation History", icon: Icons.history, onPress: () {
+              Get.to(DonationHistoryPage());
+            }),
+            ProfileMenuWidget(
+                title: "Order History", icon: Icons.history, onPress: () {
+              Get.to(OrderHistoryPage());
+            }),
             ProfileMenuWidget(
                 title: "Billing Details", icon: Icons.wallet, onPress: () {}),
             // ProfileMenuWidget(title: "User Management", icon: Icons.verified_user, onPress: () {}),

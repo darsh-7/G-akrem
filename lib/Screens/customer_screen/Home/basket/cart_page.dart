@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:akrem/Screens/basket/checkout.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket/delivery_page.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/controller/shopping_card_controller.dart';
@@ -138,7 +139,7 @@ class _TabShoppingCartPageState extends State<TabShoppingCartPage> {
               ),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryPage()));
+              Get.to(Checkout(serves: 1,));
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),

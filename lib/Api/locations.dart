@@ -40,6 +40,7 @@ class LocationAPI {
         );
         // print("V $v \n\n");
       }
+      print("BOXES CONTENT: ${data["content"]}");
       //return MarketContent.fromJson(data["content"]);
       return tempList;
     } catch (error) {

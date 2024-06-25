@@ -140,21 +140,21 @@ class ThanksScreen extends StatelessWidget {
                                         )))),
                           ],
                         )),
-                    Padding(
-                        padding: EdgeInsets.all(20),
-                        child: ElevatedButton(
-                            onPressed: () => {Get.to(EditDonation())},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFbedaff),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              elevation: 20,
-                              shadowColor: Colors.transparent,
-                              minimumSize: const Size.fromHeight(48),
-                            ),
-                            child: Text("Details",
-                                style: TextStyle(color: Colors.black))))
+                    // Padding(
+                    //     padding: EdgeInsets.all(20),
+                    //     child: ElevatedButton(
+                    //         onPressed: () => {Get.to(EditDonation())},
+                    //         style: ElevatedButton.styleFrom(
+                    //           backgroundColor: Color(0xFFbedaff),
+                    //           shape: RoundedRectangleBorder(
+                    //             borderRadius: BorderRadius.circular(12.0),
+                    //           ),
+                    //           elevation: 20,
+                    //           shadowColor: Colors.transparent,
+                    //           minimumSize: const Size.fromHeight(48),
+                    //         ),
+                    //         child: Text("Details",
+                    //             style: TextStyle(color: Colors.black))))
                   ],
                 ),
               ))
