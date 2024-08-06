@@ -42,7 +42,7 @@ class OcRModelAPI {
     var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-          "https://0758-156-215-53-33.ngrok-free.app/GetDetectedMedicineInfo/?allowStripRecognition=false",
+          "https://sensible-clearly-guinea.ngrok-free.app/GetDetectedMedicineInfo/?allowStripRecognition=false",
         ));
 
     // var request = http.MultipartRequest(

@@ -85,8 +85,8 @@ class DonationApi {
     print("add tok : ${userController.user.token}");
 
     request.headers.addAll({
-      "content-type": "application/json",
-      "accept": "application/json",
+      // "content-type": "application/json",
+      // "accept": "application/json",
       "Authorization": "bearer ${userController.user.token}"
     });
 
@@ -248,11 +248,11 @@ class DonationApi {
         },
         body: jsonEncode({
 
-          "latitude": latitude.toString(),
-          "longitude": longitude.toString(),
-          "address": address,
-          "areaId": 0,
-          "phoneNumber": phoneNumber.toString()
+          "latitude":"30.123124124" /*latitude.toString()*/,
+          "longitude": "30.123124124"/*longitude.toString()*/,
+          "address": "akljwdghlkajwgdhklawd"/*address.toString()*/,
+          "areaId": 1,
+          "phoneNumber": "01002110356"/*phoneNumber.toString()*/
         }),
       );
       print(

@@ -139,7 +139,7 @@ class UserAPI {
       }
 
       print(
-          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
+          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode} body :${response.body}");
       print("${response.body}");
 
       var data = jsonDecode(response.body);

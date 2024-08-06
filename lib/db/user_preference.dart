@@ -17,6 +17,7 @@ class UserPreference {
   }
 
   Future<void> openBox() async {
+
     _box = await Hive.openBox(_boxName);
   }
 
