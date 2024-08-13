@@ -1,6 +1,7 @@
 # Akrem
+#### Preview :
 
-# Target: Your Go-To Donation App 🎯
+https://github.com/user-attachments/assets/6edf9d8c-1c79-4fd2-9b2d-e4810263036a
 
 Target makes donating **and receiving** essential goods easier than ever! This app provides multiple ways to give back to your community and get the support you need:
 
@@ -33,7 +34,7 @@ Target makes donating **and receiving** essential goods easier than ever! This a
 
 **Let's make a difference, together! 💖** 
 
-
+try demo
 
 ## Getting Started
 
@@ -42,17 +43,19 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 * Flutter development environment: [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
-* Android Studio or VS Code with Flutter extensions
+* need to install Android Studio or VS Code with Flutter extensions
 
 ### Installation
-
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/your_repo_name.git
+   git clone https://github.com/darsh-7/G-akrem.git
+
+2. Install dependencies
+   ```sh
+   flutter pub get   
+
+3. Start the app
+   ```sh
+   flutter run
 
 
-2 Install dependencies
-* flutter pub get
-
-* Start the app
-  flutter run
