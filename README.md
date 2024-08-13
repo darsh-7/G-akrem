@@ -34,7 +34,8 @@ Target makes donating **and receiving** essential goods easier than ever! This a
 
 **Let's make a difference, together! 💖** 
 
-try demo
+## try demo
+**[download APK](https://github.com/darsh-7/G-akrem/releases/download/first_beta/Akrem.apk) <img src="https://img.icons8.com/emoji/512/down-arrow-emoji.png" alt="preview"  width="20">**
 
 ## Getting Started
 
