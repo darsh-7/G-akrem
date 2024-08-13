@@ -14,7 +14,7 @@ Target makes donating **and receiving** essential goods easier than ever! This a
 * **Request:** Browse available medications and order what you need for a small processing fee.  💊🛒
 
 ## Features:
-
+  
 * **Multiple Donation Options:**  Choose the most convenient way to donate.  🎁
 * **Seamless User Experience:**  Enjoy a smooth and intuitive donation process. ✨
 * **OCR Medication Scanning:**  Save time and ensure accuracy when donating medication. 💊📸
@@ -30,7 +30,14 @@ Target makes donating **and receiving** essential goods easier than ever! This a
 * **Google ML Kit:**  Optical Character Recognition (OCR) for medication scanning.
 * **Google APIs:**  Integration with Google Maps and other services.
 * **Geolocator:**  Retrieve user location for accurate nearby results.
-* **RESTful API:**  Seamless communication with the backend. 
+* **RESTful API:**  Seamless communication with the backend.
+
+  <h3>
+   Porgrams, Tools & Frameworks used<br><br>
+  <a>
+   <img src="https://skillicons.dev/icons?i=figma,flutter,github,gradle,postman,windows&perline=14" />
+  </a>
+  </h3>
 
 **Let's make a difference, together! 💖** 
 
