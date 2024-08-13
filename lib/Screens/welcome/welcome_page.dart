@@ -1,11 +1,7 @@
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/Screens/login/register_page.dart';
-import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/constants/app_local.dart';
-import 'package:akrem/controller/controller_mang.dart';
-import 'package:akrem/db/user_preference.dart';
-import 'package:akrem/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -4,11 +4,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 import 'package:fl_geocoder/fl_geocoder.dart' as fl;
 
-import '../Screens/map/asses/asssis1.dart';
 
 class LocationController extends GetxController {
   // Placemark _placemark ;

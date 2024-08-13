@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:akrem/model/medic.dart';
 import 'package:akrem/db/basket.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BasketController extends GetxController {
@@ -50,10 +48,9 @@ class BasketController extends GetxController {
     int? bar,
     int? pills,
     DateTime? date,
-    int? medtyp,
   }) async {
     Medic medic =
-        Medic(img: img, name: name, bar: bar, pill: pills, date: date,medtyp: medtyp);
+        Medic(img: img, name: name, bar: bar, pill: pills, date: date);
     await _basket.addMedic(medic);
     medics.add(medic);
    // MedicManager.medics.add(medic);
@@ -62,13 +59,13 @@ class BasketController extends GetxController {
     print("addMedic $medic");
   }
 
-  bool clearList() {
+  void clearList() {
     _basket.deleteAll();
     medics.clear();
    // MedicManager.medics.clear();
     update();
     print("clearList ");
-    return true;
+
   }
   Future<void> getMedics() async {
     // medics = basket.getMedics() ?? [];

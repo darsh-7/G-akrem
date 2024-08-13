@@ -1,19 +1,10 @@
-import 'dart:io';
 
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/basket_controller.dart';
-import 'package:akrem/widgets/Google_map_card.dart';
-import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
-import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/model/medic.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../services/log_manager.dart';
-import '../../services/validator.dart';
 import 'edit_donation.dart';
 
 class ThanksScreen extends StatelessWidget {
@@ -140,21 +131,21 @@ class ThanksScreen extends StatelessWidget {
                                         )))),
                           ],
                         )),
-                    // Padding(
-                    //     padding: EdgeInsets.all(20),
-                    //     child: ElevatedButton(
-                    //         onPressed: () => {Get.to(EditDonation())},
-                    //         style: ElevatedButton.styleFrom(
-                    //           backgroundColor: Color(0xFFbedaff),
-                    //           shape: RoundedRectangleBorder(
-                    //             borderRadius: BorderRadius.circular(12.0),
-                    //           ),
-                    //           elevation: 20,
-                    //           shadowColor: Colors.transparent,
-                    //           minimumSize: const Size.fromHeight(48),
-                    //         ),
-                    //         child: Text("Details",
-                    //             style: TextStyle(color: Colors.black))))
+                    Padding(
+                        padding: EdgeInsets.all(20),
+                        child: ElevatedButton(
+                            onPressed: () => {Get.to(EditDonation())},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFFbedaff),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              elevation: 20,
+                              shadowColor: Colors.transparent,
+                              minimumSize: const Size.fromHeight(48),
+                            ),
+                            child: Text("Details",
+                                style: TextStyle(color: Colors.black))))
                   ],
                 ),
               ))

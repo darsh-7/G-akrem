@@ -1,6 +1,4 @@
 import 'package:akrem/Api/fake_api.dart';
-import 'package:akrem/Api/test_api.dart';
-import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/test_controller.dart';
 import 'package:akrem/model/test_model.dart';
 import 'package:flutter/material.dart';

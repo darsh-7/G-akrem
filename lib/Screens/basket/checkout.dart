@@ -1,40 +1,23 @@
-import 'dart:io';
 
-import 'package:akrem/Api/donation_api.dart';
 import 'package:akrem/Screens/basket/thanks.dart';
-import 'package:akrem/Screens/customer_screen/Home/basket/delivery_page.dart';
-import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/controller/basket_controller.dart';
 import 'package:akrem/controller/location_controller.dart';
-import 'package:akrem/controller/shopping_card_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/widgets/Google_map_card.dart';
 import 'package:akrem/widgets/input.dart';
 import 'package:flutter/material.dart';
-import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/model/medic.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-import '../../services/log_manager.dart';
 import '../../services/validator.dart';
 
 class Checkout extends StatelessWidget {
-  Checkout({super.key, this.medictyp = 0, this.serves = 0, this.medicID = 0});
+  Checkout({super.key});
 
-    final int serves;
-    final medictyp ;
-    final medicID;
+
 
   UserController userController = Get.find();
   LocationController googleMapController = Get.put(LocationController());
-  final BasketController basketController = Get.find();
-  final ShoppingCardController shoppingCardController = Get.find();
 
-
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _buildingController = TextEditingController();
   final _streetController = TextEditingController();
 
@@ -46,12 +29,9 @@ class Checkout extends StatelessWidget {
   Duration minExDate = const Duration(days: 3 * 7);
   late DateTime selectedDate;
 
-
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-
-
     return Scaffold(
         appBar: _buildAppBar(),
         //extendBodyBehindAppBar: true,
@@ -146,76 +126,54 @@ class Checkout extends StatelessWidget {
                       CustomInputField(
                         hintText: "Floor",
                         controller: _floorController,
-                        validator: Validator.validateEmpty,
+                        validator: Validator.validateEmail,
                         label: "Floor ",
                         inputFormatters: [
                           LengthLimitingTextInputFormatter(360),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      CustomInputField(
-                        keyboardType: TextInputType.number,
-                        hintText: "Phone",
-                        label: "Phone",
-                        //obscureText: true,
-                        controller: _phoneController,
-                        validator: Validator.validateEmpty,
-
-                        // validator: Validator.validatePhone,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(11),
-                        ],
-                       // width: 240,
-                      ),
-                      // Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                      //     children: [
-                      //
-                      //       // Container(
-                      //       //   width: 110,
-                      //       //   // height: 50,
-                      //       //   // margin: EdgeInsets.only(right: 8),
-                      //       //   child: Row(
-                      //       //     children: [
-                      //       //       Text(
-                      //       //         "WhatsApp",
-                      //       //         style: TextStyle(
-                      //       //           fontSize: 13,
-                      //       //         ),
-                      //       //       ),
-                      //       //       Checkbox(
-                      //       //           value: hasWhatsApp.value,
-                      //       //           activeColor: Colors.green,
-                      //       //           onChanged: (checked) => {
-                      //       //                 hasWhatsApp.value = checked ?? false
-                      //       //               }),
-                      //       //     ],
-                      //       //   ),
-                      //       // )
-                      //     ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomInputField(
+                              keyboardType: TextInputType.number,
+                              hintText: "Phone",
+                              label: "Phone",
+                              //obscureText: true,
+                              controller: _phoneController,
+                              validator: Validator.validatePhone,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(11),
+                              ],
+                              width: 240,
+                            ),
+                            Container(
+                              width: 110,
+                              // height: 50,
+                              // margin: EdgeInsets.only(right: 8),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "WhatsApp",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  Checkbox(
+                                      value: hasWhatsApp.value,
+                                      activeColor: Colors.green,
+                                      onChanged: (checked) => {
+                                            hasWhatsApp.value = checked ?? false
+                                          }),
+                                ],
+                              ),
+                            )
+                          ]),
                       ElevatedButton(
-                          onPressed: () async {
-
-                            if (!_formKey.currentState!.validate()) {
-                              return;
-                            }
-                            if(serves ==1){
-                              Get.to(DeliveryPage(latitude: userController.user.locationLatitude!, longitude: userController.user.locationLongitude!, address: "${_buildingController.text},${_streetController.text},${_apartmentController.text},${_floorController.text},", phoneNumber: _phoneController.text,));
-                              return;
-                            }
-                            await Future.wait(basketController.medics.map((element) async {
-                              await DonationApi.addItemToCart(medic: element,medtyp: medictyp,medID:medicID );
-                            }));
-                            await Future.delayed(const Duration(seconds: 1));
-
-                            await DonationApi.supOrder(latitude: userController.user.locationLatitude??30.1672453, longitude: userController.user.locationLongitude??30.1672453, address: "${_buildingController.text},${_streetController.text},${_apartmentController.text},${_floorController.text},", phoneNumber: _phoneController.text,);
-
-                            await basketController.clearList();
-
-                            Get.to(ThanksScreen());
-
-
+                          onPressed: () => {
+                                Get.to(ThanksScreen()),
                               },
                           style: ElevatedButton.styleFrom(
                             shape: const StadiumBorder(),

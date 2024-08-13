@@ -2,30 +2,29 @@ import 'package:akrem/Screens/customer_screen/Home/basket/cart_page.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/Screens/customer_screen/shared/cart_buttom.dart';
 import 'package:akrem/controller/shopping_card_controller.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:get/get.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final int id;
+  final String id;
   final String name;
-  final String imagePath;
+  final String image;
   final double price;
-  final int quantity;
-  final double priceAfterDiscount;
-
-
+  final double rating;
+  final int review;
+  final int sale;
 
   const ProductDetailPage(
       {Key? key,
       required this.id,
-        required this.name,
-        required this.price ,
-        required this.imagePath, required this.quantity,
-        required this.priceAfterDiscount
-      })
+      this.name = '',
+      this.image = '',
+      this.price = 24,
+      this.rating = 4,
+      this.review = 45,
+      this.sale = 63})
       : super(key: key);
 
   @override
@@ -91,9 +90,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   children: [
                     _createProductSlider(),
                     _createProductPriceTitleEtc(),
-                    // _createDeliveryEstimated(),
-                    // _createProductInformation(),
-                    // _createProductDescription(),
+                    _createDeliveryEstimated(),
+                    _createProductInformation(),
+                    _createProductDescription(),
                     SizedBox(height: 16)
                   ],
                 ),
@@ -118,15 +117,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-
-
-
                           setState(() {
                             shoppingCardController.addMedic(
                               id: widget.id,
-                              ImageUrl: widget.imagePath,
+                              ImageUrl: widget.image,
                               name: widget.name,
-                              price: widget.priceAfterDiscount,
+                              price: widget.price,
                             );
                           });
                             Fluttertoast.showToast(msg: 'Item has been added to Shopping Cart', toastLength: Toast.LENGTH_LONG);
@@ -157,7 +153,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   Widget _createProductSlider() {
-    return buildCacheNetworkImage(url: widget.imagePath);
+    return buildCacheNetworkImage(url: widget.image);
   }
 
   Widget _createProductPriceTitleEtc() {
@@ -178,11 +174,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               children: [
                 Row(
                   children: [
-                    Text(widget.priceAfterDiscount.toString() + " EG",
+                    Text(widget.price.toString() + " EG",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     SizedBox(width: 5),
-                    Text(widget.price.toString() + ' EG',
+                    Text(widget.sale.toString() + ' EG',
                         style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           color: Colors.grey,
@@ -205,31 +201,31 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
           ),
           SizedBox(height: 12),
-          // IntrinsicHeight(
-          //   child: Row(
-          //     children: [
-          //       Icon(Icons.location_on, color: Colors.blue, size: 16),
-          //       Text('Brooklyn',
-          //           style: TextStyle(fontSize: 13, color: Colors.blue)),
-          //       VerticalDivider(
-          //         width: 30,
-          //         thickness: 1,
-          //         color: Colors.grey[300],
-          //       ),
-          //       Icon(Icons.factory, color: Colors.grey, size: 16),
-          //       Text(' Company name',
-          //           style: TextStyle(fontSize: 13, color: Colors.grey)),
-          //       VerticalDivider(
-          //         width: 30,
-          //         thickness: 1,
-          //         color: Colors.grey[300],
-          //       ),
-          //       Icon(Icons.bloodtype_outlined, color: Colors.grey, size: 16),
-          //       Text(' Medic type',
-          //           style: TextStyle(fontSize: 13, color: Colors.grey)),
-          //     ],
-          //   ),
-          // ),
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Icon(Icons.location_on, color: Colors.blue, size: 16),
+                Text('Brooklyn',
+                    style: TextStyle(fontSize: 13, color: Colors.blue)),
+                VerticalDivider(
+                  width: 30,
+                  thickness: 1,
+                  color: Colors.grey[300],
+                ),
+                Icon(Icons.factory, color: Colors.grey, size: 16),
+                Text(' Company name',
+                    style: TextStyle(fontSize: 13, color: Colors.grey)),
+                VerticalDivider(
+                  width: 30,
+                  thickness: 1,
+                  color: Colors.grey[300],
+                ),
+                Icon(Icons.bloodtype_outlined, color: Colors.grey, size: 16),
+                Text(' Medic type',
+                    style: TextStyle(fontSize: 13, color: Colors.grey)),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -39,7 +39,7 @@ class EmptyItemsScreen extends StatelessWidget {
             child: FilledButton(
               style: ButtonStyle(
                 backgroundColor:
-                MaterialStatePropertyAll<Color>(Get.theme.primaryColor),
+                WidgetStatePropertyAll<Color>(Get.theme.primaryColor),
                 //TODO: add video
               ),
               onPressed: () {

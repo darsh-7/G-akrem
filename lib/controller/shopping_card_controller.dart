@@ -1,10 +1,5 @@
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:akrem/model/medic.dart';
-import 'package:akrem/db/basket.dart';
 import 'package:akrem/model/shopping_cart.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ShoppingCardController extends GetxController {
@@ -16,7 +11,7 @@ class ShoppingCardController extends GetxController {
 
 
   void removeItem({
-    required int id,
+    required String id,
     bool forceDelete = false,
   }) {
     if(forceDelete){
@@ -36,7 +31,7 @@ class ShoppingCardController extends GetxController {
 
   void addMedic({
     //required Uint8List img,
-    required int id,
+    required String id,
     required String ImageUrl,
     required String name,
     required double price,
@@ -58,13 +53,13 @@ class ShoppingCardController extends GetxController {
     print("addMedic $medic");
   }
 
-  bool clearList() {
+  void clearList() {
    // _basket.deleteAll();
     cart.clear();
     // MedicManager.medics.clear();
     update();
     print("clearList ");
-    return true;
+
   }
 
   Future<void> getMedics() async {

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/basket_controller.dart';
@@ -196,7 +195,7 @@ class _AddMedicState extends State<AddMedic> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 4, top: 4),
                   child: RawChip(
-                      color: MaterialStateProperty.all<Color>(
+                      color: WidgetStateProperty.all<Color>(
                           _selectedIndex == cards[index].id
                               ? Colors.blue
                               : Colors.white),
@@ -627,8 +626,6 @@ class _AddMedicState extends State<AddMedic> {
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2100));
-
-                            if (newDate == null) return;
                             selectedDate = newDate;
 
                             _dateController.text =
@@ -746,7 +743,6 @@ class _AddMedicState extends State<AddMedic> {
                           bar: int.parse(_barController.text),
                           pills: int.parse(_pillController.text),
                           date: selectedDate,
-                          medtyp: _selectedIndex - 1,
                         );
 
                         Get.close(2);

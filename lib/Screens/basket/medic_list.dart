@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:akrem/Screens/basket/checkout.dart';
 import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/Screens/login/login_page.dart';
-import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/basket_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:camera/camera.dart';
@@ -13,7 +12,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../model/medic.dart';
 import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
-import 'add_medic.dart';
 import 'empty_items.dart';
 
 class MedicList extends StatefulWidget {

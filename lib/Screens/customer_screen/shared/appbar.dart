@@ -1,6 +1,4 @@
-import 'package:akrem/Screens/customer_screen/Home/basket/cart_page.dart';
 import 'package:akrem/Screens/customer_screen/provider/cart.dart';
-import 'package:akrem/Screens/customer_screen/shared/cart_buttom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

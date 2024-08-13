@@ -7,13 +7,10 @@ import 'package:akrem/Screens/login/register_page.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Api/fake_api.dart';
 import 'package:akrem/Screens/map/Select_location.dart';
-import 'package:akrem/Screens/welcome/introduction_page.dart';
 import 'package:akrem/Screens/welcome/welcome_page.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_local.dart';
-import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
-import 'package:akrem/model/user.dart';
 import 'package:akrem/widgets/info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -115,8 +112,6 @@ class MyApp extends StatelessWidget {
                   onSecondary: AppColors.mainColor,
                   error: Colors.red,
                   onError: Colors.red,
-                  background: Colors.white,
-                  onBackground: Colors.white,
                   surface: Colors.black,
                   onSurface: Colors.black),
               floatingActionButtonTheme: FloatingActionButtonThemeData(),
@@ -124,14 +119,14 @@ class MyApp extends StatelessWidget {
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(AppColors.mainColor),
+                      WidgetStateProperty.all(AppColors.mainColor),
                   //textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                  foregroundColor: WidgetStateProperty.all(Colors.white),
 
                   // minimumSize: MaterialStateProperty.all(
                   //   const Size.fromHeight(60),
                   // ),
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
                     ),
@@ -154,7 +149,6 @@ class MyApp extends StatelessWidget {
           darkTheme: ThemeData.dark().copyWith(
               primaryColor: AppColors.darkBlue,
               shadowColor: Colors.white,
-              useMaterial3: true,
               cardColor: AppColors.darkGround,
               scaffoldBackgroundColor: AppColors.darkGround,
               colorScheme: const ColorScheme(
@@ -165,20 +159,18 @@ class MyApp extends StatelessWidget {
                   onSecondary: AppColors.mainColor,
                   error: Colors.red,
                   onError: Colors.red,
-                  background: AppColors.darkGround,
-                  onBackground: AppColors.darkGround,
                   surface: Colors.black,
                   onSurface: Colors.white),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(AppColors.darkBlue),
+                      WidgetStateProperty.all(AppColors.darkBlue),
                   //textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                  foregroundColor: WidgetStateProperty.all(Colors.white),
                   // minimumSize: MaterialStateProperty.all(
                   //   const Size.fromHeight(60),
                   // ),
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.0),
                     ),

@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:akrem/Api/api_key.dart';
 import 'package:akrem/Api/user_api_model.dart';
 import 'package:akrem/controller/user_controller.dart';
-import 'package:akrem/model/user.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -139,7 +138,7 @@ class UserAPI {
       }
 
       print(
-          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode} body :${response.body}");
+          "post : ${response.headers}\n else: ${response.persistentConnection} code :${response.statusCode}");
       print("${response.body}");
 
       var data = jsonDecode(response.body);

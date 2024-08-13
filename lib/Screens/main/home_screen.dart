@@ -1,6 +1,4 @@
-import 'package:akrem/Api/donation_api.dart';
 import 'package:akrem/Api/fake_api.dart';
-import 'package:akrem/Api/market.dart';
 import 'package:akrem/Screens/basket/medic_list.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/Screens/main/show_branchs.dart';
@@ -8,15 +6,10 @@ import 'package:akrem/Screens/map/Select_location.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/constants/app_local.dart';
 import 'package:akrem/controller/basket_controller.dart';
-import 'package:akrem/controller/boxes_controller.dart';
 import 'package:akrem/controller/shopping_card_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
-import 'package:akrem/model/boxes.dart';
 import 'package:akrem/widgets/skeleton.dart';
-import 'package:akrem/widgets/statistics_card.dart';
-import 'package:akrem/widgets/upcoming_donation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../widgets/pharmacy_card.dart';
@@ -38,30 +31,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   // UserController userController = Get.find();
 
-  //final pharmacyList = Pharmacy.pharmacyList;
-  //List<Pharmacy> _foundPharmacy = [];
+  final pharmacyList = Pharmacy.pharmacyList;
+  List<Pharmacy> _foundPharmacy = [];
   Image image = Image.asset(AppImages.profileIcon);
   var _isLoading = true.obs;
   List<Card> cards = [];
   final ShoppingCardController shoppingCardController = Get.find();
   final BasketController basketController = Get.put(BasketController());
-  final BoxesController boxController = Get.put(BoxesController());
-
-  bool upcomingDonation = false;
-  bool upcomingOrder = false;
-
-
-  List<BoxContent> get _foundPharmacy {
-    return boxController.productsList;
-  }
 
   @override
   void initState() {
-    //_foundPharmacy = pharmacyList;
+    _foundPharmacy = pharmacyList;
     _getThingsOnStartup().then((value) {
       // print('Async done');
     });
-    boxController.getBoxes();
     print(" token val :${(userController.user).token}");
     print("locationString val :${(userController.user).locationString}");
     print(" name val :${(userController.user).fName}");
@@ -112,20 +95,6 @@ class _HomeState extends State<Home> {
 
   Future _getThingsOnStartup() async {
     await Future.delayed(const Duration(seconds: 1));
-
-    MarketAPI.checkUpComingOrder().then((value) {
-      upcomingOrder = value;
-      print("upcomingOrder $upcomingOrder");
-      setState(() {});
-    });
-
-    DonationApi.checkUpComingDonation().then((value) {
-      upcomingDonation = value;
-      print("upcomingDonation $upcomingDonation");
-      setState(() {});
-    });
-
-
     _isLoading.value = false;
   }
 
@@ -136,18 +105,19 @@ class _HomeState extends State<Home> {
       body: Stack(
         children: [
           Obx(
-            () => Column(
-              children: [
-                Visibility(
-                  visible: _isLoading.value,
-                  child: const LinearProgressIndicator(
-                    minHeight: 8,
-                  ),
-                ),
-                //searchBox(),
-                Expanded(
-                  child: _isLoading.value
-                      ? ListView(
+                () =>
+                Column(
+                  children: [
+                    Visibility(
+                      visible: _isLoading.value,
+                      child: const LinearProgressIndicator(
+                        minHeight: 8,
+                      ),
+                    ),
+                    //searchBox(),
+                    Expanded(
+                      child: _isLoading.value
+                          ? ListView(
                           padding: const EdgeInsets.all(40),
                           children: [const SkeltonView()])
                       // ListView.separated(
@@ -157,318 +127,275 @@ class _HomeState extends State<Home> {
                       //         separatorBuilder: (context, index) =>
                       //             const SizedBox(height: 16),
                       //       )
-                      : ListView(
-                          padding: const EdgeInsets.only(bottom: 80, top: 10),
-                          children: [
-                            if(upcomingDonation || upcomingOrder)
-                            Container(
-                                margin: const EdgeInsets.only(
-                                  top: 0,
-                                  bottom: 10,
+                          : ListView(
+                        padding: const EdgeInsets.only(bottom: 80, top: 10),
+                        children: [
+                          Container(
+                              margin: const EdgeInsets.only(
+                                top: 0,
+                                bottom: 10,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 20),
+                              child: Text(
+                                getLang(context, "Upcoming Order"),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 20),
-                                child: Text(
-                                  getLang(context, "Upcoming"),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                            if(upcomingDonation )
-
-                              Container(
-                              margin: const EdgeInsets.only(
-                                top: 0,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: const UpcomingDonationCard(),
+                              )),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 10,
                             ),
-                            if(upcomingOrder)
-
-                              Container(
-                              margin: const EdgeInsets.only(
-                                top: 0,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: const UpcomingOrderCard(),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 20),
+                            child: const UpcomingCard(),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 0,
+                              bottom: 10,
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 0,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: Row(children: [
-                                Text(
-                                  getLang(context, "Donation Options"),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 20),
+                            child: Row(children: [
+                              Text(
+                                getLang(context, "Donation Options"),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
                                 ),
-                                // Text(
-                                //   '(5)',
-                                //   style: TextStyle(
-                                //     fontSize: 20,
-                                //     fontWeight: FontWeight.w500,
-                                //     color: Colors.deepOrange,
-                                //   ),
-                                // ),
-                              ]),
-                            ),
-                            SizedBox(
-                                height: 210,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                            child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2.1,
-                                          child: Stack(
-                                            children: [
-                                              buildCard(card: cards[0]),
-                                              GetBuilder<
-                                                      ShoppingCardController>(
-                                                  builder: (_) {
-                                                if (basketController
-                                                        .medics.length ==
-                                                    0) {
-                                                  return SizedBox();
-                                                } else
-                                                  return Positioned(
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            7.5,
-                                                    bottom: 32,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(100),
-                                                      ),
-                                                      constraints:
-                                                          BoxConstraints(
-                                                        minWidth: 28,
-                                                        minHeight: 28,
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          basketController
-                                                              .medics.length
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15,
+                              ),
+                              // Text(
+                              //   '(5)',
+                              //   style: TextStyle(
+                              //     fontSize: 20,
+                              //     fontWeight: FontWeight.w500,
+                              //     color: Colors.deepOrange,
+                              //   ),
+                              // ),
+                            ]),
+                          ),
+                          SizedBox(
+                              height: 210,
+                              child:
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceAround,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceAround,
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    children: [
+                                      Expanded(
+                                          child: SizedBox(
+                                            width: MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width / 2.1,
+                                            child: Stack(
+                                              children: [
+                                                buildCard(card: cards[0]),
+                                                GetBuilder<ShoppingCardController>(builder: (_) {
+                                                  if (basketController.medics.length == 0) {
+                                                    return SizedBox();
+                                                  } else
+                                                    return Positioned(
+                                                      right:  MediaQuery
+                                                          .of(context)
+                                                          .size
+                                                          .width / 7.5,
+                                                      bottom: 32,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.circular(100),
+                                                        ),
+                                                        constraints: BoxConstraints(
+                                                          minWidth: 28,
+                                                          minHeight: 28,
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            basketController.medics.length.toString(),
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 15,
+                                                            ),
+                                                            textAlign: TextAlign.center,
                                                           ),
-                                                          textAlign:
-                                                              TextAlign.center,
                                                         ),
                                                       ),
-                                                    ),
-                                                  );
-                                              }),
-                                            ],
-                                          ),
-                                        )),
-                                        Expanded(
-                                            child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              2.1,
-                                          child: Stack(
-                                            children: [
-                                              buildCard(card: cards[1]),
-                                              GetBuilder<
-                                                      ShoppingCardController>(
-                                                  builder: (_) {
-                                                if (shoppingCardController
-                                                        .cart.length ==
-                                                    0) {
-                                                  return SizedBox();
-                                                } else
-                                                  return Positioned(
-                                                    right:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            7.5,
-                                                    bottom: 32,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(100),
-                                                      ),
-                                                      constraints:
-                                                          BoxConstraints(
-                                                        minWidth: 28,
-                                                        minHeight: 28,
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          shoppingCardController
-                                                              .cart.length
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15,
+                                                    );
+                                                }),
+                                              ],
+                                            ),
+                                          )
+                                      ),
+                                      Expanded(
+                                          child: SizedBox(
+                                            width: MediaQuery
+                                                .of(context)
+                                                .size
+                                                .width / 2.1,
+                                            child: Stack(
+                                              children: [
+                                                buildCard(card: cards[1]),
+                                                GetBuilder<ShoppingCardController>(builder: (_) {
+                                                  if (shoppingCardController.cart.length == 0) {
+                                                    return SizedBox();
+                                                  } else
+                                                    return Positioned(
+                                                      right:  MediaQuery
+                                                          .of(context)
+                                                          .size
+                                                          .width / 7.5,
+                                                      bottom: 32,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.circular(100),
+                                                        ),
+                                                        constraints: BoxConstraints(
+                                                          minWidth: 28,
+                                                          minHeight: 28,
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            shoppingCardController.cart.length.toString(),
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 15,
+                                                            ),
+                                                            textAlign: TextAlign.center,
                                                           ),
-                                                          textAlign:
-                                                              TextAlign.center,
                                                         ),
                                                       ),
-                                                    ),
-                                                  );
-                                              }),
-                                            ],
-                                          ),
-                                        )),
-                                      ],
-                                    ),
-                                    Column(
+                                                    );
+                                                }),
+                                              ],
+                                            ),
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceAround,
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    children: [
+                                      Expanded(
+                                          child: buildCard(card: cards[2])
+                                      ),
+                                      Expanded(
+                                          child: buildCard(card: cards[3])
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )),
+                          //   ListView.separated(
+                          //     // This next line does the trick.
+                          //     scrollDirection: Axis.horizontal,
+                          //     separatorBuilder: (context, index) {
+                          //       return const SizedBox(
+                          //         width: 0,
+                          //       );
+                          //     },
+                          //     itemCount: cards.length,
+                          //     itemBuilder: (context, index) {
+                          //       return buildCard(card: cards[index]);
+                          //     },
+                          //   ),
+                          // ),
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 10,
+                              bottom: 10,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 20),
+                            child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      MainAxisAlignment.start,
                                       children: [
-                                        Expanded(
-                                            child: buildCard(card: cards[2])),
-                                        Expanded(
-                                            child: buildCard(card: cards[3])),
-                                      ],
-                                    )
-                                  ],
-                                )),
-                            //   ListView.separated(
-                            //     // This next line does the trick.
-                            //     scrollDirection: Axis.horizontal,
-                            //     separatorBuilder: (context, index) {
-                            //       return const SizedBox(
-                            //         width: 0,
-                            //       );
-                            //     },
-                            //     itemCount: cards.length,
-                            //     itemBuilder: (context, index) {
-                            //       return buildCard(card: cards[index]);
-                            //     },
-                            //   ),
-                            // ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                top: 10,
-                                bottom: 10,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 20),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Row(children: [
-                                            Text(
-                                              getLang(
-                                                  context, "Nearest branch"),
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                        Row(children: [
+                                          Text(
+                                            getLang(context, "Nearest branch"),
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                            Text(
-                                              '(${_foundPharmacy.length})',
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.deepOrange,
-                                              ),
+                                          ),
+                                          Text(
+                                            '(${_foundPharmacy.length})',
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.deepOrange,
                                             ),
-                                          ]),
+                                          ),
                                         ]),
-                                    // TextButton(
-                                    //     child: Text(
-                                    //       getLang(context, "See all"),
-                                    //       style: TextStyle(color: Colors.blue),
-                                    //     ),
-                                    //     onPressed: () =>
-                                    //         Get.to(() => ShowBranch())),
-                                  ]),
-                            ),
-                            GetBuilder<BoxesController>(builder: (_) {
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    for (BoxContent box
-                                        in _foundPharmacy.reversed)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 4, horizontal: 20),
-                                        child: PharmacyItem(
-                                          pharm: Pharmacy(
-                                              img: box.branchImagePath ??
-                                                  "https://i.pinimg.com/originals/e4/37/30/e437307f4baf5f8c6a9236c82886bbd4.jpg",
-                                              name: box.branch,
-                                              locName: box.branchAddress,
-                                              location: "location",
-                                              boxStorage: 0.0),
-                                        ),
-                                      )
-                                  ],
-                                ),
-                              );
-                            })
-                          ],
-                        ),
-                )
-              ],
-            ),
+                                      ]),
+                                  TextButton(
+                                      child: Text(
+                                        getLang(context, "See all"),
+                                        style: TextStyle(color: Colors.blue),
+                                      ),
+                                      onPressed: () =>
+                                          Get.to(() => ShowBranch())),
+                                ]),
+                          ),
+                          for (Pharmacy Pharm in _foundPharmacy.reversed)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4, horizontal: 20),
+                              child: PharmacyItem(
+                                pharm: Pharm,
+                              ),
+                            )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
           )
         ],
       ),
     );
   }
 
-  // void _runFilter(String enteredKeyword) {
-  //   List<Pharmacy> results = [];
-  //   if (enteredKeyword.isEmpty) {
-  //     results = pharmacyList;
-  //   } else {
-  //     results = pharmacyList
-  //         .where((item) =>
-  //         item.name!.toLowerCase().contains(enteredKeyword.toLowerCase()))
-  //         .toList();
-  //   }
-  //
-  //   setState(() {
-  //     _foundPharmacy = results;
-  //   });
-  // }
+  void _runFilter(String enteredKeyword) {
+    List<Pharmacy> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = pharmacyList;
+    } else {
+      results = pharmacyList
+          .where((item) =>
+          item.name!.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
 
-  Widget buildCard({required Card card}) => SizedBox(
-        width: MediaQuery.of(context).size.width / 2.1,
+    setState(() {
+      _foundPharmacy = results;
+    });
+  }
+
+  Widget buildCard({required Card card}) =>
+      SizedBox(
+        width: MediaQuery
+            .of(context)
+            .size
+            .width / 2.1,
         //height: 200,
         child: InkWell(
           onTap: () {
@@ -486,29 +413,30 @@ class _HomeState extends State<Home> {
                 }
                 break;
 
-              // case 3: {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ShowBranch()),
-              //TODO:donat to the box
-              //   );
-              // }
-              // break;
+            // case 3: {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => ShowBranch()),
+            //TODO:donat to the box
+            //   );
+            // }
+            // break;
 
-              // case 4: {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => ShowBranch()),
-              //TODO:Fast donation
-              //   );
-              // }
-              // break;
+            // case 4: {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => ShowBranch()),
+            //TODO:Fast donation
+            //   );
+            // }
+            // break;
 
               default:
                 {
                   showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
+                      builder: (context) =>
+                          AlertDialog(
                             actions: [
                               TextButton(
                                   onPressed: () {
@@ -527,7 +455,10 @@ class _HomeState extends State<Home> {
           child: Column(
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width / 5.5,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width / 5.5,
                 child: AspectRatio(
                   aspectRatio: 1 / 1,
                   child: card.img,
@@ -575,7 +506,7 @@ class _HomeState extends State<Home> {
           ],
         ),
         child: TextField(
-          //onChanged: (value) => _runFilter(value),
+          onChanged: (value) => _runFilter(value),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(10),
             prefixIcon: Icon(

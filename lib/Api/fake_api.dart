@@ -1,6 +1,3 @@
-import 'package:akrem/Screens/map/Select_location.dart';
-import 'package:akrem/constants/app_images.dart';
-import 'package:flutter/material.dart';
 
 class Pharmacy {
   String img;

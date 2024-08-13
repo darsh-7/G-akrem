@@ -1,6 +1,5 @@
 import 'package:akrem/Api/user_api.dart';
 import 'package:akrem/Screens/login/login_page.dart';
-import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/main/Profile/account/add_phone.dart';
 import 'package:akrem/Screens/main/Profile/account/change_password.dart';
 import 'package:akrem/Screens/main/Profile/account/edit_info.dart';

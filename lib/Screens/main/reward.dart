@@ -1,10 +1,6 @@
-import 'package:akrem/Api/fake_api.dart';
-import 'package:akrem/Api/test_api.dart';
 import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/test_controller.dart';
 import 'package:akrem/model/redeem.dart';
-import 'package:akrem/model/test_model.dart';
 import 'package:akrem/widgets/reword_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,24 +24,6 @@ class _Reword extends State<Reword> {
     return redeems;
   }
 
-  void alert(){
-    showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: const Text("Close"))
-              ],
-              title: const Text("Info"),
-              content: const Text(
-                  "this is your score from giving up donation to the community, you can use it to get discounts on the products in the app."),
-            ));
-  }
-
   @override
   void initState() {
     //_foundPharmacy = pharmacyList;
@@ -59,15 +37,6 @@ class _Reword extends State<Reword> {
       if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
         testController.getProducts(end: _redeemList.length+10);
       }
-    });
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      //googleMapController.determinePosition();
-      // googleMapController.cameraChanged(
-      //     initialPoint.latitude, initialPoint.longitude);
-      //
-      alert();
-
     });
 
     super.initState();
@@ -144,7 +113,21 @@ class _Reword extends State<Reword> {
 
           GestureDetector(
             onTap: () {
-              alert();
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text("Close"))
+                        ],
+                        title: const Text("Info"),
+                        content: const Text(
+                            "this is your score from giving up donation to the community, you can use it to get discounts on the products in the app."),
+                      ));
             },
             child: const Text("0"+" 🪙") ,
           )

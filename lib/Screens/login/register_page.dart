@@ -4,10 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:akrem/widgets/input.dart';
-import 'package:akrem/widgets/appbar.dart';
 import 'package:akrem/widgets/scrollable_column.dart';
 import 'package:akrem/services/validator.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -93,7 +91,7 @@ class _RegisterPage extends State<RegisterPage> {
         child: SizedBox(
           width: mediaSize.width,
           child: Card(
-            color: Get.theme.colorScheme.onBackground,
+            color: Get.theme.colorScheme.onSurface,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
@@ -194,6 +192,7 @@ class _RegisterPage extends State<RegisterPage> {
               if (password == _passwordConfirmationController.text) {
                 return null;
               }
+              return null;
             },
           ),
           // const SizedBox(height: 12),
@@ -239,66 +238,66 @@ class _RegisterPage extends State<RegisterPage> {
             label: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const Padding(
-                //   padding: EdgeInsets.only(left: 8),
-                //   child: Text(
-                //     "By creating an account you agree to our",
-                //     style: TextStyle(
-                //       color: Color(0xFFa8a8a7),
-                //     ),
-                //   ),
-                // ),
-                // TextButton(
-                //   child: const Text('Terms & Conditions'),
-                //   onPressed: () {
-                //     showCupertinoModalPopup(
-                //       context: context,
-                //       builder: (BuildContext builder) {
-                //         return CupertinoPopupSurface(
-                //           child: Container(
-                //               color: Colors.white,
-                //               alignment: Alignment.center,
-                //               width: double.infinity,
-                //               height: mediaSize.height,
-                //               child: ListView(children: [
-                //                 Column(
-                //                   crossAxisAlignment:
-                //                       CrossAxisAlignment.stretch,
-                //                   children: [
-                //                     Padding(
-                //                         padding: EdgeInsets.only(
-                //                             top: statusBarHeight),
-                //                         child: null),
-                //                     RichText(
-                //                       text: const TextSpan(
-                //                         text: 'good to see you \n',
-                //                         style: TextStyle(
-                //                             fontSize: 20,
-                //                             fontWeight: FontWeight.w500,
-                //                             color: Colors.grey),
-                //                         /*defining default style is optional */
-                //                         children: <TextSpan>[
-                //                           TextSpan(
-                //                               text:
-                //                                   "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
-                //                                   " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
-                //                               style: TextStyle(
-                //                                   color: Colors.black)),
-                //                         ],
-                //                       ),
-                //                     ),
-                //                     Image.asset(
-                //                       "assets/Pharmacy.png",
-                //                       scale: 1,
-                //                     ),
-                //                   ],
-                //                 )
-                //               ])),
-                //         );
-                //       },
-                //     );
-                //   },
-                // ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text(
+                    "By creating an account you agree to our",
+                    style: TextStyle(
+                      color: Color(0xFFa8a8a7),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  child: const Text('Terms & Conditions'),
+                  onPressed: () {
+                    showCupertinoModalPopup(
+                      context: context,
+                      builder: (BuildContext builder) {
+                        return CupertinoPopupSurface(
+                          child: Container(
+                              color: Colors.white,
+                              alignment: Alignment.center,
+                              width: double.infinity,
+                              height: mediaSize.height,
+                              child: ListView(children: [
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            top: statusBarHeight),
+                                        child: null),
+                                    RichText(
+                                      text: const TextSpan(
+                                        text: 'good to see you \n',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.grey),
+                                        /*defining default style is optional */
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text:
+                                                  "bla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla blabla bla \n"
+                                                  " \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \nbla bla \n",
+                                              style: TextStyle(
+                                                  color: Colors.black)),
+                                        ],
+                                      ),
+                                    ),
+                                    Image.asset(
+                                      "assets/Pharmacy.png",
+                                      scale: 1,
+                                    ),
+                                  ],
+                                )
+                              ])),
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
             value: _agreeWithTermsAndConditions,

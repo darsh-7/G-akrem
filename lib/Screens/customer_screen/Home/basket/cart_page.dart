@@ -1,10 +1,7 @@
-import 'dart:ffi';
 
-import 'package:akrem/Screens/basket/checkout.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket/delivery_page.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
 import 'package:akrem/controller/shopping_card_controller.dart';
-import 'package:akrem/model/shopping_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -128,18 +125,18 @@ class _TabShoppingCartPageState extends State<TabShoppingCartPage> {
         ),
         TextButton(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                    (Set<MaterialState> states) => Get.theme.primaryColor,
+              backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                    (Set<WidgetState> states) => Get.theme.primaryColor,
               ),
-              overlayColor: MaterialStateProperty.all(Colors.transparent),
-              shape: MaterialStateProperty.all(
+              overlayColor: WidgetStateProperty.all(Colors.transparent),
+              shape: WidgetStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(4.0),
                   )
               ),
             ),
             onPressed: () {
-              Get.to(Checkout(serves: 1,));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryPage()));
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -157,7 +154,7 @@ class _TabShoppingCartPageState extends State<TabShoppingCartPage> {
     );
   }
 
-  Column _buildItem(int id, boxImageSize,String name,String imgUrl,int quantity,double price) {
+  Column _buildItem(String id, boxImageSize,String name,String imgUrl,int quantity,double price) {
     //int quantity = shoppingCartData[index].quantity;
     return Column(
       children: [

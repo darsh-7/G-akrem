@@ -1,7 +1,5 @@
 import 'package:akrem/Api/user_api.dart';
-import 'package:akrem/Screens/main/Profile/account/account_screen.dart';
 import 'package:akrem/services/validator.dart';
-import 'package:akrem/widgets/scrollable_column.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -80,6 +78,7 @@ class _PasswordViewState extends State<PasswordView> {
                         if (password == newPass.text) {
                           return null;
                         }
+                        return null;
                       },
                       label: "Conform new password",
                       inputFormatters: [

@@ -1,13 +1,8 @@
-import 'dart:async';
 
 import 'package:akrem/Screens/login/login_page.dart';
-import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:akrem/Screens/main/Profile/account/account_screen.dart';
-import 'package:akrem/Screens/main/Profile/account/donation_history.dart';
-import 'package:akrem/Screens/main/Profile/account/order_history.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/widgets/profle_menu.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +121,7 @@ class _ProfileScreen extends State<ProfileScreen> {
             // ),
             const SizedBox(height: 10),
             Text(userController.user.fName ?? "No Name",
-                style: Theme.of(context).textTheme.headline4),
+                style: Theme.of(context).textTheme.bodyMedium ),
             // Text(userController.user.email??"No Email",
             //     style: Theme.of(context).textTheme.bodyText2),
             const SizedBox(height: 20),
@@ -161,16 +156,10 @@ class _ProfileScreen extends State<ProfileScreen> {
                 title: "Settings",
                 icon: Icons.settings,
                 onPress: () {
-                Get.to(AccountView());
+                //  Get.to(AccountView());
                 }),
             ProfileMenuWidget(
-                title: "Donation History", icon: Icons.history, onPress: () {
-              Get.to(DonationHistoryPage());
-            }),
-            ProfileMenuWidget(
-                title: "Order History", icon: Icons.history, onPress: () {
-              Get.to(OrderHistoryPage());
-            }),
+                title: "Donation History", icon: Icons.history, onPress: () {}),
             ProfileMenuWidget(
                 title: "Billing Details", icon: Icons.wallet, onPress: () {}),
             // ProfileMenuWidget(title: "User Management", icon: Icons.verified_user, onPress: () {}),

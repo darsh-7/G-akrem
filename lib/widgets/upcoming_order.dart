@@ -1,14 +1,10 @@
-import 'package:akrem/Api/market.dart';
 import 'package:akrem/Screens/basket/edit_donation.dart';
-import 'package:akrem/Screens/basket/medic_list.dart';
-import 'package:akrem/Screens/main/NavigationBar.dart';
-import 'package:akrem/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class UpcomingOrderCard extends StatelessWidget {
-  const UpcomingOrderCard({
+class UpcomingCard extends StatelessWidget {
+  const UpcomingCard({
     Key? key,
   }) : super(key: key);
 
@@ -16,7 +12,7 @@ class UpcomingOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      height: 140,
+      height: 124,
       padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 20),
       decoration: BoxDecoration(
         //color: Theme.of(context).primaryColor.withOpacity(0.8),
@@ -48,82 +44,77 @@ class UpcomingOrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "your medications \nis coming soon\n 👌️",
-
+                    "Well be there",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       overflow: TextOverflow.ellipsis,
                     ),
-
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 60,
                   ),
                   Container(
-                    height: 34,
-                    width: 68,
+                    height: 40,
+                    width: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
-                      color: Colors.red,
+                      color: Colors.deepOrange.shade700,
                     ),                    // padding: const EdgeInsets.symmetric(
                     //     vertical: 22, horizontal: 20),
                     child: TextButton(
                       child: const Text(
-                        "Cancel",
+                        "Edit",
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () async {
-                       // Get.to(EditDonation());
-                        await MarketAPI.cancelOrder();
-                        Get.offAll(() => NavigationBarApp());
+                      onPressed: () {
+                        Get.to(EditDonation());
                       },
                     ),
                   )
                 ],
               ),
               const SizedBox(height: 8),
-              // Container(
-              //   padding: const EdgeInsets.symmetric(
-              //     vertical: 6,
-              //     horizontal: 8.0,
-              //   ),
-              //   decoration: BoxDecoration(
-              //       color: Colors.white10,
-              //       borderRadius: BorderRadius.circular(10)),
-              //   child: const Row(
-              //     children: [
-              //       Icon(
-              //         Icons.calendar_month_outlined,
-              //         size: 18,
-              //         color: Colors.white,
-              //       ),
-              //       Padding(
-              //         padding: EdgeInsets.only(left: 6, right: 14),
-              //         child: Text(
-              //           "Today",
-              //           style: TextStyle(color: Colors.white),
-              //         ),
-              //       ),
-              //       Padding(
-              //         padding: EdgeInsets.only(right: 8),
-              //         child: Icon(
-              //           Icons.timer,
-              //           size: 18,
-              //           color: Colors.white,
-              //         ),
-              //       ),
-              //       Text(
-              //         "13:30 - 15:30 AM",
-              //         style: TextStyle(
-              //           color: Colors.white,
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // )
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6,
+                  horizontal: 8.0,
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.white10,
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.calendar_month_outlined,
+                      size: 18,
+                      color: Colors.white,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 6, right: 14),
+                      child: Text(
+                        "Today",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 8),
+                      child: Icon(
+                        Icons.timer,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "13:30 - 15:30 AM",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+              )
             ],
           )
         ],

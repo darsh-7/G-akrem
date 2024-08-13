@@ -105,12 +105,12 @@ class _PhoneVerificationState extends State<PhoneVerification> {
               width: double.maxFinite,
               child: TextButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (Set<MaterialState> states) =>
+                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                      (Set<WidgetState> states) =>
                           _buttonDisabled ? Colors.grey[300]! : _color1,
                     ),
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    shape: WidgetStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(3.0),
                     )),
                   ),

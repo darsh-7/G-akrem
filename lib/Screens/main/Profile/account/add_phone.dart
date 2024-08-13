@@ -1,5 +1,4 @@
 import 'package:akrem/Api/user_api.dart';
-import 'package:akrem/Screens/main/Profile/account/account_screen.dart';
 import 'package:akrem/Screens/main/Profile/account/phone_verification.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
@@ -294,6 +293,7 @@ class _PhoneViewState extends State<PhoneView> {
                       } else if (value.length > 10) {
                         return 'The phone number you entered is too long for the country: ${countryNameController.text}';
                       }
+                      return null;
                     },
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(

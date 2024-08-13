@@ -1,21 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'dart:developer' as dev;
-import 'package:akrem/Api/ocr_model.dart';
-import 'package:akrem/constants/app_colors.dart';
-import 'package:connectivity/connectivity.dart';
-import 'package:akrem/Screens/basket/ImagePreview.dart';
+
 import 'package:akrem/Screens/basket/add_medic.dart';
 import 'package:akrem/Screens/basket/totorial_video.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
 import 'package:camera/camera.dart';
-import 'package:edge_detection/edge_detection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mlkit_object_detection/google_mlkit_object_detection.dart';
-import 'package:image/image.dart' as img;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
@@ -101,7 +93,7 @@ class _TakePic extends State<TakePic> {
               child: Container(
                 height: 100,
                 width: double.infinity,
-                color: AppColors.mainColor,
+                color: Colors.red,
                 child: const Text(
                   "Please take a vertical photo of the medicine",
                   style: TextStyle(fontSize: 30),
@@ -199,36 +191,6 @@ class _TakePic extends State<TakePic> {
 
                           File pic = File(xPic.path);
 
-
-                         //final croppedFile = pic;
-                          
-
-                          // final objectDetector = ObjectDetector(options: ObjectDetectorOptions(mode: mode, classifyObjects: classifyObjects, multipleObjects: multipleObjects));
-                          //
-                          // final List<DetectedObject> objects = await objectDetector.processImage(InputImage.fromFilePath(pic.path));
-                          //
-                          // for(DetectedObject detectedObject in objects){
-                          //   final rect = detectedObject.boundingBox;
-                          //   final trackingId = detectedObject.trackingId;
-                          //
-                          //   for(Label label in detectedObject.labels){
-                          //     print('${label.text} ${label.confidence}');
-                          //   }
-                          // }
-                          // try {
-                          //   //Make sure to await the call to detectEdge.
-                          //   bool success = await EdgeDetection.detectEdge(pic.path,
-                          //     canUseGallery: true,
-                          //     androidScanTitle: 'Scanning', // use custom localizations for android
-                          //     androidCropTitle: 'Crop',
-                          //     androidCropBlackWhiteTitle: 'Black White',
-                          //     androidCropReset: 'Reset',
-                          //
-                          //   );
-                          // } catch (e) {
-                          //   print(e);
-                          // }
-
                           final croppedFile = await ImageCropper().cropImage(
                             sourcePath: pic.path,
                             compressFormat: ImageCompressFormat.jpg,
@@ -266,175 +228,64 @@ class _TakePic extends State<TakePic> {
                           if (croppedFile == null) {
                             return;
                           }
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return Dialog(
-                                backgroundColor: Colors.transparent,
-                                child: Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            },
-                          );
 
-                          int id = 4712;
+                          final inputImage =
+                              InputImage.fromFile(File(croppedFile.path));
+                          final recognizedText =
+                              await textRecognizer.processImage(inputImage);
+
                           String medicName = "";
                           String medicConcentration = "";
                           String medicTablets = "";
-                          final String ocrText ="";
-                          var connectivityResult = await (Connectivity().checkConnectivity());
 
-                          if (connectivityResult != ConnectivityResult.none) {
-                            // I am connected to a mobile network.
+                          double biggestVertical = 0;
+                          double biggestHorizontal = 0;
 
-                            final bytes = File(croppedFile.path);
-                            Map<String,dynamic> res = await OcRModelAPI.postImageToServer(bytes);
-
-                           // medicName = res["responseJson"][];
-
-
-
-                          if(res["responseJson"] == 0||medicName.isEmpty||medicName == ""){
-                            final inputImage =
-                            InputImage.fromFile(File(croppedFile.path));
-
-                            final recognizedText =
-                            await textRecognizer.processImage(inputImage);
-
-
-                            double biggestVertical = 0;
-                            double biggestHorizontal = 0;
-
-                            for (TextBlock block in recognizedText.blocks) {
-                              for (TextLine line in block.lines) {
-                                Rect frame = line.elements.first.boundingBox;
-                                print(
-                                    "vaal ${line.elements.first.text} : ${line.elements.first.text.contains("mg") || line.elements.first.text.contains("MG")}");
-                                if (_isNumeric(line.elements.first.text)) {
-                                  line.elements.toList().forEach((element) {
-                                    if (element.text.contains("mg") ||
-                                        element.text.contains("MG")) {
-                                      print(
-                                          "found Concentration : ${line.elements.toString()}");
-                                      //medicNum = line.elements.toString();
-                                      medicConcentration = medicConcentration +
-                                          " " +
-                                          line.elements.first.text +
-                                          element.text +
-                                          " ";
-                                    } else if (element.text.contains("tablets") ||
-                                        element.text.contains("Tablets")) {
-                                      print(
-                                          "found Concentration : ${line.elements.toString()}");
-                                      //medicNum = line.elements.first.text;
+                          for (TextBlock block in recognizedText.blocks) {
+                            for (TextLine line in block.lines) {
+                              Rect frame = line.elements.first.boundingBox;
+                              print(
+                                  "vaal ${line.elements.first.text} : ${line.elements.first.text.contains("mg") || line.elements.first.text.contains("MG")}");
+                              if (_isNumeric(line.elements.first.text)) {
+                                line.elements.toList().forEach((element) {
+                                  if (element.text.contains("mg") ||
+                                      element.text.contains("MG")) {
+                                    print(
+                                        "found Concentration : ${line.elements.toString()}");
+                                    //medicNum = line.elements.toString();
+                                    medicConcentration = medicConcentration +
+                                        " " +
+                                        line.elements.first.text +
+                                        element.text +
+                                        " ";
+                                  } else if (element.text.contains("tablets") ||
+                                      element.text.contains("Tablets")) {
+                                    print(
+                                        "found Concentration : ${line.elements.toString()}");
+                                    //medicNum = line.elements.first.text;
+                                    medicTablets = line.elements.first.text;
+                                  } else {
+                                    if (medicTablets.isEmpty) {
                                       medicTablets = line.elements.first.text;
-                                    } else {
-                                      if (medicTablets.isEmpty) {
-                                        medicTablets = line.elements.first.text;
-                                      } else if (medicConcentration.isEmpty) {
-                                        medicConcentration =
-                                            line.elements.first.text;
-                                      }
+                                    } else if (medicConcentration.isEmpty) {
+                                      medicConcentration =
+                                          line.elements.first.text;
                                     }
-                                  });
-                                  continue;
-                                }
-
-                                if (biggestVertical <
-                                    (frame.bottom - frame.top) &&
-                                    biggestHorizontal <
-                                        (frame.right - frame.left)) {
-                                  print(
-                                      "medicName : ${line.elements.first.text} bigger than ${medicName}");
-                                  biggestVertical = frame.bottom - frame.top;
-                                  biggestHorizontal = frame.right - frame.left;
-                                  medicName = line.elements.first.text;
-                                }
-
+                                  }
+                                });
+                                continue;
                               }
 
-
-
-                              // for (TextElement element in line.elements) {
-                              //
-                              //   if (biggestVertical < (element.boundingBox.bottom - element.boundingBox.top)/* && biggestHorizontal < (element.boundingBox.right - element.boundingBox.left)*/) {
-                              //     print ("medicName : ${element.text} bigger than ${medicName}");
-                              //     biggestVertical = element.boundingBox.bottom - element.boundingBox.top;
-                              //     biggestHorizontal =element.boundingBox.right - element.boundingBox.left;
-                              //     medicName = element.text;
-                              //   }
-                              //
-                              //   // Do something with fontSize, e.g. add to a list
-                              // }
-
-                              // Do something with fontSize, e.g. add to a list
-                            }
-                          }
-
-                          } else  {
-                            // I am connected to a wifi network.
-
-                            final inputImage =
-                            InputImage.fromFile(File(croppedFile.path));
-
-                            final recognizedText =
-                            await textRecognizer.processImage(inputImage);
-
-
-                            double biggestVertical = 0;
-                            double biggestHorizontal = 0;
-
-                            for (TextBlock block in recognizedText.blocks) {
-                              for (TextLine line in block.lines) {
-                                Rect frame = line.elements.first.boundingBox;
+                              if (biggestVertical <
+                                      (frame.bottom - frame.top) &&
+                                  biggestHorizontal <
+                                      (frame.right - frame.left)) {
                                 print(
-                                    "vaal ${line.elements.first.text} : ${line.elements.first.text.contains("mg") || line.elements.first.text.contains("MG")}");
-                                if (_isNumeric(line.elements.first.text)) {
-                                  line.elements.toList().forEach((element) {
-                                    if (element.text.contains("mg") ||
-                                        element.text.contains("MG")) {
-                                      print(
-                                          "found Concentration : ${line.elements.toString()}");
-                                      //medicNum = line.elements.toString();
-                                      medicConcentration = medicConcentration +
-                                          " " +
-                                          line.elements.first.text +
-                                          element.text +
-                                          " ";
-                                    } else if (element.text.contains("tablets") ||
-                                        element.text.contains("Tablets")) {
-                                      print(
-                                          "found Concentration : ${line.elements.toString()}");
-                                      //medicNum = line.elements.first.text;
-                                      medicTablets = line.elements.first.text;
-                                    } else {
-                                      if (medicTablets.isEmpty) {
-                                        medicTablets = line.elements.first.text;
-                                      } else if (medicConcentration.isEmpty) {
-                                        medicConcentration =
-                                            line.elements.first.text;
-                                      }
-                                    }
-                                  });
-                                  continue;
-                                }
-
-                                if (biggestVertical <
-                                    (frame.bottom - frame.top) &&
-                                    biggestHorizontal <
-                                        (frame.right - frame.left)) {
-                                  print(
-                                      "medicName : ${line.elements.first.text} bigger than ${medicName}");
-                                  biggestVertical = frame.bottom - frame.top;
-                                  biggestHorizontal = frame.right - frame.left;
-                                  medicName = line.elements.first.text;
-                                }
-
+                                    "medicName : ${line.elements.first.text} bigger than ${medicName}");
+                                biggestVertical = frame.bottom - frame.top;
+                                biggestHorizontal = frame.right - frame.left;
+                                medicName = line.elements.first.text;
                               }
-
-
 
                               // for (TextElement element in line.elements) {
                               //
@@ -495,18 +346,15 @@ class _TakePic extends State<TakePic> {
 
                           var imgBytes = await croppedFile.readAsBytes();
                           //pic.delete();
-                          Get.back();
+
                           Get.to(() => AddMedic(), arguments: {
                             "picFile": imgBytes,
-                            "text": ocrText,
+                            "text": recognizedText.text,
                             "medicName": medicName,
                             "medicConcentration": medicConcentration,
                             "medicTablets": medicTablets
                           });
-
-
-
-                        } on CameraException catch (e) {
+                        } on CameraException {
                           debugPrint("takePicture error");
                           return null;
                         }
@@ -530,10 +378,5 @@ bool isUppercase(String str) {
 }
 
 bool _isNumeric(String str) {
-  if (str == null) {
-    return false;
-  }
   return double.tryParse(str) != null;
 }
-
-

@@ -2,7 +2,6 @@ import 'package:akrem/Api/fake_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../constants/app_colors.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 

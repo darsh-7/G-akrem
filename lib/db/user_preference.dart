@@ -1,8 +1,5 @@
-import 'dart:ffi';
 
-import 'package:akrem/model/medic.dart';
 import 'package:akrem/model/user.dart';
-import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class UserPreference {
@@ -17,7 +14,6 @@ class UserPreference {
   }
 
   Future<void> openBox() async {
-
     _box = await Hive.openBox(_boxName);
   }
 

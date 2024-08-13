@@ -1,17 +1,13 @@
 import 'dart:ui';
 
 import 'package:akrem/Screens/customer_screen/Home/basket_page.dart';
-import 'package:akrem/Screens/main/Fund.dart';
 import 'package:akrem/Screens/main/NavigationBar.dart';
-import 'package:akrem/Screens/main/home_screen.dart';
 import 'package:akrem/Screens/main/Profile/profle_Screen.dart';
-import 'package:akrem/Screens/main/show_branchs.dart';
 import 'package:akrem/Screens/map/branchs_map.dart';
 import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
 import 'package:akrem/controller/shopping_card_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -116,7 +112,7 @@ class _NavigationBarApp extends State<CustomerNavigationBar> {
                 //backgroundColor: Get.theme.navigationBarTheme.backgroundColor,
 
                 backgroundColor:
-                    Get.theme.colorScheme.background.withAlpha(150),
+                    Get.theme.colorScheme.surface.withAlpha(150),
                 indicatorColor: Colors.transparent,
                 selectedIndex: currentPageIndex,
                 destinations: <Widget>[

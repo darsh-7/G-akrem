@@ -22,14 +22,13 @@ class MedicAdapter extends TypeAdapter<Medic> {
       bar: fields[2] as int?,
       pill: fields[3] as int?,
       date: fields[4] as DateTime?,
-      medtyp: fields[5] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Medic obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.img)
       ..writeByte(1)
@@ -39,9 +38,7 @@ class MedicAdapter extends TypeAdapter<Medic> {
       ..writeByte(3)
       ..write(obj.pill)
       ..writeByte(4)
-      ..write(obj.date)
-      ..writeByte(5)
-      ..write(obj.medtyp);
+      ..write(obj.date);
   }
 
   @override

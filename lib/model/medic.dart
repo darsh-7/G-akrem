@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:hive/hive.dart';
 
-import 'package:hive/hive.dart';
 part 'medic.g.dart';
 @HiveType(typeId: 2)
 class Medic {
@@ -23,9 +21,6 @@ class Medic {
   @HiveField(4)
   final DateTime? date;
 
-  @HiveField(5)
-  final int? medtyp;
-
   //String formattedDate = DateFormat('d MMMM yyyy', 'fr_FR').format(now);
   Medic({
     required this.img,
@@ -33,7 +28,6 @@ class Medic {
     this.bar,
     this.pill,
     this.date,
-    this.medtyp,
   });
 }
 

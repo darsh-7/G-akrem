@@ -116,7 +116,7 @@ class _LoginPage extends State<LoginPage> {
         child: SizedBox(
           width: mediaSize.width,
           child: Card(
-            color: Get.theme.colorScheme.onBackground,
+            color: Get.theme.colorScheme.onSurface,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),

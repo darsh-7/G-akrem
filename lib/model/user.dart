@@ -1,13 +1,9 @@
-import 'dart:typed_data';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
 
-import 'package:hive/hive.dart';
 
 part 'user.g.dart';
-
-
 
 @HiveType(typeId: 1)
 class User {

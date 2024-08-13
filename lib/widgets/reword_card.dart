@@ -103,7 +103,7 @@ class VerticalCouponExample extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(60),
                           ),
@@ -111,7 +111,7 @@ class VerticalCouponExample extends StatelessWidget {
                         // padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                         //   const EdgeInsets.symmetric(horizontal: 80),
                         // ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
+                        backgroundColor: WidgetStateProperty.all<Color>(
                           Colors.white,
                         ),
                       ),

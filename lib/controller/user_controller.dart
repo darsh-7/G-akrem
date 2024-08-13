@@ -1,9 +1,6 @@
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:akrem/Api/user_api.dart';
 import 'package:akrem/db/user_preference.dart';
-import 'package:akrem/model/medic.dart';
 import 'package:akrem/model/user.dart';
 import 'package:get/get.dart';
 

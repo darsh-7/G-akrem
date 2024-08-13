@@ -1,25 +1,14 @@
 //AIzaSyC79noCguhAfYieDJejvlj9gfXBwm1sFhY
 //import 'package:geolocator/geolocator.dart';
-import 'package:akrem/Screens/main/NavigationBar.dart';
-import 'package:akrem/constants/app_colors.dart';
 import 'package:akrem/constants/app_images.dart';
-import 'package:akrem/controller/boxes_controller.dart';
 import 'package:akrem/controller/location_controller.dart';
-import 'package:akrem/controller/controller_mang.dart';
 import 'package:akrem/controller/user_controller.dart';
-import 'package:akrem/db/user_preference.dart';
-import 'package:akrem/model/boxes.dart';
-import 'package:akrem/model/user.dart';
-import 'package:akrem/widgets/input.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 
-import '../../Api/api_key.dart';
 
 class BranchMap extends StatefulWidget {
   const BranchMap({super.key});
@@ -33,16 +22,10 @@ LatLng mti = LatLng(29.992895885508347, 31.31135928995078);
 
 class _BranchMap extends State<BranchMap> {
   LocationController googleMapController = Get.put(LocationController());
-  final BoxesController boxController = Get.find();
-
   UserController userController = Get.find();
 
   CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
-
-  List<BoxContent> get _foundPharmacy {
-    return boxController.productsList;
-  }
 
   @override
   void dispose() {
@@ -63,11 +46,8 @@ class _BranchMap extends State<BranchMap> {
       // googleMapController.cameraChanged(
       //     initialPoint.latitude, initialPoint.longitude);
       //
-      _foundPharmacy.forEach((element) {
-        addMarker(element.id.toString(), LatLng(element.latitude ??0, element.longitude?? 0), element.branch.toString());
-      });
-      // addMarker("mti", mti, "mti");
-      // addMarker("initialPoint", initialPoint, "place");
+      addMarker("mti", mti, "mti");
+      addMarker("initialPoint", initialPoint, "place");
     });
 
 
@@ -194,12 +174,9 @@ class _BranchMap extends State<BranchMap> {
                         SizedBox(
                           width: 8.0,
                         ),
-                        SizedBox(
-                          height: 90,
-                          child: Text(
-                            name,
-                            style: TextStyle(fontSize: 14),
-                          ),
+                        Text(
+                          name,
+                          style: TextStyle(fontSize: 20),
                         )
                       ],
                     ),

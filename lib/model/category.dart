@@ -1,6 +1,5 @@
 
 
-import 'package:akrem/model/item.dart';
 
 class CategoryModel {
   late int id;

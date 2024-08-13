@@ -1,7 +1,5 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
-import 'package:akrem/Screens/basket/checkout.dart';
 import 'package:akrem/Screens/basket/take_pic.dart';
 import 'package:akrem/Screens/login/login_page.dart';
 import 'package:akrem/constants/app_images.dart';
@@ -15,7 +13,6 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../model/medic.dart';
 import '../../widgets/medic_card.dart';
 import '../../constants/app_colors.dart';
-import 'add_medic.dart';
 import 'empty_items.dart';
 
 class EditDonation extends StatefulWidget {

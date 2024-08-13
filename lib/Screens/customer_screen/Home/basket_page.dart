@@ -1,20 +1,13 @@
 import 'package:akrem/Screens/customer_screen/Home/NavigationBar.dart';
 import 'package:akrem/Screens/customer_screen/Home/basket/cart_page.dart';
 import 'package:akrem/Screens/customer_screen/Home/product_detail_page.dart';
-import 'package:akrem/Screens/customer_screen/provider/cart.dart';
-import 'package:akrem/Screens/customer_screen/shared/appbar.dart';
 import 'package:akrem/Screens/customer_screen/shared/cart_buttom.dart';
 import 'package:akrem/Screens/map/Select_location.dart';
-import 'package:akrem/constants/app_colors.dart';
-import 'package:akrem/controller/market_controller.dart';
 import 'package:akrem/controller/user_controller.dart';
 import 'package:akrem/model/category.dart';
-import 'package:akrem/model/market_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 import 'package:akrem/model/item.dart';
 import 'dart:math' as math;
 
@@ -27,29 +20,14 @@ class BasketPage extends StatefulWidget {
 
 class _BasketPageState extends State<BasketPage> {
   //final textt = Provider.of<Cart>(context);
-  //List<Product> product = items;
+  List<Product> product = items;
   final userController = Get.put(UserController());
-  final testController = Get.put(MarketController());
-  final scrollController = ScrollController();
-
-  List<MarketContent> get product {
-    return testController.productsList;
-  }
-
 
   @override
   void initState() {
-    testController.getProducts();
-
-
-    scrollController.addListener(() {
-
-      if(scrollController.position.pixels == scrollController.position.maxScrollExtent){
-        testController.getProducts(end: product.length+10);
-      }
-    });
-
-    super.initState();  }
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -90,53 +68,43 @@ class _BasketPageState extends State<BasketPage> {
                       TextSpan(
                           text: "Hub",
                           style: TextStyle(color: Colors.cyanAccent)),
-                      // TextSpan(
-                      //   text: " click for more",
-                      //   //style: TextStyle(color: Colors.red)
-                      // ),
+                      TextSpan(
+                        text: " click for more",
+                        //style: TextStyle(color: Colors.red)
+                      ),
                     ],
                   ),
                 ),
               ),
-            //  _createGridCategory(),
+              _createGridCategory(),
               Container(
                 margin: EdgeInsets.only(top: 30, left: 16, right: 16),
                 child: Text('Recommended Product',
                     style:
                     TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               ),
-              GetBuilder<MarketController>(builder: (_) {
-                if(product.isEmpty){
-                  return Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                return CustomScrollView(
-                      shrinkWrap: true,
-                      primary: false,
-                      slivers: <Widget>[
-                        SliverPadding(
-                          padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
-                          sliver: SliverGrid(
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 8,
-                              crossAxisSpacing: 8,
-                              childAspectRatio: 0.625,
-                            ),
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-
-                                return _buildProductCard(index, context);
-                              },
-                              childCount: product.length,
-                            ),
-                          ),
+              CustomScrollView(
+                  shrinkWrap: true,
+                  primary: false,
+                  slivers: <Widget>[
+                    SliverPadding(
+                      padding: EdgeInsets.fromLTRB(12, 8, 12, 8),
+                      sliver: SliverGrid(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 0.625,
                         ),
-                      ]);
-                }
-              ),
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return _buildProductCard(index, context);
+                          },
+                          childCount: product.length,
+                        ),
+                      ),
+                    ),
+                  ]),
             ],
           ),
           appBar: _buildAppBar(context)
@@ -161,14 +129,11 @@ class _BasketPageState extends State<BasketPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ProductDetailPage(
-                        id: product[index].id!,
-                        name: product[index].name!,
-                        imagePath: product[index].imagePath!,
-                        price: product[index].price!,
-                        quantity: product[index].totalQuantity!,
-                        priceAfterDiscount: product[index].priceAfterDiscount!
-
-                    )));
+                        id: product[index].id,
+                        name: product[index].name,
+                        image: product[index].image,
+                        price: product[index].price,
+                        sale: product[index].sale)));
           },
           child: Stack(
             children: [
@@ -181,7 +146,7 @@ class _BasketPageState extends State<BasketPage> {
                       child: buildCacheNetworkImage(
                           width: boxImageSize,
                           height: boxImageSize,
-                          url: product[index].imagePath)),
+                          url: product[index].image)),
                   Container(
                     margin: EdgeInsets.fromLTRB(8, 8, 8, 8),
                     child: Column(
@@ -191,7 +156,7 @@ class _BasketPageState extends State<BasketPage> {
                         SizedBox(
                           height: 40,
                           child: Text(
-                            product[index].name!,
+                            product[index].name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -201,7 +166,7 @@ class _BasketPageState extends State<BasketPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(product[index].priceAfterDiscount.toString() + " EG",
+                              Text(product[index].sale.toString() + " EG",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12)),
@@ -215,18 +180,18 @@ class _BasketPageState extends State<BasketPage> {
                             ],
                           ),
                         ),
-                        // Container(
-                        //   margin: EdgeInsets.only(top: 5),
-                        //   child: Row(
-                        //     children: [
-                        //       Icon(Icons.location_on,
-                        //           color: Colors.grey, size: 12),
-                        //       Text(' ' ,
-                        //           style: TextStyle(
-                        //               fontSize: 11, color: Colors.grey))
-                        //     ],
-                        //   ),
-                        // ),
+                        Container(
+                          margin: EdgeInsets.only(top: 5),
+                          child: Row(
+                            children: [
+                              Icon(Icons.location_on,
+                                  color: Colors.grey, size: 12),
+                              Text(' ' + product[index].location,
+                                  style: TextStyle(
+                                      fontSize: 11, color: Colors.grey))
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
