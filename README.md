@@ -1,4 +1,4 @@
-# **[]() <img src="https://github.com/darsh-7/G-akrem/blob/master/assets/icons/akremLogo.png?raw=true" alt="preview"  width="30">** Akrem
+# **[]() <img src="https://github.com/darsh-7/G-akrem/blob/master/assets/icons/akremLogo.png?raw=true" alt="preview"  width="30">** Akrem medical donation platform
 Target makes donating **and receiving** essential goods easier than ever! This app provides multiple ways to give back to your community and get the support you need:
 
 🙌 **Find Donation Hubs and Boxes:** Easily locate nearby donation centers and drop-off boxes using our integrated map. 🗺️
@@ -25,13 +25,13 @@ Target makes donating **and receiving** essential goods easier than ever! This a
 [![Provider](https://img.shields.io/badge/Provider-any-blue)](https://pub.dev/packages/provider)
 [![Cached Network Image](https://img.shields.io/badge/Cached_Network_Image-3.3.1-purple)](https://pub.dev/packages/cached_network_image)
 
-#### **[]() <img src="https://static-00.iconduck.com/assets.00/apps-figma-icon-2048x2048-ctjj5ab7.png" alt="preview"  width="20">** Figma project URL
+## **[]() <img src="https://static-00.iconduck.com/assets.00/apps-figma-icon-2048x2048-ctjj5ab7.png" alt="preview"  width="20">** Figma project URL
 
 **[Figma UI Link](https://www.figma.com/design/P2CF0CTomXovN0GluPNkTQ/Donation-UI?node-id=0-1&t=Kf3tDxB6TJCH3N4Q-1)**
 <br>
 **[Figma UML & Dusiness Diagramss Link](https://www.figma.com/board/ALahEXxpDwmgTA8innUKd7/Akrem-charts?node-id=0-1&t=e9TJhsjRAUPjzIC7-1)**
 
-#### **[]() <img src="https://github.com/darsh-7/G-akrem/blob/master/assets/icons/akremLogo.png?raw=true" alt="preview"  width="20">** Akrem Documentations URL
+## **[]() <img src="https://github.com/darsh-7/G-akrem/blob/master/assets/icons/akremLogo.png?raw=true" alt="preview"  width="20">** Akrem Documentations URL
 
 **[Akrem Business model](https://github.com/darsh-7/G-akrem/blob/master/docs/AKREM%20business%20model.pdf)**
 <br>
