@@ -25,6 +25,10 @@ Target makes donating **and receiving** essential goods easier than ever! This a
 [![Provider](https://img.shields.io/badge/Provider-any-blue)](https://pub.dev/packages/provider)
 [![Cached Network Image](https://img.shields.io/badge/Cached_Network_Image-3.3.1-purple)](https://pub.dev/packages/cached_network_image)
 
+#### Figma project URL
+
+**[Figma Link](https://www.figma.com/design/P2CF0CTomXovN0GluPNkTQ/Donation-UI?node-id=0-1&t=Kf3tDxB6TJCH3N4Q-1) <img src="https://static-00.iconduck.com/assets.00/apps-figma-icon-2048x2048-ctjj5ab7.png" alt="preview"  width="20">**
+
 #### Preview :
 
 https://github.com/user-attachments/assets/6edf9d8c-1c79-4fd2-9b2d-e4810263036a
@@ -40,6 +44,13 @@ https://github.com/user-attachments/assets/6edf9d8c-1c79-4fd2-9b2d-e4810263036a
 <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(21).jpg" width="200" alt="Screenshot 21"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(22).jpg" width="200" alt="Screenshot 22"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(23).jpg" width="200" alt="Screenshot 23"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(24).jpg" width="200" alt="Screenshot 24"> <br>
 <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(25).jpg" width="200" alt="Screenshot 25"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(26).jpg" width="200" alt="Screenshot 26"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(27).jpg" width="200" alt="Screenshot 27"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(28).jpg" width="200" alt="Screenshot 28"> <be>
 
+      
+<img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(29).jpg" width="200" alt="Screenshot 29"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(30).jpg" width="200" alt="Screenshot 30"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(31).jpg" width="200" alt="Screenshot 31"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(32).jpg" width="200" alt="Screenshot 32"> <br>
+<img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(33).jpg" width="200" alt="Screenshot 33"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(34).jpg" width="200" alt="Screenshot 34"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(35).jpg" width="200" alt="Screenshot 35"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(36).jpg" width="200" alt="Screenshot 36"> <br>
+<img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(37).jpg" width="200" alt="Screenshot 37"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(38).jpg" width="200" alt="Screenshot 38"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(39).jpg" width="200" alt="Screenshot 39"> <img src="https://github.com/darsh-7/G-akrem/blob/master/screenshot/screen%20(40).jpg" width="200" alt="Screenshot 40"> <br>
+
+
+    
 ## Features:
   
 * **Multiple Donation Options:**  Choose the most convenient donation method.  🎁
