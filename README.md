@@ -1,4 +1,4 @@
-# **[]() <img src="https://github.com/darsh-7/G-akrem/blob/master/assets/icons/akremLogo.png?raw=true" alt="preview"  width="30">** Akrem medical donation platform
+# **[]() <img src="https://github.com/darsh-7/G-akrem/blob/master/assets/icons/akremLogo.png?raw=true" alt="preview"  width="30">** Akrem Medicine donation platform
 Target makes donating **and receiving** essential goods easier than ever! This app provides multiple ways to give back to your community and get the support you need:
 
 🙌 **Find Donation Hubs and Boxes:** Easily locate nearby donation centers and drop-off boxes using our integrated map. 🗺️
