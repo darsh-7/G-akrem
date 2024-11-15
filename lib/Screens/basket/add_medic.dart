@@ -626,8 +626,8 @@ class _AddMedicState extends State<AddMedic> {
                                 initialDate: DateTime.now(),
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(2100));
+                            if(newDate == null) return;
                             selectedDate = newDate;
-
                             _dateController.text =
                                 "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
                           },
